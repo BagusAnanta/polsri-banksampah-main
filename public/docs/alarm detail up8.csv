@@ -1,0 +1,400 @@
+8528;0; 
+8529;1; 
+8530;2; 
+8531;3; 
+8532;4;Emergency Stop
+8533;5;Drop the prime air for drive
+8534;6;Drop the prime air for blow
+8535;7;Open the door at left
+8536;8;Open the door at  center
+8537;9;Open the door at right
+8538;10;Master module of the CC-Link is abnormal
+8539;11;Slave station of the PLC is abnormal
+8540;12;Module of the PLC is Abnormal
+8541;13; 
+8542;14;Motor of hydraulic pump is overload
+8543;15;Robot of the parretizing robot is abnormal
+8544;0;Battery of the parretizing robot is life
+8545;1;Battery of the PLC is life
+8546;2;Robot of the carrier is abnormal
+8547;3;Battery of the carrier robot is life
+8548;4; 
+8549;5; 
+8550;6;Machine does not work
+8551;7;Can't move the home position
+8552;8;1ST:Can't slide the plate to back
+8553;9;1ST:Can't slide the plate to fwd.
+8554;10;1ST:LS of sliding unit is abnormal
+8555;11;1ST:Can't match a pattern
+8556;12;1ST:Not a plate to suplly
+8557;13;1ST:Pattern sensor is burnout
+8558;14;1ST:Parts not alive in feeder
+8559;15;1ST:Thickness measurement is fail
+8560;0;1ST:Measurement is time out
+8561;1;1ST Abnormal plate position, 1ST:Can't slide the plate to fwd.
+8562;2;2ND:Can't turn the plate to right side
+8563;3;2ND:Can't turn the plate to left side
+8564;4;2ND:Can't slide parts to left side
+8565;5;2ND:Can't slide parts to right side
+8566;6;2ND:Can't down the chucking unit
+8567;7;2ND:Can't up the chucking unit
+8568;8;2ND:Chucking miss of the body
+8569;9;2ND:Can't chuck the body
+8570;10;2ND:Can't back the hand
+8571;11;2ND:Can't forward the hand
+8572;12;2ND:LS of the rotater is abnormal
+8573;13;2ND:LS of the slider is abnormal
+8574;14;2ND:LS of the up & down hand is abnormal
+8575;15;2ND:LS of the open & close hand is abnl
+8576;0;2ND:LS of fwd. & back unit is abnormal
+8577;1;2ND:Sensor of the work is abnormal
+8578;2; 
+8579;3;2ND:No suplly parts
+8580;4;2ND:Parts not alive in feeder
+8581;5; 
+8582;6;3RD:Can't down the press unit
+8583;7;3RD:Can't up the press unit
+8584;8;3RD:LS of the press-fit is abnormal
+8585;9;3RD:Sensor of the work is abnormal
+8586;10; 
+8587;11;3RD:Fail continue
+8588;12;3RD:can't press-fit the body
+8589;13;3RD:Judge sensor of height is abnormal
+8590;14;2ND:Can't turn the plate to left side
+8591;15; 
+8592;0;4TH:Can't turn the work at left
+8593;1;4TH:Can't turn the work at right
+8594;2;4TH:LS of the work turner is abnormal
+8595;3;4TH:Sensor of the work is abnormal
+8596;4;5TH:Can't back the punchout
+8597;5;5TH:Can't foward the punchout
+8598;6;5TH:LS of the knockout is abnormal
+8599;7;5TH:LS of the locating is abnormal
+8600;8;5TH:LS of the unit shift is abnormal
+8601;9;5TH:LS of the punchout is abnormal
+8602;10;5TH:Can't down the work clamp
+8603;11;5TH:Can't up the work clamp
+8604;12;5TH:LS of the clamp is abnormal
+8605;13;5TH:Can't down the knockout
+8606;14;5TH:Can't up the knockout
+8607;15;5TH:Sensor of the work is abnormal
+8608;0;5TH:Can't locate to foward
+8609;1;5TH:Can't locarte to back
+8610;2;5TH:Can't shift the unit at left
+8611;3;5TH:Can't shift the unit at right
+8612;4;7TH:Can't down the work clamp
+8613;5;7TH:Can't up the work clamp
+8614;6;7TH:Can't down the drill unit
+8615;7;7TH:Can't up the drill unit
+8616;8;7TH:LS of the work clamp is abnormal
+8617;9;7TH:LS of the drill is abnormal
+8618;10;7TH:Drilling tool is broken
+8619;11;7TH:Setting error of the tool
+8620;12;7TH:Drill motor is overload
+8621;13;7TH:Sensor of the work is abnormal
+8622;14;6TH:Can't close the chucking unit
+8623;15;6TH:Can't open the chucking unit
+8624;0;6TH:Can't turn the work at right
+8625;1;6TH:Can't turn the work at left
+8626;2;6TH:LS of the work chuck is abnormal
+8627;3;6TH:Can't turn the work chuck
+8628;4;6TH:Sensor of the work is abnormal
+8629;5;7TH:Setting error of tool sensor
+8630;6;7TH:Dill motor stop
+8631;7;8TH:Pressure judgment is time out
+8632;8;8TH:Can't down the pipe hand
+8633;9;8TH:Can't up the pipe hand
+8634;10;8TH:Can't close a pipe hand at right
+8635;11;8TH:Can't open a pipe hand at right
+8636;12;8TH:Can't close a pipe hand at left
+8637;13;8TH:Can't open a pipe hand at left
+8638;14;8TH:Can't move a pipe carrier at left
+8639;15;8TH:Can't move a pipe carrier at right
+8640;0;8TH:Can't close the locate chuck
+8641;1;8TH:Can't open the locate chuck
+8642;2;8TH:Can't close the locate chuck
+8643;3;8TH:Can't open the locate chuck
+8644;4;8TH:Can't close the gudge head
+8645;5;8TH:Can't open the gudge head
+8646;6;8TH:Difference in length of the pipe
+8647;7;8TH:Difference in diameter of the pipe
+8648;8;8TH:Can't turn the pipe to right
+8649;9;8TH:Can't turn the pipe to left
+8650;10;8TH:Can't close the pipe clamp
+8651;11;8TH:Can't open the pipe clamp
+8652;12;8TH:Can't down the work clamp
+8653;13;8TH:Can't up the work clamp
+8654;14;8TH:Can't move the press-fit to back
+8655;15;8TH:Can't move the press-fit to foward
+8656;0;8TH:LS of up & down hand is abnormal
+8657;1;8TH:LS of pipe chuck at right is abnl
+8658;2;8TH:LS of pipe chuck at left is abnormal
+8659;3;8TH:LS of pipe carrier is abnormal
+8660;4;8TH:LS of locating chuck is abnormal
+8661;5;8TH:LS of locating chuck is abnoraml
+8662;6;8TH:LS of gudging head is abnormal
+8663;7; 
+8664;8;8TH:LS of pipe turner is abnormal
+8665;9;8TH:LS of pipe clamper is abnormal
+8666;10;8TH:LS of work carrier is abnoraml
+8667;11;8TH:LS of press-fit is abnoraml
+8668;12;8TH:Sensor of the work is abnoraml
+8669;13;8TH:Fail continue
+8670;14;8TH:No supply parts
+8671;15;8TH:Pipe not alive in feeder
+8672;0;9TH:Can't turn the work to right
+8673;1;9TH:Can't turn the work to left
+8674;2;9TH:LS of work turner is abnormal
+8675;3;9TH:Sensor of the work is abnormal
+8676;4;8TH:Not a pipe after press-fitting
+8677;5;8TH:Measurement at pipe is abnormal
+8678;6;8TH:Pipe hold sensor on is abnormal
+8679;7; 
+8680;8; 
+8681;9; 
+8682;10;10TH:Can't up the nozzle
+8683;11;10TH:Can't down the nozzle
+8684;12;10TH:Can't move the nozzle to foward
+8685;13;10TH:Can't move the nozzle to back
+8686;14;10TH:Spray the powder is abnormal
+8687;15;10TH:Can't move a work to right
+8688;0;10TH:Can't move a work to left
+8689;1;10TH:LS of up & down nozzle is abnormal
+8690;2;10TH:LS of fwd. & back nossle is abnl
+8691;3;10TH:LS of the shift work is abnormal
+8692;4;10TH:Sensor of the work is abnormal
+8693;5; 
+8694;6; 
+8695;7; 
+8696;8; 
+8697;9; 
+8698;10; 
+8699;11; 
+8700;12; 
+8701;13; 
+8702;14;Can't move the pallet at back
+8703;15;Can't move the pallet at forward
+8704;0;Can't move the robot hand at down
+8705;1;Can't move the robot hand at up
+8706;2;Can't move the robot hand at close
+8707;3;Can't move the robot hand at open
+8708;4; 
+8709;5;LS of slide the pallet is abnormal
+8710;6;LS of robot hand at up & down is abnl
+8711;7;LS of robot hand at open & close is abnl
+8712;8;Pallet is full
+8713;9; 
+8714;10; 
+8715;11; 
+8716;12; 
+8717;13; 
+8718;14; 
+8719;15; 
+8720;0; 
+8721;1; 
+8722;2;Can't move the left carrier to foward
+8723;3;Can't move the left carrier to back
+8724;4;Can't move the left carrier to up
+8725;5;Can't move the left carrier to down
+8726;6;Can't move the left carrier to right
+8727;7;Can't move the left carrier to left
+8728;8;Can't move the 1st chuck to close
+8729;9;Can't move the 1st chuck to open
+8730;10;Can't turn the 1st chuck to right
+8731;11;Can't turn the 1st chuck to left
+8732;12;Can't move the 2nd chuck to close
+8733;13;Can't move the 2nd chuck to open
+8734;14;Can't move the 3rd chuck to close
+8735;15;Can't move the 3rd chuck to open
+8736;0;Can't turn the 3rd chuck to right
+8737;1;Can't turn the 3rd chuck to left
+8738;2; 
+8739;3;Sitting the 1st work is abnormal
+8740;4;Sitting the 2nd work is abnormal
+8741;5;Sitting the 3rd work is abnormal
+8742;6;LS of left carrier at fwd & back is abnl
+8743;7;LS of left carrier at up & down is abnl
+8744;8;LS of left carrier is abnormal 
+8745;9;LS of 1st chuck for open & close is abnl
+8746;10;LS of the 1st chuck for turn is abnormal
+8747;11;LS of 2nd chuck for open & close is abnl
+8748;12;LS of 3rd chuck for open & close is abnl
+8749;13;LS of the 3rd chuck for turn is abnormal
+8750;14;Difference in plate of the 2nd chucking
+8751;15; 
+8752;0;Can't move the right carrier to foward
+8753;1;Can't move the right carrier to back
+8754;2;Can't move the right carrier to up
+8755;3;Can't move the right carrier to down
+8756;4;Can't move the right carrier to right
+8757;5;Can't move the right carrier to left
+8758;6;Can't move the right carrier to chute
+8759;7;Can't move the 4th chuck to close
+8760;8;Can't move the 4th chuck to open
+8761;9;Can't move the 5th chuck to close
+8762;10;Can't move the 5th chuck to open
+8763;11;Can't move the 6th chuck to close
+8764;12;Can't move the 6th chuck to open
+8765;13;Can't move the 7th chuck to close
+8766;14;Can't move the 7th chuck to open
+8767;15;Can't move the 8th chuck to close
+8768;0;Can't move the 8th chuck to open
+8769;1;LS of R-carrier for fwd & back is abnl
+8770;2;LS of R-carrier for up & down is abnormal
+8771;3;LS of 4th chuck for open & close is abnl
+8772;4;LS of 5th chuck for open & close is abnl
+8773;5;LS of 6th chuck for open & close is abnl
+8774;6;LS of 7th chuck for open & close is abnl
+8775;7;LS of 8th chuck for open & close is abnl
+8776;8;Sitting the 4th work is abnormal
+8777;9;Sitting the 5th work is abnormal
+8778;10;Sitting the 6th work is abnormal
+8779;11;Sitting the 7th work is abnormal
+8780;12;Sitting the 8th work is abnormal
+8781;13;Sitting the 9th work is abnormal
+8782;14;Can't move the 9th chuck to close
+8783;15;Can't move the 9th chuck to open
+8784;0;LS of 9th chuck for open & close is abnl
+8785;1; 
+8786;2; 
+8787;3;5TH:Knockout tool is broken.
+8788;4; 
+8789;5; 
+8790;6; 
+8791;7; 
+8792;8; 
+8793;9;Fail counter at 1st become the target.
+8794;10; 
+8795;11;Fail counter at 3rd become the target.
+8796;12; 
+8797;13; 
+8798;14; 
+8799;15; 
+8800;0;Fail counter at 8th become the target.
+8801;1;Can't move the 4st chuck slide to right
+8802;2;Can't move the 4st chuck slide to left
+8803;3;Can't move the 10st_Part Detection
+8804;4; 
+8805;5; 
+8806;6; 
+8807;7; 
+8808;8; 
+8809;9; 
+8810;10; 
+8811;11; 
+8812;12;Open the door at palletizing
+8813;13; 
+8814;14; 
+8815;15; 
+8816;0; 
+8817;1; 
+8818;2; 
+8819;3; 
+8820;4; 
+8821;5; 
+8822;6; 
+8823;7; 
+8824;8; 
+8825;9; 
+8826;10; 
+8827;11; 
+8828;12; 
+8829;13; 
+8830;14; 
+8831;15; 
+8832;0; 
+8833;1; 
+8834;2; 
+8835;3; 
+8836;4; 
+8837;5; 
+8838;6; 
+8839;7; 
+8840;8; 
+8841;9; 
+8842;10; 
+8843;11; 
+8844;12; 
+8845;13; 
+8846;14; 
+8847;15; 
+8848;0;Automatic operation
+8849;1;Cycle stop
+8850;2;Cycle stop after movement
+8851;3; 
+8852;4;The stock of the plate decreases
+8853;5;The stock of the body decreases
+8854;6;The stock of the pipe decreases
+8855;7;Please change the palette,number 1
+8856;8;Please change the palette,number 2
+8857;9;Open the door at pllet change.
+8858;10;Automatic operation is possible
+8859;11;It is not the orogin
+8860;12;Finish counter become the set point
+8861;13;Drill counter become the set point
+8862;14;Setting error of finish counter
+8863;15;Setting error of drill counter
+8864;0;Spray counter become the set point
+8865;1;Setting error of spray counter
+8866;2;Setting error of prepared counter
+8867;3;Prepared counter becom the set point
+8868;4;Machine is abnomality
+8869;5;Manual mode
+8870;6;Jig counter at 2nd become the set point
+8871;7;Jig counter at 3rd become the set point
+8872;8;Jig counter at 5th become the set point
+8873;9;Jig counter at 7th become the set point
+8874;10;Jig counter at 8th become the set point
+8875;11;Setting error of jig counter at 2nd
+8876;12;Setting error of jig counter at 3rd
+8877;13;Setting error of jig counter at 5th
+8878;14;Setting error of jig counter at 7th
+8879;15;Setting error of jig counter at 8th
+8880;0; 
+8881;1; 
+8882;2; 
+8883;3; 
+8884;4; 
+8885;5; 
+8886;6; 
+8887;7; 
+8888;8; 
+8889;9;Chucking count at 1st become the target.
+8890;10;Chucking count at 2nd become the target.
+8891;11;Chucking count at 3rd become the target.
+8892;12;Chucking count at 4th become the target.
+8893;13;Chucking count at 5th become the target.
+8894;14;Chucking count at 6th become the target.
+8895;15;Chucking count at 7th become the target.
+8896;0;Chucking count at 8th become the target.
+8897;1;Chucking count at 9th become the target.
+8898;2; 
+8899;3; 
+8900;4;Setting error of chuck counter at 1st.
+8901;5;Setting error of chuck counter at 2nd.
+8902;6;Setting error of chuck counter at 3rd.
+8903;7;Setting error of chuck counter at 4th.
+8904;8;Setting error of chuck counter at 5th.
+8905;9;Setting error of chuck counter at 6th.
+8906;10;Setting error of chuck counter at 7th.
+8907;11;Setting error of chuck counter at 8th.
+8908;12;Setting error of chuck counter at 9th.
+8909;13; 
+8910;14; 
+8911;15; 
+8912;0; 
+8913;1; 
+8914;2; 
+8915;3; 
+8916;4; 
+8917;5; 
+8918;6; 
+8919;7; 
+8920;8; 
+8921;9; 
+8922;10; 
+8923;11; 
+8924;12; 
+8925;13; 
+8926;14; 
+8927;15; 

@@ -1,0 +1,160 @@
+@extends('layout-mobile.app')
+@section('header')
+    <header class="header header-fixed">
+        <div class="header-content">
+            <div class="left-content">
+                <a href="{{ route('dashboard') }}" class="back-btn">
+                    <i class="feather icon-arrow-left"></i>
+                </a>
+            </div>
+            <div class="mid-content">
+                <h4 class="title">Transaksi Kredit</h4>
+            </div>
+            <div class="right-content d-flex align-items-center gap-4">
+            </div>
+        </div>
+    </header>
+@endsection
+@section('content')
+    <div class="dz-list notification-list">
+        {{-- <header class="header py-2 mx-auto">
+            <div class="header-content">
+                <div class="left-content">
+                    <div class="info">
+                        <p class="text m-b10">Good Morning</p>
+                        <h3 class="title">{{ Auth::user()->name }}</h3>
+                    </div>
+                </div>
+                <div class="mid-content"></div>
+                <div class="right-content d-flex align-items-center gap-4">
+                    <a href="javascript:void(0);" class="icon dz-floating-toggler">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <rect y="2" width="20" height="3" rx="1.5" fill="#5F5F5F" />
+                            <rect y="18" width="20" height="3" rx="1.5" fill="#5F5F5F" />
+                            <rect x="4" y="10" width="20" height="3" rx="1.5" fill="#5F5F5F" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </header> --}}
+        <!-- Header -->
+
+        <!-- Main Content Start -->
+        <main class="page-content bg-white p-b60">
+            <div class="container">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        {{ $errors->first('message') }}
+                    </div>
+                @endif
+                @if (session('success'))
+                    <div class="alert alert-success solid alert-dismissible fade show">
+                        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2"
+                            fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                        </svg>
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close">
+                            <span><i class="icon feather icon-x"></i></span>
+                        </button>
+                    </div>
+                @endif
+
+                <!-- SearchBox -->
+                <div class="search-box">
+                    <form action="{{ route('transaksi.admin.index') }}" method="GET">
+                        <div class="input-group input-radius input-rounded input-lg">
+                            <input type="text" placeholder="Masukkan ID Nasabah" id="search"
+                                value="{{ request('search') }}" name="search" class="form-control">
+
+                            <button type="submit" class="btn btn-primary">Cari</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- SearchBox -->
+
+                <table id="myTable" class="table table-responsive table-bordered">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Id Nasabah</th>
+                            <th>Nama Nasabah</th>
+                            <th>Tanggal</th>
+                            <th>Sisa Saldo</th>
+                            <th>Pengajuan Kredit</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if ($tabungan->count() > 0)
+                            @php
+                                $nomor = ($tabungan->currentPage() - 1) * $tabungan->perPage() + 1;
+                            @endphp
+                            @foreach ($tabungan as $item)
+                                <tr>
+                                    <td>{{ $nomor++ }}</td>
+                                    <td>{{ $item->user->user_code }}</td>
+                                    <td>{{ $item->user->name }}</td>
+                                    <td>{{ formatDateIndo($item->tanggal) }}</td>
+                                    {{-- <td>{{ 'Rp. ' . number_format($item->debit, 0, ',', '.') }}</td> --}}
+                                    <td>{{ 'Rp. ' . number_format($item->sisa_saldo, 0, ',', '.') }}</td>
+                                    <td>{{ 'Rp. ' . number_format($item->kredit, 0, ',', '.') }}</td>
+                                    <td>
+                                        <span
+                                            class="badge
+                                                {{ $item->status === 'approved' ? 'bg-success' : ($item->status === 'pending' ? 'bg-warning' : 'bg-danger') }}">
+                                            {{ ucfirst($item->status) }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <form action="{{ route('transaksi.approvedKredit', $item->id) }}" method="POST"
+                                            onsubmit="return confirm('Apakah Anda yakin ingin menyetujui pengajuan ini?');">
+                                            @csrf
+                                            @method('PATCH')
+                                            <button type="submit" {{ $item->status === 'approved' ? 'disabled' : '' }}
+                                                class="btn btn-success btn-sm btn-approved">Approved</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td colspan="8" class="text-center">Tidak ada data pengajuan kredit.</td>
+                            </tr>
+                        @endif
+                    </tbody>
+                </table>
+
+                @if ($tabungan->count() > 0)
+                    <div class="d-flex">
+                        {{ $tabungan->appends(['search' => request('search')])->links() }}
+                    </div>
+                @endif
+            </div>
+            {{-- @endif --}}
+
+        </main>
+        <!-- Main Content End -->
+    </div>
+
+    {{-- <script>
+        if (window.history.replaceState) {
+            window.history.replaceState(null, '', '{{ route('dashboard') }}');
+        }
+    </script> --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const deleteButton = document.querySelector('.btn-approved');
+
+            if (deleteButton) {
+                deleteButton.addEventListener('click', () => {
+                    history.pushState(null, '', '{{ route('dashboard') }}');
+                });
+            }
+        });
+    </script>
+@endsection
