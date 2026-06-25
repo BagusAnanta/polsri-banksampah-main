@@ -20,21 +20,21 @@ class UserSeeder extends Seeder
         $user = User::where('name', 'Root')->first();
 
         if ($user) {
-            $role = Role::where('name', 'Admin')->first();
+            $role = Role::where('name', 'SuperAdmin')->first();
         } else {
             $user = new User();
-            $user->name = 'Admin';
+            $user->name = 'SuperAdmin';
             $user->username = 'admin';
             $user->email = 'admin@gmail.com';
             $user->password = Hash::make('admin');
 
             $user->save();
 
-            $user->user_code = 'NSB' . str_pad($user->id, 6, '0', STR_PAD_LEFT);
+            $user->user_code = 'SuperAdmin' . str_pad($user->id, 6, '0', STR_PAD_LEFT);
 
             $user->save();
 
-            $role = Role::create(['name' => 'Admin']);
+            $role = Role::create(['name' => 'SuperAdmin']);
         }
 
         $permissions = Permission::pluck('id', 'id')->all();

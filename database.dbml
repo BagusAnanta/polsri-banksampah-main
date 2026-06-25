@@ -1,0 +1,321 @@
+// enum declaration
+enum gender {
+  "Laki-laki"
+  "Perempuan"
+}
+
+enum verification {
+  "Menunggu"
+  "Disetujui"
+  "Ditolak"
+}
+
+enum status_sampah {
+  "Pending"
+  "Approved"
+  "Gagal"
+}
+
+enum status_ticket {
+  "Menunggu"
+  "Selesai"
+}
+
+// V1 Table
+Table users {
+  id integer [primary key, increment]
+  user_code varchar [not null, default: 0]
+  name varchar [not null]
+  username varchar [not null, unique]
+  email varchar [not null, unique]
+  email_verified_at timestamp
+  password varchar [not null]
+  remember_token varchar
+  two_factor_secret text
+  two_factor_recovery_codes text
+  avatar varchar
+  phone varchar [not null]
+  no_rekening varchar
+  bank varchar
+  address varchar [not null]
+  created_at timestamp
+  updated_at timestamp
+}
+
+// V2 table
+Table masyarakat {
+  masyarakat_id uuid [primary key]
+  id_user integer
+  nik varchar(16) [not null]
+  approved_by_superadmin_id uuid // this for superadmin
+  identity_photo varchar [not null]
+  gender gender
+  verification verification
+  created_at timestamp
+  updated_at timestamp
+}
+
+// V2 table
+// this banksampahuser create by superadmin
+Table banksampahuser {
+  banksampah_id uuid [primary key]
+  create_by uuid
+  username varchar [not null]
+  password varchar [not null]
+  nama_bank_sampah varchar [not null]
+  alamat text 
+  kecamatan varchar
+  jam_operasional varchar // format : Senin - Jum'at 08.00 - 16.00 -> thats should be good ? Idk :D
+  nomor_telepon varchar
+  deskripsi text
+  created_at timestamp
+  updated_at timestamp
+}
+
+// V1 table
+Table tickets {
+  id integer [primary key, increment]
+  id_user integer
+  nomor_tiket varchar [not null]
+  tanggal varchar [not null]
+  judul varchar [not null]
+  deskripsi varchar [not null]
+  status varchar [not null]
+  closed_by integer 
+  progress_by integer
+  created_at timestamp
+  updated_at timestamp
+}
+
+// V1 table
+Table upload_doc_tickets {
+  id integer [primary key, increment]
+  file_upload varchar
+  id_ticket integer
+  id_user integer
+  created_at timestamp
+  updated_at timestamp
+}
+
+// V1 table
+Table upload_doc_troubles {
+  id integer [primary key, increment]
+  file_upload varchar 
+  id_ticket integer
+  id_user integer 
+  created_at timestamp
+  updated_at timestamp
+}
+
+// V1 table
+Table jenis_sampah {
+  id integer [primary key, increment]
+  nama varchar [not null]
+  catatan text
+  gambar varchar
+  harga integer
+  gramasi double
+  created_at timestamp
+  updated_at timestamp
+}
+
+// V1 Table
+// this table contain trash transaction summited by citizen or user 
+Table bank_sampahs{
+  id integer [primary key, increment]
+  id_jenis_sampah integer 
+  id_user integer
+  qty integer
+  tanggal_setor varchar
+  status status_sampah [default: "Pending"] // this status values can pending, approval, gagal
+  created_at timestamp
+  updated_at timestamp
+}
+
+// V1 table
+Table products {
+  id integer [primary key, increment]
+  name varchar
+  price integer
+  description text [not null]
+  image varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+// V1 table
+Table orders {
+  id integer [primary key, increment]
+  id_product integer [not null]
+  id_user integer [not null]
+  qty integer
+  total_price integer
+  description text
+  status varchar [default: 'pending']
+  date date
+  created_at timestamp 
+  updated_at timestamp
+}
+
+// V1 Table
+Table tabungans {
+  id integer [primary key, increment]
+  id_bank_sampahs integer [not null]
+  id_user integer [not null]
+  tanggal date [not null]
+  debit integer
+  kredit integer
+  sisa_saldo integer [not null]
+  status varchar [not null,default: 'pending']
+  created_at timestamp
+  updated_at timestamp
+}
+
+// V1 Table
+Table box_sampahs{
+  id integer [primary key, increment]
+  id_box varchar [not null, unique]
+  latitude decimal(10,8) [not null]
+  longitude decimal(11,8) [not null]
+  description text
+  created_at timestamp
+  updated_at timestamp
+}
+
+// V1 table
+Table laporan_pengaduans{
+  id integer [primary key, increment]
+  id_box_sampah integer [not null]
+  id_user integer [not null]
+  catatan text [not null]
+  created_at timestamp
+  updated_at timestamp
+}
+
+// V1 Table
+Table sensor_logs {
+  id integer [primary key, increment]
+  sensor_name varchar
+  value float
+  status tinyint(1)
+  created_at timestamp
+  updated_at timestamp
+}
+
+// V1 Table
+Table sensor_selenoids {
+  id integer [primary key, increment]
+  sensor_name varchar
+  status tinyint(1)
+  created_at timestamp
+  updated_at timestamp
+}
+
+// V1 table
+Table notification_mails {
+  id integer [primary key, increment]
+  email varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+// V2 table
+Table tiketsetorsampah {
+  tiketsampah_id uuid [primary key]
+  tiketsampah_inc integer [increment] // this used for numbering ticket
+  id_masyarakat uuid [not null]
+  id_banksampah uuid [not null]
+  berat_sampah integer [not null]
+  berat_sampah_actual integer [not null]
+  poin integer [not null]
+  qr_code_id varchar [not null]
+  status status_ticket [default: "Menunggu"]
+  created_at timestamp
+  updated_at timestamp
+}
+
+// V2 table
+Table tikettukarpoin {
+  tiketpoin_id uuid [primary key]
+  tiketpoin_inc integer [increment]
+  id_masyarakat uuid [not null]
+  id_banksampah uuid [not null]
+  poin integer [not null]
+  qr_code_id varchar [not null]
+  status status_ticket [default: "Menunggu"]
+  created_at timestamp
+  updated_at timestamp
+}
+
+// V2 table
+Table artikel {
+  artikel_id uuid [primary key]
+  judul_artikel varchar [not null]
+  gambar_artikel varchar
+  isi_artikel text [not null]
+  created_at timestamp
+  updated_at timestamp
+}
+
+// V2 table
+Table settings {
+  settings_id integer [increment, primary key]
+  gram_per_point integer [not null]
+  point_per_voucher integer [not null]
+  created_at timestamp
+  updated_at timestamp
+}
+
+
+// add relation 
+
+// V1 Relation table
+
+// masyarakat can create tickets
+Ref createtickets: users.id < tickets.id_user
+
+// masyarakat can upload doc tickets
+Ref uploadtickets: users.id < upload_doc_tickets.id_user
+
+// masyarakat can upload doc troubles
+Ref uploadtroubles: users.id < upload_doc_troubles.id_user
+
+// masyarakat can create bank sampah (user can use bank sampah)
+Ref banksampah: users.id < bank_sampahs.id_user
+
+// masyarakat can order 
+Ref orders: users.id < orders.id_user
+
+// masyarat can tabungan
+Ref tabungans: users.id < tabungans.id_user
+
+// masyarakat can laporan pengaduan
+Ref pengaduan: users.id < laporan_pengaduans.id_user
+
+// ticket can use for create more doc trouble 
+Ref ticketstrouble: tickets.id < upload_doc_troubles.id_ticket
+
+// ticket can use for create doc ticket
+Ref tickets: tickets.id < upload_doc_tickets.id_ticket
+
+Ref jenissampah: jenis_sampah.id < bank_sampahs.id_jenis_sampah
+
+Ref tabunganbanksampah: bank_sampahs.id < tabungans.id_bank_sampahs
+
+Ref productorder: products.id < orders.id_product
+
+Ref boxsampahlaporan: box_sampahs.id < laporan_pengaduans.id_box_sampah
+
+// V2 Relation table
+
+// one user one masyarakat
+Ref usermasyarakat: users.id - masyarakat.id_user
+
+// masyarakat can create lot tiket setor sampah
+Ref createloticket: masyarakat.masyarakat_id < tiketsetorsampah.id_masyarakat
+
+// a banksampah can verified a lot tiketsetorsampah
+Ref banksampahverif: banksampahuser.banksampah_id < tiketsetorsampah.id_banksampah
+
+// a banksampah can verified a lot tikettukarpoin
+Ref banksampahverpoin: banksampahuser.banksampah_id < tikettukarpoin.id_banksampah

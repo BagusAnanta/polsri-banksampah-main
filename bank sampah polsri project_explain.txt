@@ -1,0 +1,43 @@
+Bank sampah polsri project V1 Feature :
+- Login, Register & Authentication (Admin & User)
+- Lokasi Box Sampah
+- IoT Monitoring (sensoring banyak sampah dalam box sampah & kontrol selenoid)
+- Jenis Sampah (jenis, satuan, harga, catatan)
+- Box Sampah (Penambahan box sampah)
+- Laporan Pengaduan
+- Management User (menambah user)
+- Penyetoran nasabah (kayak nyetor sampah dari nasabah maybee ?)
+- Transaksi Kredit ( ini kayak nasabah bisa ambil kredit dari setor sampah maybe ?)
+- Order & Product
+- Roles
+- signout
+
+Bank sampah polsri project V2 Feature :
+- Login (NIK, password)
+- Register (Nama lengkap, NIK, jenis kelamin, ho HP, email, alamat, foto ktp, password)
+- Waiting Room (Verifikasi Masyarakat di Super Admin) (Masyarakat > S.Admin)
+- User feature 
+: Beranda (Halaman untuk masyarakat)(Total poin, total gramasi, setor selesai, progress voucher)
+: Tiket Sampah 
+: Tiket Tukar Poin
+: Daftar pengajuan tukar voucher
+
+- Admin Bank Sampah Feature (Halaman untuk Admin Bank Sampah)
+: Beranda (Total Tiket Setor, Tiket Stor Pending, Tiket Setor Selesai, Tiket Poin Pending) (Informasi Bank : Alamat, Jam operasi, No telp)
+: Tiket Setor Sampah (Total tiket, menunggu proses, selesai, semua tiket yang dideposit masyarakat)
+: Detail Tiket Setoran sampah (id tiket, identitas warga(nama, no telp, nik), detailsampah(estimasi berat, konversi), validasi tiket, kalkulasi gram dan kalkulasi point)
+: Daftar Tiket Pengajuan Penukaran Voucher (Total tiket, menunggu proses, selesai, semua tiket voucher)
+: Detail Tiket Setoran sampah (id poin, identitas warga(nama, no telp, nik), detail penukaran(hasil kalkulasi poin, tanggal pengajuan))
+: Scan QR ticker pengajuan
+
+- Super Admin Bank Sampah Feature (Halaman untuk Super Admin)
+: Beranda (Total masyarakat, menunggu approval masyarakat, disetujui, ditolak, jumlah bank sampah, artikel edukasi)
+: Daftar masyarakat yang register (Total masyarakat, menunggu persetujuan, telah disetujui)
+: Halaman peninjauan pengajuan akun masyarakat (nama, nik, tanggal daftar, email, no HP, jenis kelamin, alamat, ktp, pendaftaran)
+: Halaman profil masyarakat
+: Daftar bank sampah (Total Bank Sampah)
+: Daftar akun bank sampah (username, password, nama bank sampah, alamat, area/kecamatan, jam operasional, nomor telepon(optional), Deskripsi(optional))
+: Edukasi masyarakat (jumlah artikel)
+: Artikel (Judul artikel, Gambar sampul, Isi artikel)
+: pengaturan sistem (konversi gramasi ke poin, konversi point ke voucher)
+

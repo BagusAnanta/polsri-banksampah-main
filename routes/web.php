@@ -15,6 +15,12 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RiwayatSetorController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\MonitoringController;
+use App\Http\Controllers\MasyarakatController;
+use App\Http\Controllers\BanksampahuserController;
+use App\Http\Controllers\TiketsetorsampahController;
+use App\Http\Controllers\TikettukarpoinController;
+use App\Http\Controllers\ArtikelController;
+use App\Http\Controllers\SettingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -122,4 +128,29 @@ Route::middleware('auth:web')->group(function () {
 
     Route::get('/dashboard/search', [DashboardController::class, 'search'])->name('dashboard.search');
 });
+
+Route::prefix('v2')->middleware('auth:web')->as('v2.')->group(function () {
+    Route::resource('departements', DepartementController::class);
+    Route::resource('tickets', TicketController::class);
+    Route::resource('users', UserController::class);
+    Route::resource('bank-sampahs', BankSampahController::class);
+    Route::resource('box-sampahs', BoxSampahController::class);
+    Route::resource('jenis-sampahs', JenisSampahController::class);
+    Route::resource('laporan-pengaduans', LaporanPengaduanController::class);
+    Route::resource('products-list', ListproductController::class);
+    Route::resource('data-products', ProductController::class);
+    Route::resource('notification-mails', NotificationMailController::class);
+    Route::resource('orders', OrderController::class);
+    Route::resource('riwayat-setor', RiwayatSetorController::class);
+    Route::resource('masyarakats', MasyarakatController::class);
+    Route::resource('banksampahusers', BanksampahuserController::class);
+    Route::resource('tiketsetorsampahs', TiketsetorsampahController::class);
+    Route::resource('tikettukarpoin', TikettukarpoinController::class);
+    Route::resource('artikels', ArtikelController::class);
+    Route::resource('settings', SettingController::class);
+    Route::resource('dashboard', DashboardController::class);
+    Route::resource('monitoring', MonitoringController::class);
+    Route::resource('transaksi', TransaksiController::class);
+});
+
 Route::post('/register-user', [UserController::class, 'registerUser'])->name('registerUser');

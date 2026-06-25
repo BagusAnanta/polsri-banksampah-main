@@ -34,11 +34,17 @@ class AppServiceProvider extends ServiceProvider
         config(['app.locale' => 'id']);
         Carbon::setLocale('id');
 
-        $this->app['request']->server->set('HTTPS', true);
-        URL::forceScheme('https');
+        if (!app()->environment('local')) {
+            $this->app['request']->server->set('HTTPS', true);
+            URL::forceScheme('https');
+        }
 
-        $roles = Role::pluck('name')->all();
-        view()->share('roles', $roles);
+        if (!$this->app->runningInConsole() && \Illuminate\Support\Facades\Schema::hasTable('roles')) {
+            $roles = Role::pluck('name')->all();
+            view()->share('roles', $roles);
+        } else {
+            view()->share('roles', []);
+        }
 
         Paginator::useBootstrap();
     }
