@@ -13,8 +13,8 @@ class SettingController extends Controller
 
         if (!$setting) {
             $setting = Setting::create([
-                'gram_per_point' => 1000,
-                'point_per_voucher' => 100,
+                'gram_per_point' => 10,
+                'point_per_voucher' => 500,
             ]);
         }
 

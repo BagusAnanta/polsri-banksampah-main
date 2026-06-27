@@ -57,7 +57,7 @@ class MasyarakatController extends Controller
         }
 
         if ($request->hasFile('identity_photo')) {
-            $rules['identity_photo'] = 'image|mimes:jpeg,png,jpg,gif,svg|max:2048';
+            $rules['identity_photo'] = 'image|mimes:jpeg,png,jpg,webp|max:2048';
         }
 
         $validated = $request->validate($rules);
@@ -150,7 +150,7 @@ class MasyarakatController extends Controller
         ];
 
         if ($request->hasFile('identity_photo')) {
-            $rules['identity_photo'] = 'image|mimes:jpeg,png,jpg,gif,svg|max:2048';
+            $rules['identity_photo'] = 'image|mimes:jpeg,png,jpg,webp|max:2048';
         }
 
         $validated = $request->validate($rules);
@@ -165,7 +165,7 @@ class MasyarakatController extends Controller
 
             if ($newVerif === 'Disetujui' && $oldVerif !== 'Disetujui') {
                 $admin = User::whereHas('roles', function($q) {
-                    $q->where('name', 'Admin');
+                    $q->where('name', 'SuperAdmin');
                 })->first();
                 $masyarakat->approved_by = Auth::id() ?? ($admin ? $admin->id : null);
             }
@@ -187,7 +187,7 @@ class MasyarakatController extends Controller
             }
             $image->move($destinationPath, $name);
             $masyarakat->identity_photo = 'ui/images/masyarakat/' . $name;
-        } elseif ($request->has('identity_photo')) {
+        } else if ($request->has('identity_photo')) {
             $masyarakat->identity_photo = $request->get('identity_photo');
         }
 

@@ -55,6 +55,11 @@ class TikettukarpoinController extends Controller
             'poin' => 'required|integer|min:1',
         ]);
 
+
+        // user can get point kalo total poinnya sudah == atau > dari poin yang udah ditentuin di sistem
+        // misal : disistem untuk dapat 1 voucher itu masyarakat/user harus mengumpulkan 500 point untuk 1 poin
+        // jadi kalau kurang ngak bisa ditukar 
+
         $masyarakatId = $validated['masyarakat_id'];
         $totalPoinDeposit = TiketSetorSampah::where('masyarakat_id', $masyarakatId)->where('status', 'Selesai')->sum('poin');
         $totalPoinRedeemed = TiketTukarPoin::where('masyarakat_id', $masyarakatId)->where('status', 'Selesai')->sum('poin');

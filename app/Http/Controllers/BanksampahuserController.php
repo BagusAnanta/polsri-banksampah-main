@@ -48,7 +48,7 @@ class BanksampahuserController extends Controller
         ]);
 
         $admin = User::whereHas('roles', function($q) {
-            $q->where('name', 'Admin');
+            $q->where('name', 'SuperAdmin');
         })->first();
 
         $user = new BankSampahUser();
@@ -113,9 +113,11 @@ class BanksampahuserController extends Controller
         ]);
 
         $user->username = $validated['username'];
+        
         if (!empty($validated['password'])) {
             $user->password = Hash::make($validated['password']);
         }
+
         $user->nama_bank_sampah = $validated['nama_bank_sampah'];
         $user->alamat = $validated['alamat'] ?? null;
         $user->kecamatan = $validated['kecamatan'] ?? null;

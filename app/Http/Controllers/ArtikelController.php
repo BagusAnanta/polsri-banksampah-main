@@ -41,7 +41,7 @@ class ArtikelController extends Controller
         ];
 
         if ($request->hasFile('gambar_artikel')) {
-            $rules['gambar_artikel'] = 'image|mimes:jpeg,png,jpg,gif,svg|max:2048';
+            $rules['gambar_artikel'] = 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048';
         }
 
         $validated = $request->validate($rules);
@@ -110,7 +110,7 @@ class ArtikelController extends Controller
         ];
 
         if ($request->hasFile('gambar_artikel')) {
-            $rules['gambar_artikel'] = 'image|mimes:jpeg,png,jpg,gif,svg|max:2048';
+            $rules['gambar_artikel'] = 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048';
         }
 
         $validated = $request->validate($rules);

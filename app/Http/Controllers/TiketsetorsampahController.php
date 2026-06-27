@@ -66,6 +66,9 @@ class TiketsetorsampahController extends Controller
         $ticket->berat_sampah = $validated['berat_sampah'];
         $ticket->berat_sampah_actual = $validated['berat_sampah'];
         $ticket->poin = $poin;
+        
+        // what contain qrcode ? bro, the f*ck lah 
+        // bro, keep it because we just get Id so its correct make like this, because we just get data based qr code id 
         $ticket->qr_code_id = 'TS-' . strtoupper(Str::random(10));
         $ticket->status = 'Menunggu';
         $ticket->save();
