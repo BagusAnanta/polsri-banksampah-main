@@ -29,7 +29,7 @@
                 </div>
                 <div class="list-content">
                     <h5 class="title">{{ucfirst($user->name)}}</h5>
-                    <span class="date">{{$user->getRoleNames()[0]}}</span>
+                    <span class="date">{{ $user->getRoleNames()->first() ?? 'No role' }}</span>
                 </div>
             </div>
         </li>

@@ -91,7 +91,7 @@
                                 </button>
                             </div>
                         @endif
-                        {{-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor </p> --}}
+                        {{-- <p>Session maybe not success, please try again</p> --}}
                     </div>
                     <div class="account-section">
                         <form method="POST" action="{{ route('login') }}" class="m-b30">

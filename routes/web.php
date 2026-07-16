@@ -112,6 +112,7 @@ Route::middleware('auth:web')->group(function () {
     Route::get('riwayat-setor/{month?}', [RiwayatSetorController::class, 'index'])->name('riwayat-setor');
     Route::resource('jenis_sampahs', JenisSampahController::class);
     Route::resource('bank_sampahs', BankSampahController::class);
+    
     // Route::put('bank-sampah/approve/{user_id}', [BankSampahController::class, 'approve'])->name('bank-sampah.approve');
     Route::put('/bank-sampah/update-status/{user_id}', [BankSampahController::class, 'updateStatus'])->name('bank-sampah.updateStatus');
     Route::get('bank-sampah/detail/{user_id}', [BankSampahController::class, 'detail'])->name('bank-sampah.detail');

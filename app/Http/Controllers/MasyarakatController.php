@@ -165,7 +165,7 @@ class MasyarakatController extends Controller
 
             if ($newVerif === 'Disetujui' && $oldVerif !== 'Disetujui') {
                 $admin = User::whereHas('roles', function($q) {
-                    $q->where('name', 'SuperAdmin');
+                    $q->where('name', 'Admin');
                 })->first();
                 $masyarakat->approved_by = Auth::id() ?? ($admin ? $admin->id : null);
             }

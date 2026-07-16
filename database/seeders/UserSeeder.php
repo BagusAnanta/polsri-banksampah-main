@@ -17,28 +17,27 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $user = User::where('name', 'Root')->first();
+        $role = Role::firstOrCreate(['name' => 'Admin']);
 
-        if ($user) {
-            $role = Role::where('name', 'SuperAdmin')->first();
-        } else {
+        $user = User::where('email', 'admin@gmail.com')->first();
+
+        if (!$user) {
             $user = new User();
-            $user->name = 'SuperAdmin';
+            $user->name = 'Admin';
             $user->username = 'admin';
             $user->email = 'admin@gmail.com';
             $user->password = Hash::make('admin');
-
             $user->save();
 
-            $user->user_code = 'SuperAdmin' . str_pad($user->id, 6, '0', STR_PAD_LEFT);
-
+            $user->user_code = 'Admin' . str_pad($user->id, 6, '0', STR_PAD_LEFT);
             $user->save();
-
-            $role = Role::create(['name' => 'SuperAdmin']);
         }
 
         $permissions = Permission::pluck('id', 'id')->all();
         $role->syncPermissions($permissions);
-        $user->assignRole([$role->id]);
+
+        if (!$user->hasRole($role->name)) {
+            $user->assignRole($role->name);
+        }
     }
 }

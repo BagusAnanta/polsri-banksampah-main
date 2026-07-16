@@ -48,7 +48,7 @@ class BanksampahuserController extends Controller
         ]);
 
         $admin = User::whereHas('roles', function($q) {
-            $q->where('name', 'SuperAdmin');
+            $q->where('name', 'Admin');
         })->first();
 
         $user = new BankSampahUser();
