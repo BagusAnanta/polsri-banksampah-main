@@ -12,7 +12,7 @@
                  <h4 class="title">Profil</h4>
              </div>
              <div class="right-content d-flex align-items-center gap-4">
-                 @if (Auth::user()->getRoleNames()[0] == 'Admin')
+                 @if (Auth::user()->getRoleNames().first() == 'Admin')
                      <form action="{{ route('users.destroy', $user->id) }}" method="post">
                          @csrf
                          @method('DELETE')
@@ -43,7 +43,7 @@
              </div>
              <div class="dz-content">
                  <h2 class="name">{{ ucfirst($user->name) }}</h2>
-                 <p class="text-primary">{{ $user->getRoleNames()[0] }}</p>
+                 <p class="text-primary">{{ $user->getRoleNames()->first() ?: 'User' }}</p>
              </div>
          </div>
          <div class="widget_getintuch pb-15">

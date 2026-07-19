@@ -40,6 +40,21 @@ Route::get('/', function () {
     return view('auth.login', $data);
 })->name('user.login');
 
+Route::get('/v2/login', function () {
+    $data['page_title'] = "Login";
+    return view('views2.auth.login', $data);
+})->name('login');
+
+Route::get('/v2/register', function () {
+    $data['page_title'] = "Register";
+    return view('views2.auth.register', $data);
+})->name('register');
+
+Route::get('/v2/waiting', function () {
+    $data['page_title'] = "Waiting Room";
+    return view('views2.waiting.waiting', $data);
+})->name('waiting');
+
 Route::middleware('auth:web')->group(function () {
 
     // Master Data

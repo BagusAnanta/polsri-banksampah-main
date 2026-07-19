@@ -12,7 +12,7 @@
                  <h4 class="title">Profil</h4>
              </div>
              <div class="right-content d-flex align-items-center gap-4">
-                 <?php if(Auth::user()->getRoleNames()[0] == 'Admin'): ?>
+                 <?php if(Auth::user()->getRoleNames().first() == 'Admin'): ?>
                      <form action="<?php echo e(route('users.destroy', $user->id)); ?>" method="post">
                          <?php echo csrf_field(); ?>
                          <?php echo method_field('DELETE'); ?>
@@ -43,7 +43,7 @@
              </div>
              <div class="dz-content">
                  <h2 class="name"><?php echo e(ucfirst($user->name)); ?></h2>
-                 <p class="text-primary"><?php echo e($user->getRoleNames()[0]); ?></p>
+                 <p class="text-primary"><?php echo e($user->getRoleNames()->first() ?: 'User'); ?></p>
              </div>
          </div>
          <div class="widget_getintuch pb-15">

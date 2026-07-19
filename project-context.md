@@ -1,30 +1,17 @@
-Bank sampah polsri project V1 Feature :
-- Login, Register & Authentication (Admin & User)
+Project: Bank Sampah V2
 
-Admin Bank Sampah : 
-- Lokasi Box Sampah
-- IoT Monitoring (sensoring banyak sampah dalam box sampah & kontrol selenoid)
-- Jenis Sampah (jenis, satuan, harga, catatan)
-- Box Sampah (Penambahan box sampah)
-- Laporan Pengaduan
-- Management User (menambah user)
-- Penyetoran nasabah (kayak nyetor sampah dari nasabah maybee ?)
-- Transaksi Kredit ( ini kayak nasabah bisa ambil kredit dari setor sampah maybe ?)
-- Order & Product
-- Tempat Jual Produk
-- Setor Sampah (Admin Side)
-- Roles
-- Logout
+Tech Stack:
+- Laravel 8
+- Filament 
+- TailwindCSS
+- MySQL
 
-User Bank Sampah :
-- Lokasi Box Sampah
-- Transaksi
-- My Order
-- Laporan Pengaduan
-- Setor Sampah 
-- Riwayat Setoran 
-- Shop
-- Logout
+Roles:
+- Masyarakat
+- Admin Bank Sampah
+- Super Admin
+
+Business Rules:
 
 Bank sampah polsri project V2 Feature :
 - Login (NIK, password)
@@ -54,4 +41,3 @@ Bank sampah polsri project V2 Feature :
 : Edukasi masyarakat (jumlah artikel)
 : Artikel (Judul artikel, Gambar sampul, Isi artikel)
 : pengaturan sistem (konversi gramasi ke poin, konversi point ke voucher)
-

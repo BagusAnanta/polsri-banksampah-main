@@ -108,6 +108,7 @@
     ***********************************-->
     <!-- Required vendors -->
     @include('layouts.partials.foot')
+    @stack('scripts')
 </body>
 
 </html>

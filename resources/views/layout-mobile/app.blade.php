@@ -345,7 +345,7 @@
     Scripts
 ***********************************-->
 @include('layout-mobile.components.foot')
-
+@stack('scripts')
 </body>
 
 </html>
