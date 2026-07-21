@@ -2,9 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MonitoringController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\DepartementController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\BankSampahController;
@@ -17,7 +17,6 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RiwayatSetorController;
 use App\Http\Controllers\TransaksiController;
-use App\Http\Controllers\MasyarakatController;
 use App\Http\Controllers\BanksampahuserController;
 use App\Http\Controllers\TiketsetorsampahController;
 use App\Http\Controllers\TikettukarpoinController;
@@ -42,13 +41,25 @@ Route::get('/health', function () {
     ];
 })->name('health');
 
+Route::post('/v1/register', [AuthController::class, 'register'])->name('api.v1.register');
+Route::post('/v2/register', [AuthController::class, 'register'])->name('api.v2.register');
+Route::post('/login', [AuthController::class, 'login'])->name('api.login');
+
+
 Route::middleware('auth:api')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout'])->name('api.logout');
+    Route::get('/profile', [AuthController::class, 'profile'])->name('api.profile');
+    Route::patch('/change-password', [AuthController::class, 'changePassword'])->name('api.change-password');
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
 
     Route::prefix('v1')->as('v1.')->group(function () {
-        Route::apiResource('users', UserController::class);
+        Route::get('users', [AuthController::class, 'listUsers'])->name('users.index');
+        Route::post('users', [AuthController::class, 'storeUser'])->name('users.store');
+        Route::get('users/{user}', [AuthController::class, 'showUser'])->name('users.show');
+        Route::put('users/{user}', [AuthController::class, 'updateUser'])->name('users.update');
+        Route::delete('users/{user}', [AuthController::class, 'destroyUser'])->name('users.destroy');
         Route::apiResource('departements', DepartementController::class);
         Route::apiResource('tickets', TicketController::class);
         Route::apiResource('bank-sampahs', BankSampahController::class);
@@ -60,7 +71,7 @@ Route::middleware('auth:api')->group(function () {
         Route::apiResource('orders', OrderController::class);
         Route::apiResource('data-products', ProductController::class);
         Route::apiResource('riwayat-setors', RiwayatSetorController::class);
-        Route::apiResource('masyarakats', MasyarakatController::class);
+        Route::apiResource('masyarakats', AuthController::class);
         Route::apiResource('banksampahusers', BanksampahuserController::class);
         Route::apiResource('tiketsetorsampahs', TiketsetorsampahController::class);
         Route::apiResource('tikettukarpoin', TikettukarpoinController::class);

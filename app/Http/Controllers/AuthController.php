@@ -6,11 +6,13 @@ use App\Models\Masyarakat;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Str;
 
-class MasyarakatController extends Controller
+class AuthController extends Controller
 {
     public function index(Request $request)
     {
@@ -35,6 +37,290 @@ class MasyarakatController extends Controller
         $data['page_title'] = 'Register Masyarakat';
         $data['users'] = User::doesntHave('masyarakat')->get();
         return view('masyarakats.create', $data);
+    }
+
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'username' => 'nullable|string',
+            'email' => 'nullable|string',
+            'password' => 'required|string',
+        ]);
+
+        $loginValue = $request->input('email') ?: $request->input('username');
+        $field = filter_var($loginValue, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
+        $attempt = [
+            $field => $loginValue,
+            'password' => $credentials['password'],
+        ];
+
+        if (! Auth::attempt($attempt, $request->boolean('remember'))) {
+            if ($request->wantsJson() || $request->is('api/*')) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Email atau password salah',
+                ], 401);
+            }
+
+            return back()
+                ->withErrors(['email' => 'Email atau password salah'])
+                ->withInput();
+        }
+
+        $request->session()->regenerate();
+        $user = Auth::user()->load('masyarakat');
+
+        if ($request->wantsJson() || $request->is('api/*')) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Login berhasil',
+                'data' => $user,
+            ]);
+        }
+
+        return redirect()->intended(route('dashboard'));
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        if ($request->wantsJson() || $request->is('api/*')) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Logout berhasil',
+            ]);
+        }
+
+        return redirect()->route('login');
+    }
+
+    public function profile(Request $request)
+    {
+        $user = $request->user()->load('masyarakat');
+
+        if ($request->wantsJson() || $request->is('api/*')) {
+            return response()->json([
+                'success' => true,
+                'data' => $user,
+            ]);
+        }
+
+        return redirect()->route('users.show', $user->id);
+    }
+
+    public function changePassword(Request $request)
+    {
+        $validateData = $request->validate([
+            'password' => 'required|string',
+            'new_password' => 'required|string|min:8',
+        ]);
+
+        $user = Auth::user();
+
+        if (! Hash::check($validateData['password'], $user->password)) {
+            if ($request->wantsJson() || $request->is('api/*')) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Password lama tidak cocok',
+                ], 422);
+            }
+
+            return redirect()->back()->with('failed', 'Password lama tidak cocok');
+        }
+
+        $user->password = Hash::make($validateData['new_password']);
+        $user->save();
+
+        if ($request->wantsJson() || $request->is('api/*')) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Password berhasil diubah',
+            ]);
+        }
+
+        return redirect()->route('users.edit', $user->id)->with('success', 'Password changed successfully!');
+    }
+
+    public function registerUser(Request $request)
+    {
+        return $this->register($request);
+    }
+
+    public function listUsers(Request $request)
+    {
+        $users = User::orderby('id', 'asc')->get();
+
+        if ($request->wantsJson() || $request->is('api/*')) {
+            return response()->json([
+                'success' => true,
+                'data' => $users,
+            ]);
+        }
+
+        $data['page_title'] = 'Users';
+        $data['table_title'] = 'User List';
+        $data['users'] = $users;
+
+        return view('users.index', $data);
+    }
+
+    public function createUser()
+    {
+        $data['page_title'] = 'Add Users';
+        $data['breadcumb'] = 'Add Users';
+        $data['roles'] = Role::pluck('name')->all();
+
+        return view('users.create', $data);
+    }
+
+    public function storeUser(Request $request)
+    {
+        $validateData = $request->validate([
+            'name' => 'required|string|min:3',
+            'username' => 'required|unique:users,username|alpha_dash',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
+            'role' => 'required',
+            'no_rekening' => 'required|numeric',
+            'bank' => 'required|string|min:3',
+            'phone' => 'required|numeric',
+            'alamat' => 'required',
+        ]);
+
+        $user = new User();
+        $user->name = $validateData['name'];
+        $user->username = $validateData['username'];
+        $user->email = $validateData['email'];
+        $user->no_rekening = $validateData['no_rekening'];
+        $user->bank = $validateData['bank'];
+        $user->phone = $validateData['phone'];
+        $user->address = $request->get('alamat');
+        $user->password = Hash::make($validateData['password']);
+
+        if ($request->hasFile('avatar')) {
+            $image = $request->file('avatar');
+            $name = time() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('ui/images/profile');
+            $image->move($destinationPath, $name);
+            $user->avatar = $name;
+        }
+
+        $user->save();
+        $user->user_code = 'NSB' . str_pad($user->id, 6, '0', STR_PAD_LEFT);
+        $user->save();
+        $user->assignRole($validateData['role']);
+
+        if ($request->wantsJson() || $request->is('api/*')) {
+            return response()->json([
+                'success' => true,
+                'message' => 'User added successfully',
+                'data' => $user,
+            ], 201);
+        }
+
+        return redirect()->route('users.index')->with(['success' => 'User added successfully!']);
+    }
+
+    public function showUser($id)
+    {
+        $user = User::findOrFail($id);
+
+        if (request()->wantsJson() || request()->is('api/*')) {
+            return response()->json([
+                'success' => true,
+                'data' => $user,
+            ]);
+        }
+
+        $data['page_title'] = 'User Profile';
+        $data['user'] = $user;
+
+        return view('users.show', $data);
+    }
+
+    public function editUser($id)
+    {
+        $data['page_title'] = 'Edit User';
+        $data['breadcumb'] = 'Edit User';
+        $data['user'] = User::findOrFail($id);
+        $data['roles'] = Role::pluck('name')->all();
+
+        return view('users.edit', $data);
+    }
+
+    public function updateUser(Request $request, $id)
+    {
+        $validateData = $request->validate([
+            'name' => 'required|string|min:3',
+            'username' => 'required|alpha_dash|unique:users,username,' . $id,
+            'email' => 'required|unique:users,email,' . $id,
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
+        ]);
+
+        $user = User::findOrFail($id);
+        $user->name = $validateData['name'];
+        $user->username = $validateData['username'];
+        $user->email = $validateData['email'];
+        $user->no_rekening = $request->get('no_rekening');
+        $user->bank = $request->get('bank');
+        $user->phone = $request->get('phone');
+        $user->address = $request->get('alamat');
+
+        if ($request->hasFile('avatar')) {
+            if ($user->avatar) {
+                $image_path = public_path('ui/images/profile/' . $user->avatar);
+                if (File::exists($image_path)) {
+                    File::delete($image_path);
+                }
+            }
+
+            $image = $request->file('avatar');
+            $name = time() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('ui/images/profile/');
+            $image->move($destinationPath, $name);
+            $user->avatar = $name;
+        }
+
+        $user->save();
+
+        if ($request->wantsJson() || $request->is('api/*')) {
+            return response()->json([
+                'success' => true,
+                'message' => 'User updated successfully',
+                'data' => $user,
+            ]);
+        }
+
+        return redirect()->route('users.show', $id);
+    }
+
+    public function destroyUser($id)
+    {
+        DB::transaction(function () use ($id) {
+            $user = User::findOrFail($id);
+            if ($user->avatar) {
+                $image_path = public_path('ui/images/profile/' . $user->avatar);
+                if (File::exists($image_path)) {
+                    File::delete($image_path);
+                }
+            }
+
+            $user->delete();
+        });
+
+        if (request()->wantsJson() || request()->is('api/*')) {
+            return response()->json([
+                'success' => true,
+                'message' => 'User deleted successfully',
+            ]);
+        }
+
+        return redirect()->route('users.index');
     }
 
     # register user + masyarakat data 

@@ -119,7 +119,7 @@
                         </form>
                         <div class="text-center account-footer">
                             <p class="text-light">Tidak memiliki akun?</p>
-                            <a href="{{ route('register') }}"
+                            <a href="{{ route('user.register') }}"
                                 class="btn btn-secondary btn-lg btn-thin rounded-xl w-100">BUAT AKUN BARU</a>
                         </div>
                     </div>

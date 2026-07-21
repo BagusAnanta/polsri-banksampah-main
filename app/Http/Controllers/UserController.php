@@ -190,50 +190,6 @@ class UserController extends Controller
 
     public function registerUser(Request $request)
     {
-        // dd($request->all());
-        try {
-            //code...
-            $validateData = $request->validate([
-                'name'   => 'required|string|min:3',
-                'username'   => 'required|unique:users,username|alpha_dash',
-                'email'   => 'required|email',
-                'password' => 'required',
-                // 'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
-                'role' => 'required',
-                'no_rekening' => 'required|numeric',
-                'bank'   => 'required|string|min:3',
-                'phone' => 'required|numeric'
-            ]);
-
-
-            $user = new User();
-            $user->name = $validateData['name'];
-            $user->username = $validateData['username'];
-            $user->email = $validateData['email'];
-            $user->no_rekening = $validateData['no_rekening'];
-            $user->bank = $validateData['bank'];
-            $user->phone = $validateData['phone'];
-            $user->password = Hash::make($validateData['password']);
-
-            // if ($request->hasFile('avatar')) {
-            //     $image = $request->file('avatar');
-            //     $name = time() . '.' . $image->getClientOriginalExtension();
-            //     $destinationPath = public_path('ui/images/profile');
-            //     $image->move($destinationPath, $name);
-            //     $user->avatar = $name;
-            // }
-
-            $user->save();
-
-            $user->user_code = 'NSB' . str_pad($user->id, 6, '0', STR_PAD_LEFT);
-
-            $user->save();
-            $user->assignRole($validateData['role']);
-
-            return redirect()->route('login')->with(['success' => 'Akun berhasil dibuat! Silahkan login']);
-        } catch (\Throwable $th) {
-            //throw $th;
-            dd($th->getMessage());
-        }
+        return app(AuthController::class)->register($request);
     }
 }

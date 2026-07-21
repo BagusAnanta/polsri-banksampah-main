@@ -28,7 +28,7 @@
                         <p class="text-[10px] text-stone-500 -mt-0.5">Sekanak Connect</p>
                     </div>
                 </div>
-                <a href="{{ route('login') }}" class="btn btn-ghost btn-sm gap-2 text-stone-500 hover:text-red-600">
+                <a href="{{ route('v2.login') }}" class="btn btn-ghost btn-sm gap-2 text-stone-500 hover:text-red-600">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
                     </svg>
@@ -190,7 +190,7 @@
                                 <span class="text-xs font-semibold text-[#5B6E33]">1×24 Jam</span>
                             </div>
 
-                            <a href="{{ route('login') }}" class="btn btn-block btn-sm rounded-full bg-stone-200 text-stone-600 border-none hover:bg-stone-300 text-sm mt-4">
+                            <a href="{{ route('v2.login') }}" class="btn btn-block btn-sm rounded-full bg-stone-200 text-stone-600 border-none hover:bg-stone-300 text-sm mt-4">
                                 Kembali ke Halaman Login
                             </a>
                         </div>

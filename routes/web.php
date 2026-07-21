@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DepartementController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TicketController;
@@ -15,7 +15,6 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RiwayatSetorController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\MonitoringController;
-use App\Http\Controllers\MasyarakatController;
 use App\Http\Controllers\BanksampahuserController;
 use App\Http\Controllers\TiketsetorsampahController;
 use App\Http\Controllers\TikettukarpoinController;
@@ -34,28 +33,55 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+# test route
+// Route::get('/', function () {
+//     $data['page_title'] = "Login";
+//     return view('auth.login', $data);
+// })->name('user.login');
 
-Route::get('/', function () {
+# V1 route
+Route::get('/v1/login', function () {
     $data['page_title'] = "Login";
     return view('auth.login', $data);
 })->name('user.login');
 
+Route::get('/v1/register', function () {
+    $data['page_title'] = "Register";
+    return view('auth.register', $data);
+})->name('user.register');
+
+# V2 route
+
 Route::get('/v2/login', function () {
     $data['page_title'] = "Login";
     return view('views2.auth.login', $data);
-})->name('login');
+})->name('v2.login');
 
 Route::get('/v2/register', function () {
     $data['page_title'] = "Register";
     return view('views2.auth.register', $data);
-})->name('register');
+})->name('v2.register');
+
+Route::post('/v2/register', [AuthController::class, 'register'])
+    ->name('v2.register.store');
+
+Route::get('/login', function () {
+    $data['page_title'] = 'Login';
+    return view('views2.auth.login', $data);
+});
+
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
 
 Route::get('/v2/waiting', function () {
     $data['page_title'] = "Waiting Room";
     return view('views2.waiting.waiting', $data);
-})->name('waiting');
+})->name('v2.waiting');
 
-Route::middleware('auth:web')->group(function () {
+# Version 1 middleware 
+
+Route::prefix('v1')->middleware('auth:web')->group(function () {
 
     // Master Data
     Route::get('master-data', function () {
@@ -83,8 +109,14 @@ Route::middleware('auth:web')->group(function () {
     Route::post('/tickets/document/delete/creator', [TicketController::class, 'deleteDoc'])->name('tickets.delete-document');
     Route::post('/tickets/delete-doc-trouble', [TicketController::class, 'deleteDocTrouble'])->name('tickets.delete-doc-trouble');
     // Users
-    Route::patch('change-password', [UserController::class, 'changePassword'])->name('users.change-password');
-    Route::resource('users', UserController::class);
+    Route::patch('change-password', [AuthController::class, 'changePassword'])->name('users.change-password');
+    Route::get('users', [AuthController::class, 'listUsers'])->name('users.index');
+    Route::get('users/create', [AuthController::class, 'createUser'])->name('users.create');
+    Route::post('users', [AuthController::class, 'storeUser'])->name('users.store');
+    Route::get('users/{user}', [AuthController::class, 'showUser'])->name('users.show');
+    Route::get('users/{user}/edit', [AuthController::class, 'editUser'])->name('users.edit');
+    Route::put('users/{user}', [AuthController::class, 'updateUser'])->name('users.update');
+    Route::delete('users/{user}', [AuthController::class, 'destroyUser'])->name('users.destroy');
 
     // Box Sampah
     Route::get('box-sampahs', [BoxSampahController::class, 'index'])->name('box-sampahs.index');
@@ -145,10 +177,19 @@ Route::middleware('auth:web')->group(function () {
     Route::get('/dashboard/search', [DashboardController::class, 'search'])->name('dashboard.search');
 });
 
+
+# Version 2 middleware 
+
 Route::prefix('v2')->middleware('auth:web')->as('v2.')->group(function () {
     Route::resource('departements', DepartementController::class);
     Route::resource('tickets', TicketController::class);
-    Route::resource('users', UserController::class);
+    Route::get('users', [AuthController::class, 'listUsers'])->name('users.index');
+    Route::get('users/create', [AuthController::class, 'createUser'])->name('users.create');
+    Route::post('users', [AuthController::class, 'storeUser'])->name('users.store');
+    Route::get('users/{user}', [AuthController::class, 'showUser'])->name('users.show');
+    Route::get('users/{user}/edit', [AuthController::class, 'editUser'])->name('users.edit');
+    Route::put('users/{user}', [AuthController::class, 'updateUser'])->name('users.update');
+    Route::delete('users/{user}', [AuthController::class, 'destroyUser'])->name('users.destroy');
     Route::resource('bank-sampahs', BankSampahController::class);
     Route::resource('box-sampahs', BoxSampahController::class);
     Route::resource('jenis-sampahs', JenisSampahController::class);
@@ -158,7 +199,7 @@ Route::prefix('v2')->middleware('auth:web')->as('v2.')->group(function () {
     Route::resource('notification-mails', NotificationMailController::class);
     Route::resource('orders', OrderController::class);
     Route::resource('riwayat-setor', RiwayatSetorController::class);
-    Route::resource('masyarakats', MasyarakatController::class);
+    Route::resource('masyarakats', AuthController::class);
     Route::resource('banksampahusers', BanksampahuserController::class);
     Route::resource('tiketsetorsampahs', TiketsetorsampahController::class);
     Route::resource('tikettukarpoin', TikettukarpoinController::class);
@@ -169,4 +210,4 @@ Route::prefix('v2')->middleware('auth:web')->as('v2.')->group(function () {
     Route::resource('transaksi', TransaksiController::class);
 });
 
-Route::post('/register-user', [UserController::class, 'registerUser'])->name('registerUser');
+Route::post('/register-user', [AuthController::class, 'registerUser'])->name('registerUser');

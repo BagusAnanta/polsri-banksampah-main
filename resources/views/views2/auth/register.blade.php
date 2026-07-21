@@ -42,7 +42,7 @@
             <div class="w-full max-w-md mx-auto">
                 <!-- Back Button & Logo -->
                 <div class="flex items-center justify-between mb-10">
-                    <a href="{{ route('login') }}" class="btn btn-ghost btn-sm text-[#5B6E33] hover:text-[#4A5D23]">
+                    <a href="{{ route('v2.login') }}" class="btn btn-ghost btn-sm text-[#5B6E33] hover:text-[#4A5D23]">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                         </svg>
@@ -64,7 +64,7 @@
                 </div>
 
                 <!-- Form -->
-                <form method="POST" action="{{ route('registerUser') }}" enctype="multipart/form-data" class="space-y-4">
+                <form method="POST" action="{{ route('v2.register.store') }}" enctype="multipart/form-data" class="space-y-4">
                     @csrf
 
                     <!-- Nama Lengkap -->
@@ -148,7 +148,7 @@
                     </div>
 
                     <!-- KTP upload -->
-                    <x-ktp-upload name="foto_ktp"/>
+                    <x-ktp-upload name="identity_photo"/>
 
                     <!-- Password -->
                     <div class="form-control">
@@ -209,7 +209,7 @@
                 <!-- Login Link -->
                 <p class="text-center text-xs text-stone-400 mt-6">
                     Sudah memiliki akun?
-                    <a href="{{ route('login') }}" class="text-[#5B6E33] hover:text-[#4A5D23] font-medium transition">
+                    <a href="{{ route('v2.login') }}" class="text-[#5B6E33] hover:text-[#4A5D23] font-medium transition">
                         Masuk di sini
                     </a>
                 </p>
