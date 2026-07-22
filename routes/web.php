@@ -39,45 +39,43 @@ use Illuminate\Support\Facades\Route;
 //     return view('auth.login', $data);
 // })->name('user.login');
 
-# V1 route
-Route::get('/v1/login', function () {
-    $data['page_title'] = "Login";
-    return view('auth.login', $data);
-})->name('user.login');
+// # V1 route
+// Route::get('/v1/login', function () {
+//     $data['page_title'] = "Login";
+//     return view('auth.login', $data);
+// })->name('user.login');
 
-Route::get('/v1/register', function () {
-    $data['page_title'] = "Register";
-    return view('auth.register', $data);
-})->name('user.register');
+// Route::get('/v1/register', function () {
+//     $data['page_title'] = "Register";
+//     return view('auth.register', $data);
+// })->name('user.register');
 
 # V2 route
 
-Route::get('/v2/login', function () {
-    $data['page_title'] = "Login";
-    return view('views2.auth.login', $data);
-})->name('v2.login');
-
-Route::get('/v2/register', function () {
-    $data['page_title'] = "Register";
-    return view('views2.auth.register', $data);
-})->name('v2.register');
-
-Route::post('/v2/register', [AuthController::class, 'register'])
-    ->name('v2.register.store');
-
+// Login route 
 Route::get('/login', function () {
-    $data['page_title'] = 'Login';
-    return view('views2.auth.login', $data);
-});
+    $data['page_title'] = "Login";
+    return view('v2.auth.login', $data);
+})->name('login');
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
+
+// Register route
+Route::get('/register', function () {
+    $data['page_title'] = "Register";
+    return view('v2.auth.register', $data);
+})->name('register');
+
+Route::post('/register', [AuthController::class, 'register'])->name('register');
+
+// Router 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
 
-Route::get('/v2/waiting', function () {
+Route::get('/waiting', function () {
     $data['page_title'] = "Waiting Room";
-    return view('views2.waiting.waiting', $data);
-})->name('v2.waiting');
+    return view('v2.waiting.waiting', $data);
+})->name('waiting');
 
 # Version 1 middleware 
 

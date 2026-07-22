@@ -11,65 +11,58 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 
-class AuthController extends Controller
-{
-    public function index(Request $request)
-    {
-        $masyarakats = Masyarakat::with(['user', 'approver'])->get();
+class AuthController extends Controller {
 
-        if ($request->wantsJson() || $request->is('api/*')) {
-            return response()->json([
-                'success' => true,
-                'data' => $masyarakats
-            ]);
-        }
-
-        $data['page_title'] = 'Masyarakat';
-        $data['table_title'] = 'Daftar Masyarakat';
-        $data['masyarakats'] = $masyarakats;
-
-        return view('masyarakats.index', $data);
-    }
-
-    public function create()
-    {
-        $data['page_title'] = 'Register Masyarakat';
-        $data['users'] = User::doesntHave('masyarakat')->get();
-        return view('masyarakats.create', $data);
-    }
-
-    public function login(Request $request)
-    {
+    public function login(Request $request) {
         $credentials = $request->validate([
             'username' => 'nullable|string',
-            'email' => 'nullable|string',
+            'nik' => 'nullable|string|size:16',
             'password' => 'required|string',
         ]);
 
-        $loginValue = $request->input('email') ?: $request->input('username');
-        $field = filter_var($loginValue, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        $nik = $request->input('nik');
+        $username = $request->input('username');
+        $password = $credentials['password'];
 
-        $attempt = [
-            $field => $loginValue,
-            'password' => $credentials['password'],
-        ];
-
-        if (! Auth::attempt($attempt, $request->boolean('remember'))) {
+        if (!$nik && !$username) {
             if ($request->wantsJson() || $request->is('api/*')) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Email atau password salah',
-                ], 401);
+                    'message' => 'NIK atau username harus diisi',
+                ], 422);
             }
-
-            return back()
-                ->withErrors(['email' => 'Email atau password salah'])
-                ->withInput();
+            return back()->withErrors(['credential' => 'NIK atau username harus diisi'])->withInput();
         }
 
+        $user = null;
+
+        if ($nik && is_numeric($nik) && strlen($nik) === 16) {
+            $masyarakat = Masyarakat::where('nik', $nik)->first();
+            
+            if ($masyarakat) {
+                $user = User::find($masyarakat->user_id);
+            }
+        } elseif ($username) {
+            $user = User::where('username', $username)->first();
+        }
+
+        if (!$user || !Hash::check($password, $user->password)) {
+            if ($request->wantsJson() || $request->is('api/*')) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'NIK/username atau password salah',
+                ], 401);
+            }
+            return back()->withErrors(['credential' => 'NIK/username atau password salah'])->withInput();
+        }
+
+        Auth::login($user, $request->boolean('remember'));
         $request->session()->regenerate();
-        $user = Auth::user()->load('masyarakat');
+        $user = $user->load('masyarakat');
+
+        dd($nik);
 
         if ($request->wantsJson() || $request->is('api/*')) {
             return response()->json([
@@ -79,7 +72,92 @@ class AuthController extends Controller
             ]);
         }
 
+        if ($user->masyarakat && $user->masyarakat->verification) {
+            $verification = strtolower(trim($user->masyarakat->verification));
+            
+            if ($verification === 'menunggu') {
+                return redirect()->route('waiting')
+                    ->with('user_name', $user->name)
+                    ->with('user_nik', $user->masyarakat->nik)
+                    ->with('user_email', $user->email);
+            } elseif ($verification === 'ditolak') {
+                Auth::logout();
+                return back()
+                    ->withErrors(['credential' => 'Akun Anda ditolak. Hubungi admin.'])
+                    ->withInput();
+            }
+        }
+
         return redirect()->intended(route('dashboard'));
+    }
+
+    # register user + masyarakat data 
+    public function register(Request $request){
+        $rules = [
+            'name' => 'required|string|min:3',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:6|confirmed',
+            'phone' => 'required|string',
+            'address' => 'required|string',
+            'nik' => 'required|string|size:16|unique:masyarakats,nik',
+            'gender' => 'required|in:Laki-laki,Perempuan',
+            'identity_photo' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
+        ];
+
+        $validated = $request->validate($rules);
+
+        $user = new User();
+        $user->name = $validated['name'];
+        $user->username = $validated['name'];
+        $user->email = $validated['email'];
+        $user->phone = $validated['phone'];
+        $user->address = $validated['address'];
+        $user->password = Hash::make($validated['password']);
+        $user->save();
+
+        $user->user_code = 'NSB' . str_pad($user->id, 6, '0', STR_PAD_LEFT);
+        $user->save();
+        $user->assignRole('Masyarakat');
+
+        $masyarakat = new Masyarakat();
+        $masyarakat->user_id = $user->id;
+        $masyarakat->nik = $validated['nik'];
+        $masyarakat->gender = $validated['gender'];
+        $masyarakat->verification = 'Menunggu';
+
+        if ($request->hasFile('identity_photo')) {
+            $image = $request->file('identity_photo');
+            $name = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('ui/images/masyarakat');
+            if (!File::exists($destinationPath)) {
+                File::makeDirectory($destinationPath, 0755, true);
+            }
+            $image->move($destinationPath, $name);
+            $masyarakat->identity_photo = 'ui/images/masyarakat/' . $name;
+        }
+
+        $masyarakat->save();
+
+        if ($request->wantsJson() || $request->is('api/*')) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Akun berhasil dibuat. Menunggu verifikasi.',
+                'data' => [
+                    'user' => $user->load('masyarakat'),
+                    'masyarakat' => $masyarakat->load('user'),
+                ],
+            ], 201);
+        }
+
+        return redirect()->route('waiting')
+            ->with('success', 'Akun berhasil dibuat! Menunggu verifikasi.')
+            ->with('user_name', $user->name)
+            ->with('user_nik', $masyarakat->nik)
+            ->with('user_email', $user->email);
+    }
+
+    public function registerUser(Request $request){
+        return $this->register($request);
     }
 
     public function logout(Request $request)
@@ -95,7 +173,7 @@ class AuthController extends Controller
             ]);
         }
 
-        return redirect()->route('login');
+        return redirect()->route('v2.login');
     }
 
     public function profile(Request $request)
@@ -143,11 +221,6 @@ class AuthController extends Controller
         }
 
         return redirect()->route('users.edit', $user->id)->with('success', 'Password changed successfully!');
-    }
-
-    public function registerUser(Request $request)
-    {
-        return $this->register($request);
     }
 
     public function listUsers(Request $request)
@@ -321,68 +394,6 @@ class AuthController extends Controller
         }
 
         return redirect()->route('users.index');
-    }
-
-    # register user + masyarakat data 
-    public function register(Request $request)
-    {
-        $rules = [
-            'name' => 'required|string|min:3',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6|confirmed',
-            'phone' => 'required|string',
-            'address' => 'required|string',
-            'nik' => 'required|string|size:16|unique:masyarakats,nik',
-            'gender' => 'required|in:Laki-laki,Perempuan',
-            'identity_photo' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
-        ];
-
-        $validated = $request->validate($rules);
-
-        $user = new User();
-        $user->name = $validated['name'];
-        $user->username = Str::slug($validated['name'] . '-' . uniqid());
-        $user->email = $validated['email'];
-        $user->phone = $validated['phone'];
-        $user->address = $validated['address'];
-        $user->password = Hash::make($validated['password']);
-        $user->save();
-
-        $user->user_code = 'NSB' . str_pad($user->id, 6, '0', STR_PAD_LEFT);
-        $user->save();
-        $user->assignRole('Masyarakat');
-
-        $masyarakat = new Masyarakat();
-        $masyarakat->user_id = $user->id;
-        $masyarakat->nik = $validated['nik'];
-        $masyarakat->gender = $validated['gender'];
-        $masyarakat->verification = 'Menunggu';
-
-        if ($request->hasFile('identity_photo')) {
-            $image = $request->file('identity_photo');
-            $name = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
-            $destinationPath = public_path('ui/images/masyarakat');
-            if (!File::exists($destinationPath)) {
-                File::makeDirectory($destinationPath, 0755, true);
-            }
-            $image->move($destinationPath, $name);
-            $masyarakat->identity_photo = 'ui/images/masyarakat/' . $name;
-        }
-
-        $masyarakat->save();
-
-        if ($request->wantsJson() || $request->is('api/*')) {
-            return response()->json([
-                'success' => true,
-                'message' => 'Akun berhasil dibuat. Menunggu verifikasi.',
-                'data' => [
-                    'user' => $user->load('masyarakat'),
-                    'masyarakat' => $masyarakat->load('user'),
-                ],
-            ], 201);
-        }
-
-        return redirect()->route('v2.waiting')->with('success', 'Akun berhasil dibuat! Waiting for verification.');
     }
 
     public function store(Request $request)

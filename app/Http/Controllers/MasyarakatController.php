@@ -1,5 +1,12 @@
 <?php
 
+
+/**
+ * ON DEPRECATED, ALL LOGIC CODE HAS MOVE INTO AUTHCONTROLLER
+ * THIS CODE FOR REFERENCE, PLEASE REMOVE IF ALL CODE ALREADY 
+ * RUNNING AND THIS CODE UNUSED 
+ */
+
 namespace App\Http\Controllers;
 
 use App\Models\Masyarakat;

@@ -42,7 +42,7 @@
             <div class="w-full max-w-md mx-auto">
                 <!-- Back Button & Logo -->
                 <div class="flex items-center justify-between mb-10">
-                    <a href="{{ route('v2.login') }}" class="btn btn-ghost btn-sm text-[#5B6E33] hover:text-[#4A5D23]">
+                    <a href="<?php echo e(route('login')); ?>" class="btn btn-ghost btn-sm text-[#5B6E33] hover:text-[#4A5D23]">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                         </svg>
@@ -64,8 +64,8 @@
                 </div>
 
                 <!-- Form -->
-                <form method="POST" action="{{ route('v2.register.store') }}" enctype="multipart/form-data" class="space-y-4">
-                    @csrf
+                <form method="POST" action="<?php echo e(route('register')); ?>" enctype="multipart/form-data" class="space-y-4">
+                    <?php echo csrf_field(); ?>
 
                     <!-- Nama Lengkap -->
                     <div class="form-control">
@@ -74,10 +74,24 @@
                         </label>
                         <input type="text" name="name" id="name"
                                placeholder="Masukkan nama lengkap"
-                               value="{{ old('name') }}"
-                               class="input input-bordered rounded-xl bg-[#EADDCD] text-sm px-4 py-3 text-stone-800 placeholder-stone-400 @error('name') input-error @enderror"
+                               value="<?php echo e(old('name')); ?>"
+                               class="input input-bordered rounded-xl bg-[#EADDCD] text-sm px-4 py-3 text-stone-800 placeholder-stone-400 <?php $__errorArgs = ['name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> input-error <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
                                required />
-                        @error('name') <label class="label"><span class="label-text-alt text-red-500">{{ $message }}</span></label> @enderror
+                        <?php $__errorArgs = ['name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> <label class="label"><span class="label-text-alt text-red-500"><?php echo e($message); ?></span></label> <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <!-- NIK -->
@@ -87,10 +101,24 @@
                         </label>
                         <input type="text" name="nik" id="nik"
                                placeholder="Masukkan NIK"
-                               value="{{ old('nik') }}"
-                               class="input input-bordered rounded-xl bg-[#EADDCD] text-sm px-4 py-3 text-stone-800 placeholder-stone-400 @error('nik') input-error @enderror"
+                               value="<?php echo e(old('nik')); ?>"
+                               class="input input-bordered rounded-xl bg-[#EADDCD] text-sm px-4 py-3 text-stone-800 placeholder-stone-400 <?php $__errorArgs = ['nik'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> input-error <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
                                required />
-                        @error('nik') <label class="label"><span class="label-text-alt text-red-500">{{ $message }}</span></label> @enderror
+                        <?php $__errorArgs = ['nik'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> <label class="label"><span class="label-text-alt text-red-500"><?php echo e($message); ?></span></label> <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <!-- Jenis Kelamin -->
@@ -99,13 +127,27 @@
                             <span class="label-text text-sm font-medium text-stone-700">Jenis Kelamin *</span>
                         </label>
                         <select name="gender" id="gender"
-                                class="select select-bordered rounded-xl bg-[#EADDCD] text-sm text-stone-800 @error('gender') select-error @enderror"
+                                class="select select-bordered rounded-xl bg-[#EADDCD] text-sm text-stone-800 <?php $__errorArgs = ['gender'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> select-error <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
                                 required>
                             <option value="">-- Pilih Jenis Kelamin --</option>
-                            <option value="Laki-laki" {{ old('gender') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
-                            <option value="Perempuan" {{ old('gender') == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
+                            <option value="Laki-laki" <?php echo e(old('gender') == 'Laki-laki' ? 'selected' : ''); ?>>Laki-laki</option>
+                            <option value="Perempuan" <?php echo e(old('gender') == 'Perempuan' ? 'selected' : ''); ?>>Perempuan</option>
                         </select>
-                        @error('gender') <label class="label"><span class="label-text-alt text-red-500">{{ $message }}</span></label> @enderror
+                        <?php $__errorArgs = ['gender'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> <label class="label"><span class="label-text-alt text-red-500"><?php echo e($message); ?></span></label> <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <!-- Email -->
@@ -115,10 +157,24 @@
                         </label>
                         <input type="email" name="email" id="email"
                                placeholder="Masukkan email"
-                               value="{{ old('email') }}"
-                               class="input input-bordered rounded-xl bg-[#EADDCD] text-sm px-4 py-3 text-stone-800 placeholder-stone-400 @error('email') input-error @enderror"
+                               value="<?php echo e(old('email')); ?>"
+                               class="input input-bordered rounded-xl bg-[#EADDCD] text-sm px-4 py-3 text-stone-800 placeholder-stone-400 <?php $__errorArgs = ['email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> input-error <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
                                required />
-                        @error('email') <label class="label"><span class="label-text-alt text-red-500">{{ $message }}</span></label> @enderror
+                        <?php $__errorArgs = ['email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> <label class="label"><span class="label-text-alt text-red-500"><?php echo e($message); ?></span></label> <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <!-- Nomor HP -->
@@ -128,10 +184,24 @@
                         </label>
                         <input type="tel" name="phone" id="phone"
                                placeholder="Masukkan nomor telepon"
-                               value="{{ old('phone') }}"
-                               class="input input-bordered rounded-xl bg-[#EADDCD] text-sm px-4 py-3 text-stone-800 placeholder-stone-400 @error('phone') input-error @enderror"
+                               value="<?php echo e(old('phone')); ?>"
+                               class="input input-bordered rounded-xl bg-[#EADDCD] text-sm px-4 py-3 text-stone-800 placeholder-stone-400 <?php $__errorArgs = ['phone'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> input-error <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
                                required />
-                        @error('phone') <label class="label"><span class="label-text-alt text-red-500">{{ $message }}</span></label> @enderror
+                        <?php $__errorArgs = ['phone'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> <label class="label"><span class="label-text-alt text-red-500"><?php echo e($message); ?></span></label> <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <!-- Alamat -->
@@ -142,13 +212,38 @@
                         <textarea name="address" id="address"
                                   placeholder="Masukkan alamat lengkap"
                                   rows="3"
-                                  class="textarea textarea-bordered rounded-xl bg-[#EADDCD] text-sm px-4 py-3 text-stone-800 placeholder-stone-400 @error('address') textarea-error @enderror"
-                                  required>{{ old('address') }}</textarea>
-                        @error('address') <label class="label"><span class="label-text-alt text-red-500">{{ $message }}</span></label> @enderror
+                                  class="textarea textarea-bordered rounded-xl bg-[#EADDCD] text-sm px-4 py-3 text-stone-800 placeholder-stone-400 <?php $__errorArgs = ['address'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> textarea-error <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
+                                  required><?php echo e(old('address')); ?></textarea>
+                        <?php $__errorArgs = ['address'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> <label class="label"><span class="label-text-alt text-red-500"><?php echo e($message); ?></span></label> <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <!-- KTP upload -->
-                    <x-ktp-upload name="identity_photo"/>
+                    <?php if (isset($component)) { $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4 = $component; } ?>
+<?php $component = $__env->getContainer()->make(Illuminate\View\AnonymousComponent::class, ['view' => 'components.ktp-upload','data' => ['name' => 'identity_photo']]); ?>
+<?php $component->withName('ktp-upload'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php $component->withAttributes(['name' => 'identity_photo']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4)): ?>
+<?php $component = $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4; ?>
+<?php unset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4); ?>
+<?php endif; ?>
 
                     <!-- Password -->
                     <div class="form-control">
@@ -158,7 +253,14 @@
                         <div class="relative">
                             <input type="password" name="password" id="password"
                                    placeholder="Buat password yang kuat"
-                                   class="input input-bordered rounded-xl bg-[#EADDCD] text-sm px-4 py-3 pr-12 text-stone-800 placeholder-stone-400 w-full @error('password') input-error @enderror"
+                                   class="input input-bordered rounded-xl bg-[#EADDCD] text-sm px-4 py-3 pr-12 text-stone-800 placeholder-stone-400 w-full <?php $__errorArgs = ['password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> input-error <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
                                    required />
                             <button type="button" onclick="togglePassword('password')"
                                     class="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600 transition">
@@ -172,7 +274,14 @@
                                 </div>
                             </button>
                         </div>
-                        @error('password') <label class="label"><span class="label-text-alt text-red-500">{{ $message }}</span></label> @enderror
+                        <?php $__errorArgs = ['password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> <label class="label"><span class="label-text-alt text-red-500"><?php echo e($message); ?></span></label> <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <!-- Confirm Password -->
@@ -209,19 +318,19 @@
                 <!-- Login Link -->
                 <p class="text-center text-xs text-stone-400 mt-6">
                     Sudah memiliki akun?
-                    <a href="{{ route('v2.login') }}" class="text-[#5B6E33] hover:text-[#4A5D23] font-medium transition">
+                    <a href="<?php echo e(route('login')); ?>" class="text-[#5B6E33] hover:text-[#4A5D23] font-medium transition">
                         Masuk di sini
                     </a>
                 </p>
             </div>
 
             <!-- Footer -->
-            <p class="text-center text-xs text-stone-400 mt-12">&copy; {{ date('Y') }} Bank Sampah. Hak cipta dilindungi.</p>
+            <p class="text-center text-xs text-stone-400 mt-12">&copy; <?php echo e(date('Y')); ?> Bank Sampah. Hak cipta dilindungi.</p>
         </div>
 
         <!-- Promo Panel -->
         <div class="hidden lg:flex flex-col relative bg-cover bg-center overflow-hidden"
-             style="background-image: url('{{ asset('img/promo-auth.jpg') }}')">
+             style="background-image: url('<?php echo e(asset('img/promo-auth.jpg')); ?>')">
             <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/10"></div>
 
             <div class="absolute top-6 left-6 z-10">
@@ -274,6 +383,7 @@
 
     </script>
 
-    @stack('scripts')
+    <?php echo $__env->yieldPushContent('scripts'); ?>
 </body>
 </html>
+<?php /**PATH /home/bagusanantahidayatullah/BagusFile/FileKerjaBagus/polsri-banksampah-main/resources/views/v2/auth/register.blade.php ENDPATH**/ ?>

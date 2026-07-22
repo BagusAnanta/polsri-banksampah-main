@@ -151,7 +151,7 @@
                 <p class="text-center text-sm text-stone-600 mb-4">
                     Belum memiliki akun?
                 </p>
-                <a href="{{ route('v2.register') }}" class="btn btn-block btn-outline rounded-full border-2 border-[#5B6E33] text-[#5B6E33] hover:bg-[#5B6E33]/5 text-sm">
+                <a href="{{ route('register') }}" class="btn btn-block btn-outline rounded-full border-2 border-[#5B6E33] text-[#5B6E33] hover:bg-[#5B6E33]/5 text-sm">
                     Daftar Sekarang
                 </a>
             </div>

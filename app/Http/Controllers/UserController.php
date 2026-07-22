@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * ON DEPRECATED, ALL LOGIC CODE HAS MOVE INTO AUTHCONTROLLER
+ * THIS CODE FOR REFERENCE, PLEASE REMOVE IF ALL CODE ALREADY 
+ * RUNNING AND THIS CODE UNUSED 
+ */
+
 namespace App\Http\Controllers;
 
 use App\Models\User;
@@ -20,6 +26,7 @@ class UserController extends Controller
     //     $this->middleware('permission:user-edit', ['only' => ['edit','update']]);
     //     $this->middleware('permission:user-delete', ['only' => ['destroy']]);
     // }
+
 
     public function index()
     {
