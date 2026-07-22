@@ -89,16 +89,11 @@
                         <label class="label">
                             <span class="label-text text-sm font-medium">NIK / Nama Pengguna</span>
                         </label>
-                        <input type="text" name="username" id="username"
+                        <input type="text" name="identifier" id="identifier"
                                placeholder="Masukkan NIK atau nama pengguna"
-                               value="{{ old('username') }}"
+                               value="{{ old('identifier') }}"
                                class="input input-bordered rounded-xl bg-[#EADDCD] text-sm placeholder-stone-400 @error('username') input-error @enderror"
                                required />
-                        @error('username')
-                            <label class="label">
-                                <span class="label-text-alt text-red-500">{{ $message }}</span>
-                            </label>
-                        @enderror
                     </div>
 
                     <!-- Password Field -->
@@ -124,7 +119,7 @@
 
                             </button>
                         </div>
-                        @error('password')
+                        @error('identifier')
                             <label class="label">
                                 <span class="label-text-alt text-red-500">{{ $message }}</span>
                             </label>

@@ -2,13 +2,13 @@
 <?php $attributes = $attributes->exceptProps([
     'name' => 'foto_ktp',
     'label' => 'Foto KTP',
-    'maxSizeMb' => 5,
+    'maxSizeMb' => 2,
     'accept' => '.jpg,.jpeg,.png,.webp',
 ]); ?>
 <?php foreach (array_filter(([
     'name' => 'foto_ktp',
     'label' => 'Foto KTP',
-    'maxSizeMb' => 5,
+    'maxSizeMb' => 2,
     'accept' => '.jpg,.jpeg,.png,.webp',
 ]), 'is_string', ARRAY_FILTER_USE_KEY) as $__key => $__value) {
     $$__key = $$__key ?? $__value;
@@ -88,7 +88,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
 </div>
 
-<?php if (! $__env->hasRenderedOnce('c7af4667-dfdd-4136-86d6-8e8dbe6005ba')): $__env->markAsRenderedOnce('c7af4667-dfdd-4136-86d6-8e8dbe6005ba'); ?>
+<?php if (! $__env->hasRenderedOnce('57d8350b-c246-4017-a2c5-a004d4745ba4')): $__env->markAsRenderedOnce('57d8350b-c246-4017-a2c5-a004d4745ba4'); ?>
     <?php $__env->startPush('scripts'); ?>
     <script>
         // Inisialisasi semua komponen upload KTP yang ada di halaman ini

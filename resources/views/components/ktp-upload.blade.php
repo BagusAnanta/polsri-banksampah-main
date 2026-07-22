@@ -2,7 +2,7 @@
 @props([
     'name' => 'foto_ktp',
     'label' => 'Foto KTP',
-    'maxSizeMb' => 5,
+    'maxSizeMb' => 2,
     'accept' => '.jpg,.jpeg,.png,.webp',
 ])
 

@@ -17,16 +17,14 @@ class AuthController extends Controller {
 
     public function login(Request $request) {
         $credentials = $request->validate([
-            'username' => 'nullable|string',
-            'nik' => 'nullable|string|size:16',
+            'identifier' => 'nullable|string|max:50',
             'password' => 'required|string',
         ]);
 
-        $nik = $request->input('nik');
-        $username = $request->input('username');
+        $identifier = $request->identifier;
         $password = $credentials['password'];
 
-        if (!$nik && !$username) {
+        if (!$identifier) {
             if ($request->wantsJson() || $request->is('api/*')) {
                 return response()->json([
                     'success' => false,
@@ -38,15 +36,10 @@ class AuthController extends Controller {
 
         $user = null;
 
-        if ($nik && is_numeric($nik) && strlen($nik) === 16) {
-            $masyarakat = Masyarakat::where('nik', $nik)->first();
-            
-            if ($masyarakat) {
-                $user = User::find($masyarakat->user_id);
-            }
-        } elseif ($username) {
-            $user = User::where('username', $username)->first();
-        }
+        $user = User::where('username',$identifier)
+            ->orWhereHas('masyarakat', function ($querying) use ($identifier){
+                $querying->where('nik', $identifier);
+            })->first();
 
         if (!$user || !Hash::check($password, $user->password)) {
             if ($request->wantsJson() || $request->is('api/*')) {
@@ -55,14 +48,12 @@ class AuthController extends Controller {
                     'message' => 'NIK/username atau password salah',
                 ], 401);
             }
-            return back()->withErrors(['credential' => 'NIK/username atau password salah'])->withInput();
+            return back()->withErrors(['identifier' => 'NIK/username atau password salah'])->withInput();
         }
 
         Auth::login($user, $request->boolean('remember'));
         $request->session()->regenerate();
         $user = $user->load('masyarakat');
-
-        dd($nik);
 
         if ($request->wantsJson() || $request->is('api/*')) {
             return response()->json([
@@ -93,18 +84,41 @@ class AuthController extends Controller {
 
     # register user + masyarakat data 
     public function register(Request $request){
-        $rules = [
+        $validated = $request->validate([
             'name' => 'required|string|min:3',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:8|confirmed',
             'phone' => 'required|string',
             'address' => 'required|string',
             'nik' => 'required|string|size:16|unique:masyarakats,nik',
             'gender' => 'required|in:Laki-laki,Perempuan',
             'identity_photo' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
-        ];
+        ],[
+            'name.required' => 'Nama wajib diisi',
 
-        $validated = $request->validate($rules);
+            'email.required' => 'Email wajib diisi',
+            'email.email' => 'Format email tidak valid',
+            'email.unique' => 'Email sudah terdaftar',
+
+            'password.required' => 'Password wajib diisi',
+            'password.min' => 'Password minimal 8 karakter',
+            'password.confirmed' => 'Konfirmasi password tidak cocok',
+
+            'phone.required' => 'Nomor telepon wajib diisi',
+
+            'address.required' => 'Alamat wajib diisi',
+
+            'nik.required' => 'NIK wajib diisi',
+            'nik.size' => 'NIK harus terdiri dari 16 digit',
+            'nik.unique' => 'NIK sudah terdaftar',
+
+            'gender.required' => 'Jenis kelamin wajib dipilih',
+
+            'identity_photo.required' => 'Foto KTP wajib diupload',
+            'identity_photo.image' => 'File harus berupa gambar',
+            'identity_photo.mimes' => 'Format foto harus JPG, JPEG, PNG atau WEBP',
+            'identity_photo.max' => 'Ukuran foto maksimal 2 MB',
+        ]);
 
         $user = new User();
         $user->name = $validated['name'];
