@@ -107,7 +107,7 @@ Route::middleware('auth:api')->group(function () {
     });
 
     Route::prefix('v2')->as('v2.')->group(function () {
-        Route::apiResource('users', UserController::class);
+        Route::apiResource('users', AuthController::class);
         Route::apiResource('departements', DepartementController::class);
         Route::apiResource('tickets', TicketController::class);
         Route::apiResource('bank-sampahs', BankSampahController::class);
@@ -119,7 +119,7 @@ Route::middleware('auth:api')->group(function () {
         Route::apiResource('orders', OrderController::class);
         Route::apiResource('data-products', ProductController::class);
         Route::apiResource('riwayat-setors', RiwayatSetorController::class);
-        Route::apiResource('masyarakats', MasyarakatController::class);
+        Route::apiResource('masyarakats', AuthController::class);
         Route::apiResource('banksampahusers', BanksampahuserController::class);
         Route::apiResource('tiketsetorsampahs', TiketsetorsampahController::class);
         Route::apiResource('tikettukarpoin', TikettukarpoinController::class);

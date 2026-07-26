@@ -11,64 +11,92 @@ use Illuminate\Support\Str;
 
 class TiketsetorsampahController extends Controller
 {
-    public function index(Request $request)
+    public function indexV2(Request $request)
     {
-        $query = TiketSetorSampah::with(['masyarakat.user', 'bankSampahUser']);
+        $user = auth()->user();
+        $masyarakat = Masyarakat::where('user_id', $user->id)->first();
 
-        if ($request->has('masyarakat_id')) {
-            $query->where('masyarakat_id', $request->get('masyarakat_id'));
-        }
-        if ($request->has('banksampah_id')) {
-            $query->where('banksampah_id', $request->get('banksampah_id'));
-        }
-        if ($request->has('status')) {
-            $query->where('status', $request->get('status'));
+        if (!$masyarakat) {
+            return redirect()->route('login');
         }
 
-        $tickets = $query->get();
+        $tickets = TiketSetorSampah::where('masyarakat_id', $masyarakat->masyarakat_id)
+            ->with(['bankSampahUser'])
+            ->latest('created_at')
+            ->get();
 
-        if ($request->wantsJson() || $request->is('api/*')) {
-            return response()->json([
-                'success' => true,
-                'data' => $tickets
-            ]);
-        }
+        $totalGramasi = $tickets->where('status', 'Selesai')->sum('berat_sampah_actual');
 
         $data['page_title'] = 'Tiket Setor Sampah';
-        $data['tickets'] = $tickets;
-        return view('tiketsetorsampahs.index', $data);
+        $data['tikets'] = $tickets;
+        $data['totalGramasi'] = $totalGramasi;
+        return view('v2.user.masyarakat.tiket-sampah-index', $data);
+    }
+
+    public function showV2(Request $request, $id)
+    {
+        $ticket = TiketSetorSampah::with(['masyarakat.user', 'bankSampahUser'])->findOrFail($id);
+
+        $data['page_title'] = 'Detail Tiket Setor Sampah';
+        $data['tiket'] = $ticket;
+        return view('v2.user.masyarakat.tiket-sampah-show', $data);
+    }
+
+    public function cancel(Request $request, $id)
+    {
+        $ticket = TiketSetorSampah::findOrFail($id);
+        
+        if ($ticket->status !== 'Menunggu') {
+            return back()->withErrors(['error' => 'Hanya tiket menunggu yang dapat dibatalkan']);
+        }
+
+        $ticket->status = 'Dibatalkan';
+        $ticket->save();
+
+        return back()->with('success', 'Tiket setor sampah berhasil dibatalkan!');
     }
 
     public function create()
     {
+        $setting = Setting::first() ?? new Setting([
+            'gram_per_point' => 1000,
+            'point_per_voucher' => 500,
+        ]);
+
         $data['page_title'] = 'Buat Tiket Setor Sampah';
-        $data['masyarakats'] = Masyarakat::with('user')->get();
         $data['banksampahusers'] = BankSampahUser::all();
-        return view('tiketsetorsampahs.create', $data);
+        $data['gramPerPoint'] = $setting->gram_per_point;
+        return view('v2.user.masyarakat.tiket-sampah-create', $data);
     }
 
     public function store(Request $request)
     {
+        $user = auth()->user();
+        $masyarakat = Masyarakat::where('user_id', $user->id)->first();
+
+        if (!$masyarakat) {
+            return redirect()->route('login')->withErrors(['error' => 'Data masyarakat tidak ditemukan']);
+        }
+
         $validated = $request->validate([
-            'masyarakat_id' => 'required|exists:masyarakats,masyarakat_id',
-            'banksampah_id' => 'required|exists:banksampahusers,banksampah_id',
             'berat_sampah' => 'required|integer|min:1',
+            'banksampah_id' => 'required|exists:banksampahusers,banksampah_id',
         ]);
 
-        $setting = Setting::first();
-        $gramPerPoint = ($setting && $setting->gram_per_point > 0) ? $setting->gram_per_point : 1000;
+        $setting = Setting::first() ?? new Setting([
+            'gram_per_point' => 1000,
+            'point_per_voucher' => 500,
+        ]);
         
+        $gramPerPoint = $setting->gram_per_point ?? 1000;
         $poin = floor($validated['berat_sampah'] / $gramPerPoint);
 
         $ticket = new TiketSetorSampah();
-        $ticket->masyarakat_id = $validated['masyarakat_id'];
+        $ticket->masyarakat_id = $masyarakat->masyarakat_id;
         $ticket->banksampah_id = $validated['banksampah_id'];
         $ticket->berat_sampah = $validated['berat_sampah'];
         $ticket->berat_sampah_actual = $validated['berat_sampah'];
         $ticket->poin = $poin;
-        
-        // what contain qrcode ? bro, the f*ck lah 
-        // bro, keep it because we just get Id so its correct make like this, because we just get data based qr code id 
         $ticket->qr_code_id = 'TS-' . strtoupper(Str::random(10));
         $ticket->status = 'Menunggu';
         $ticket->save();
@@ -81,7 +109,7 @@ class TiketsetorsampahController extends Controller
             ], 201);
         }
 
-        return redirect()->route('tiket-setor-sampah.index')->with('success', 'Tiket setor sampah berhasil dibuat!');
+        return redirect()->route('tiket-sampah.index')->with('success', 'Tiket setor sampah berhasil dibuat!');
     }
 
     public function show(Request $request, $id)
@@ -97,7 +125,7 @@ class TiketsetorsampahController extends Controller
 
         $data['page_title'] = 'Detail Tiket Setor';
         $data['ticket'] = $ticket;
-        return view('tiketsetorsampahs.show', $data);
+        return view('tiket-sampah.show', $data);
     }
 
     public function edit($id)

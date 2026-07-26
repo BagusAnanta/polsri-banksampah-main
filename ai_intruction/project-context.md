@@ -17,8 +17,27 @@ Bank sampah polsri project V2 Feature :
 - Login (NIK, password)
 - Register (Nama lengkap, NIK, jenis kelamin, ho HP, email, alamat, foto ktp, password)
 - Waiting Room (Verifikasi Masyarakat di Super Admin) (Masyarakat > S.Admin)
+
 - User feature 
-: Beranda (Halaman untuk masyarakat)(Total poin, total gramasi, setor selesai, progress voucher)
+: Beranda Masyarakat (Halaman Dashboard Publik/Masyarakat) : 
+    - Total poin -> sum poin, 
+    - total gramasi -> sum gramasi, 
+    - setor selesai -> count status selesai, 
+    - Grafik Timestamp point per bulan, 
+    - progress voucher
+    - Menu cepat -> (setor sampah, Tukar Poin, Edukasi)
+    - List Tiket serot terbaru
+    - List Tiket Tukar Poin Terbaru 
+
+: Halaman Daftar Pengajuan Setor Sampah
+    - Buat Tiket
+    - Total Gramasi -> sum gramasi
+    - Menunggu (Status) -> count status menunggu
+    - Selesai (Status) -> count status selesai
+    - List Tiket -> jika status menunggu ada button (QR buat scan dan batalkan) -> untuk Button QR nanti ada modal buat munculin QR code
+
+: Halaman Pengajuan 
+
 : Tiket Sampah 
 : Tiket Tukar Poin
 : Daftar pengajuan tukar voucher

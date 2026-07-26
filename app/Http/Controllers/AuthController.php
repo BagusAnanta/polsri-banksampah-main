@@ -63,23 +63,28 @@ class AuthController extends Controller {
             ]);
         }
 
-        if ($user->masyarakat && $user->masyarakat->verification) {
-            $verification = strtolower(trim($user->masyarakat->verification));
+        // if ($user->masyarakat && $user->masyarakat->verification) {
+        //     $verification = strtolower(trim($user->masyarakat->verification));
             
-            if ($verification === 'menunggu') {
-                return redirect()->route('waiting')
-                    ->with('user_name', $user->name)
-                    ->with('user_nik', $user->masyarakat->nik)
-                    ->with('user_email', $user->email);
-            } elseif ($verification === 'ditolak') {
-                Auth::logout();
-                return back()
-                    ->withErrors(['credential' => 'Akun Anda ditolak. Hubungi admin.'])
-                    ->withInput();
-            }
-        }
+        //     if ($verification === 'menunggu') {
+        //         return redirect()->route('v2.waiting')
+        //             ->with('user_name', $user->name)
+        //             ->with('user_nik', $user->masyarakat->nik)
+        //             ->with('user_email', $user->email);
+        //     } elseif ($verification === 'ditolak') {
+        //         Auth::logout();
+        //         return back()
+        //             ->withErrors(['credential' => 'Akun Anda ditolak. Hubungi admin.'])
+        //             ->withInput();
+        //     }
+        // }
 
-        return redirect()->intended(route('dashboard'));
+        return redirect()->route('dashboard')
+            ->with('user_name', $user->name)
+            ->with('user_total_poin', $user->poin)
+            ->with('user_total_gramasi', $user->total_gramasi)
+            ->with('user_total_selesai', $user->total_selesai)
+            ->with('user_total_voucher', $user->voucher);
     }
 
     # register user + masyarakat data 
@@ -163,7 +168,7 @@ class AuthController extends Controller {
             ], 201);
         }
 
-        return redirect()->route('waiting')
+        return redirect()->route('v2.waiting')
             ->with('success', 'Akun berhasil dibuat! Menunggu verifikasi.')
             ->with('user_name', $user->name)
             ->with('user_nik', $masyarakat->nik)
@@ -187,7 +192,7 @@ class AuthController extends Controller {
             ]);
         }
 
-        return redirect()->route('v2.login');
+        return redirect()->route('login');
     }
 
     public function profile(Request $request)

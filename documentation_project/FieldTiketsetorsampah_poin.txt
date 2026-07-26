@@ -1,0 +1,30 @@
+Halaman Buat tiket setor sampah field 
+1. Berat estimasi -> set default berat aktual
+2. Nama lokasi bank sampah / bank sampah mana user mau menukar sampahnya  
+
+Halaman Buat tiket setor Voucher
+1. Jumlah Poin (User bisa masukkin jumlah poin disini juga)
+2. jumlah Voucher (jumlah voucher yang mau ditukar, hitungannya 1 voucher itu == 500 point, jadi kalau kurang dia harusnya ngak bisa tukar)
+3. Bank sampah
+
+Halaman Detail Tiket pengajuan setoran sampah
+1. no tiket
+2. Identitas Bank Sampah
+- Nama Bank sampah
+- Alamat
+- No telp
+3. Detail Sampah
+- Estimasi berat 
+- Berat Aktual
+- Konversi 
+
+Halaman Detail TIket pengajuan voucher
+1. No tiket
+2. Identitas Bank Sampah
+- Nama Bank sampah
+- Alamat
+- No telp
+3. Detail Penukaran 
+- Poin yang ditukar 
+- Jumlah voucher yang didapatkan 
+- Tanggal Pengajuan

@@ -71,11 +71,70 @@ Route::post('/register', [AuthController::class, 'register'])->name('register');
 // Router 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
+Route::get('/profil', [AuthController::class, 'profile'])->name('profil');
 
-Route::get('/waiting', function () {
-    $data['page_title'] = "Waiting Room";
-    return view('v2.waiting.waiting', $data);
-})->name('waiting');
+Route::middleware('auth:web')->group(function () {
+    Route::get('/tiket-sampah', [TiketsetorsampahController::class, 'indexV2'])->name('tiket-sampah.index');
+    Route::get('/tiket-sampah/create', [TiketsetorsampahController::class, 'create'])->name('tiket-sampah.create');
+    Route::post('/tiket-sampah', [TiketsetorsampahController::class, 'store'])->name('tiketsetorsampahs.store');
+    Route::get('/tiket-sampah/{id}', [TiketsetorsampahController::class, 'showV2'])->name('tiket-sampah.show');
+    Route::put('/tiket-sampah/{id}/cancel', [TiketsetorsampahController::class, 'cancel'])->name('tiket-sampah.cancel');
+
+    Route::get('/tiket-poin', [TikettukarpoinController::class, 'indexV2'])->name('tiket-poin.index');
+    Route::get('/tiket-poin/create', [TikettukarpoinController::class, 'create'])->name('tiket-poin.create');
+    Route::post('/tiket-poin', [TikettukarpoinController::class, 'store'])->name('tikettukarpoin.store');
+    Route::get('/tiket-poin/{id}', [TikettukarpoinController::class, 'showV2'])->name('tiket-poin.show');
+    Route::put('/tiket-poin/{id}/cancel', [TikettukarpoinController::class, 'cancel'])->name('tiket-poin.cancel');
+
+    Route::get('/edukasi', function() {
+        return view('v2.user.masyarakat.edukasi-index', ['artikels' => collect()]);
+    })->name('edukasi.index');
+
+    Route::get('/riwayat', [DashboardController::class, 'getRiwayat'])->name('riwayat.index');
+});
+
+Route::get('/help', function() {
+    return view('v2.help');
+})->name('help');
+
+// ====== Admin Bank Sampah routes (placeholder) ======
+Route::get('/admin/dashboard', function() {
+    return view('v2.admin.dashboard');
+})->name('admin.dashboard');
+
+Route::get('/admin/tiket', function() {
+    return view('v2.admin.tiket-index', ['tikets' => collect()]);
+})->name('admin.tiket.index');
+
+Route::get('/admin/scan', function() {
+    return view('v2.admin.scan');
+})->name('admin.scan');
+
+// ====== Super Admin routes (placeholder) ======
+Route::get('/sa/dashboard', function() {
+    return view('v2.sa.dashboard');
+})->name('sa.dashboard');
+
+Route::get('/sa/masyarakat', function() {
+    return view('v2.sa.masyarakat-index', ['masyarakats' => collect()]);
+})->name('sa.masyarakat.index');
+
+Route::get('/sa/bank-sampah', function() {
+    return view('v2.sa.bank-sampah-index', ['banks' => collect()]);
+})->name('sa.bank-sampah.index');
+
+Route::get('/sa/edukasi', function() {
+    return view('v2.sa.edukasi-index', ['artikels' => collect()]);
+})->name('sa.edukasi.index');
+
+Route::get('/sa/pengaturan', function() {
+    return view('v2.sa.pengaturan');
+})->name('sa.pengaturan');
+
+
+/**
+ * PRIVATE PAGE SIDE (IT CAN ACCESS WHILE USER ALREADY LOGIN)
+ */
 
 # Version 1 middleware 
 
@@ -178,7 +237,7 @@ Route::prefix('v1')->middleware('auth:web')->group(function () {
 
 # Version 2 middleware 
 
-Route::prefix('v2')->middleware('auth:web')->as('v2.')->group(function () {
+Route::prefix('v2')->middleware('auth:web')->group(function () {
     Route::resource('departements', DepartementController::class);
     Route::resource('tickets', TicketController::class);
     Route::get('users', [AuthController::class, 'listUsers'])->name('users.index');
@@ -188,6 +247,15 @@ Route::prefix('v2')->middleware('auth:web')->as('v2.')->group(function () {
     Route::get('users/{user}/edit', [AuthController::class, 'editUser'])->name('users.edit');
     Route::put('users/{user}', [AuthController::class, 'updateUser'])->name('users.update');
     Route::delete('users/{user}', [AuthController::class, 'destroyUser'])->name('users.destroy');
+
+    Route::get('/waiting', function () {
+        $data['page_title'] = "Waiting Room";
+        return view('v2.waiting.waiting', $data);
+    })->name('waiting');
+
+    // V2 Dashboard route (must be before resource to avoid conflict)
+    Route::get('/dashboard', [DashboardController::class, 'indexV2'])->name('dashboard');
+
     Route::resource('bank-sampahs', BankSampahController::class);
     Route::resource('box-sampahs', BoxSampahController::class);
     Route::resource('jenis-sampahs', JenisSampahController::class);
@@ -203,7 +271,6 @@ Route::prefix('v2')->middleware('auth:web')->as('v2.')->group(function () {
     Route::resource('tikettukarpoin', TikettukarpoinController::class);
     Route::resource('artikels', ArtikelController::class);
     Route::resource('settings', SettingController::class);
-    Route::resource('dashboard', DashboardController::class);
     Route::resource('monitoring', MonitoringController::class);
     Route::resource('transaksi', TransaksiController::class);
 });

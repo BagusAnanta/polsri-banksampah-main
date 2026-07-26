@@ -6,63 +6,118 @@ use App\Models\TiketTukarPoin;
 use App\Models\TiketSetorSampah;
 use App\Models\Masyarakat;
 use App\Models\BankSampahUser;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class TikettukarpoinController extends Controller
 {
-    public function index(Request $request)
+    public function indexV2(Request $request)
     {
-        $query = TiketTukarPoin::with(['masyarakat.user', 'bankSampahUser']);
+        $user = auth()->user();
+        $masyarakat = Masyarakat::where('user_id', $user->id)->first();
 
-        if ($request->has('masyarakat_id')) {
-            $query->where('masyarakat_id', $request->get('masyarakat_id'));
-        }
-        if ($request->has('banksampah_id')) {
-            $query->where('banksampah_id', $request->get('banksampah_id'));
-        }
-        if ($request->has('status')) {
-            $query->where('status', $request->get('status'));
+        if (!$masyarakat) {
+            return redirect()->route('login');
         }
 
-        $tickets = $query->get();
+        $tickets = TiketTukarPoin::where('masyarakat_id', $masyarakat->masyarakat_id)
+            ->with(['bankSampahUser'])
+            ->latest('created_at')
+            ->get();
 
-        if ($request->wantsJson() || $request->is('api/*')) {
-            return response()->json([
-                'success' => true,
-                'data' => $tickets
-            ]);
-        }
+        $totalPoinDeposit = TiketSetorSampah::where('masyarakat_id', $masyarakat->masyarakat_id)
+            ->where('status', 'Selesai')
+            ->sum('poin');
+
+        $totalPoinRedeemed = TiketTukarPoin::where('masyarakat_id', $masyarakat->masyarakat_id)
+            ->where('status', 'Selesai')
+            ->sum('poin');
+
+        $currentPoints = $totalPoinDeposit - $totalPoinRedeemed;
 
         $data['page_title'] = 'Tiket Tukar Poin';
-        $data['tickets'] = $tickets;
-        return view('tikettukarpoins.index', $data);
+        $data['tikets'] = $tickets;
+        $data['totalGramasi'] = $currentPoints;
+        return view('v2.user.masyarakat.tiket-poin-index', $data);
+    }
+
+    public function showV2(Request $request, $id)
+    {
+        $ticket = TiketTukarPoin::with(['masyarakat.user', 'bankSampahUser'])->findOrFail($id);
+
+        $data['page_title'] = 'Detail Tiket Tukar Poin';
+        $data['tiket'] = $ticket;
+        return view('v2.user.masyarakat.tiket-poin-show', $data);
+    }
+
+    public function cancel(Request $request, $id)
+    {
+        $ticket = TiketTukarPoin::findOrFail($id);
+        
+        if ($ticket->status !== 'Menunggu') {
+            return back()->withErrors(['error' => 'Hanya tiket menunggu yang dapat dibatalkan']);
+        }
+
+        $ticket->status = 'Dibatalkan';
+        $ticket->save();
+
+        return back()->with('success', 'Tiket tukar poin berhasil dibatalkan!');
     }
 
     public function create()
     {
+        $user = auth()->user();
+        $masyarakat = Masyarakat::where('user_id', $user->id)->first();
+
+        if (!$masyarakat) {
+            return redirect()->route('login');
+        }
+
+        $setting = Setting::first() ?? new Setting([
+            'gram_per_point' => 1000,
+            'point_per_voucher' => 500,
+        ]);
+
+        $totalPoinDeposit = TiketSetorSampah::where('masyarakat_id', $masyarakat->masyarakat_id)
+            ->where('status', 'Selesai')
+            ->sum('poin');
+
+        $totalPoinRedeemed = TiketTukarPoin::where('masyarakat_id', $masyarakat->masyarakat_id)
+            ->where('status', 'Selesai')
+            ->sum('poin');
+
+        $userCurrentPoints = $totalPoinDeposit - $totalPoinRedeemed;
+
+        $banksampahusers = BankSampahUser::all();
+
         $data['page_title'] = 'Buat Tiket Tukar Poin';
-        $data['masyarakats'] = Masyarakat::with('user')->get();
-        $data['banksampahusers'] = BankSampahUser::all();
-        return view('tikettukarpoins.create', $data);
+        $data['banksampahusers'] = $banksampahusers;
+        $data['userCurrentPoints'] = $userCurrentPoints;
+        $data['pointPerVoucher'] = $setting->point_per_voucher;
+        return view('v2.user.masyarakat.tiket-poin-create', $data);
     }
 
     public function store(Request $request)
     {
+        $user = auth()->user();
+        $masyarakat = Masyarakat::where('user_id', $user->id)->first();
+
+        if (!$masyarakat) {
+            return redirect()->route('login')->withErrors(['error' => 'Data masyarakat tidak ditemukan']);
+        }
+
         $validated = $request->validate([
-            'masyarakat_id' => 'required|exists:masyarakats,masyarakat_id',
-            'banksampah_id' => 'required|exists:banksampahusers,banksampah_id',
             'poin' => 'required|integer|min:1',
+            'banksampah_id' => 'required|exists:banksampahusers,banksampah_id',
         ]);
 
-
-        // user can get point kalo total poinnya sudah == atau > dari poin yang udah ditentuin di sistem
-        // misal : disistem untuk dapat 1 voucher itu masyarakat/user harus mengumpulkan 500 point untuk 1 poin
-        // jadi kalau kurang ngak bisa ditukar 
-
-        $masyarakatId = $validated['masyarakat_id'];
-        $totalPoinDeposit = TiketSetorSampah::where('masyarakat_id', $masyarakatId)->where('status', 'Selesai')->sum('poin');
-        $totalPoinRedeemed = TiketTukarPoin::where('masyarakat_id', $masyarakatId)->where('status', 'Selesai')->sum('poin');
+        $totalPoinDeposit = TiketSetorSampah::where('masyarakat_id', $masyarakat->masyarakat_id)
+            ->where('status', 'Selesai')
+            ->sum('poin');
+        $totalPoinRedeemed = TiketTukarPoin::where('masyarakat_id', $masyarakat->masyarakat_id)
+            ->where('status', 'Selesai')
+            ->sum('poin');
         $pointsBalance = $totalPoinDeposit - $totalPoinRedeemed;
 
         if ($validated['poin'] > $pointsBalance) {
@@ -76,7 +131,7 @@ class TikettukarpoinController extends Controller
         }
 
         $ticket = new TiketTukarPoin();
-        $ticket->masyarakat_id = $masyarakatId;
+        $ticket->masyarakat_id = $masyarakat->masyarakat_id;
         $ticket->banksampah_id = $validated['banksampah_id'];
         $ticket->poin = $validated['poin'];
         $ticket->qr_code_id = 'TP-' . strtoupper(Str::random(10));
@@ -91,7 +146,7 @@ class TikettukarpoinController extends Controller
             ], 201);
         }
 
-        return redirect()->route('tiket-tukar-poin.index')->with('success', 'Tiket tukar poin berhasil dibuat!');
+        return redirect()->route('tiket-poin.index')->with('success', 'Tiket tukar poin berhasil dibuat!');
     }
 
     public function show(Request $request, $id)

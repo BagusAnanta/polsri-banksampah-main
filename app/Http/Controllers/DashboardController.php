@@ -11,6 +11,10 @@ use App\Models\JenisSampah;
 use App\Models\BankSampah;
 use App\Models\BoxSampah;
 use App\Models\Tabungan;
+use App\Models\Masyarakat;
+use App\Models\TiketSetorSampah;
+use App\Models\TiketTukarPoin;
+use App\Models\Setting;
 
 class DashboardController extends Controller
 {
@@ -20,11 +24,89 @@ class DashboardController extends Controller
     //     $this->middleware('permission:dashboard', ['only' => 'dashboard']);
     // }
 
+    public function indexV2(Request $request)
+    {
+        $user = Auth::user();
+        $masyarakat = Masyarakat::where('user_id', $user->id)->first();
+
+        if (!$masyarakat) {
+            return redirect()->route('login');
+        }
+
+        $setting = Setting::first() ?? new Setting([
+            'gram_per_point' => 1000,
+            'point_per_voucher' => 500,
+        ]);
+
+        $totalPoinDeposit = TiketSetorSampah::where('masyarakat_id', $masyarakat->masyarakat_id)
+            ->where('status', 'Selesai')
+            ->sum('poin');
+
+        $totalPoinRedeemed = TiketTukarPoin::where('masyarakat_id', $masyarakat->masyarakat_id)
+            ->where('status', 'Selesai')
+            ->sum('poin');
+
+        $currentPoints = $totalPoinDeposit - $totalPoinRedeemed;
+
+        $totalGramasi = TiketSetorSampah::where('masyarakat_id', $masyarakat->masyarakat_id)
+            ->where('status', 'Selesai')
+            ->sum('berat_sampah_actual');
+
+        $setorSelesai = TiketSetorSampah::where('masyarakat_id', $masyarakat->masyarakat_id)
+            ->where('status', 'Selesai')
+            ->count();
+
+        $poinPerBulan = [];
+        $bulanLabels = [];
+        for ($i = 5; $i >= 0; $i--) {
+            $bulan = now()->subMonths($i);
+            $bulanLabels[] = $bulan->translatedFormat('M');
+            
+            $poin = TiketSetorSampah::where('masyarakat_id', $masyarakat->masyarakat_id)
+                ->where('status', 'Selesai')
+                ->whereYear('updated_at', $bulan->year)
+                ->whereMonth('updated_at', $bulan->month)
+                ->sum('poin');
+            
+            $poinPerBulan[] = $poin;
+        }
+
+        $tiketSetorTerbaru = TiketSetorSampah::where('masyarakat_id', $masyarakat->masyarakat_id)
+            ->with(['bankSampahUser'])
+            ->latest('created_at')
+            ->take(3)
+            ->get();
+
+        $tiketPoinTerbaru = TiketTukarPoin::where('masyarakat_id', $masyarakat->masyarakat_id)
+            ->with(['bankSampahUser'])
+            ->latest('created_at')
+            ->take(3)
+            ->get();
+
+        $poinSaatIni = $currentPoints;
+        $targetPoin = $setting->point_per_voucher;
+
+        $data = [
+            'page_title' => 'Dashboard',
+            'totalPoin' => $totalPoinDeposit,
+            'totalGramasi' => $totalGramasi,
+            'setorSelesai' => $setorSelesai,
+            'poinSaatIni' => $poinSaatIni,
+            'targetPoin' => $targetPoin,
+            'poinPerBulan' => $poinPerBulan,
+            'bulanLabels' => $bulanLabels,
+            'tiketSetorTerbaru' => $tiketSetorTerbaru,
+            'tiketPoinTerbaru' => $tiketPoinTerbaru,
+        ];
+
+        return view('v2.user.masyarakat.dashboard', $data);
+    }
+
     public function index(Request $request)
     {
         $data['page_title'] = 'Ticket List';
 
-        $hour = date('H'); // Mendapatkan jam dalam format 24 jam (00-23)
+        $hour = date('H');
         if ($hour >= 5 && $hour < 12) {
             $greeting = "Selamat Pagi";
         } elseif ($hour >= 12 && $hour < 15) {
@@ -42,8 +124,6 @@ class DashboardController extends Controller
             ->first();
 
         $data['tabunganData'] = $lastTabungan->sisa_saldo ?? 0;
-        // dd($lastTabungan);
-        // dd($userData);
 
         $data['users'] = User::orderBy('name', 'asc')->get();
         $data['jenis_sampah'] = JenisSampah::orderBy('nama', 'asc')->get();
@@ -51,8 +131,65 @@ class DashboardController extends Controller
         return view('dashboard.index', $data);
     }
 
-    public function search(Request $request)
-    {
+    public function getRiwayat(Request $request){
+        $user = Auth::user();
+        $masyarakat = Masyarakat::where('user_id', $user->id)->first();
+
+        if (!$masyarakat) {
+            return redirect()->route('login');
+        }
+
+        $riwayat = collect();
+        
+        $selesaiSampah = TiketSetorSampah::where('masyarakat_id', $masyarakat->masyarakat_id)
+            ->where('status', 'Selesai')
+            ->with(['bankSampahUser'])
+            ->latest('updated_at')
+            ->get()
+            ->map(function ($ticket) {
+                return [
+                    'type' => 'sampah',
+                    'id' => $ticket->tiketsampah_id,
+                    'nomor' => $ticket->tiketsampah_inc,
+                    'status' => $ticket->status,
+                    'bank_sampah' => $ticket->bankSampahUser->nama_bank_sampah ?? 'N/A',
+                    'nilai' => number_format($ticket->berat_sampah_actual) . ' gram',
+                    'tanggal' => $ticket->updated_at,
+                    'created_at' => $ticket->created_at,
+                ];
+            });
+
+        $selesaiPoin = TiketTukarPoin::where('masyarakat_id', $masyarakat->masyarakat_id)
+            ->where('status', 'Selesai')
+            ->with(['bankSampahUser'])
+            ->latest('updated_at')
+            ->get()
+            ->map(function ($ticket) {
+                return [
+                    'type' => 'poin',
+                    'id' => $ticket->tiketpoin_id,
+                    'nomor' => $ticket->tiketpoin_inc,
+                    'status' => $ticket->status,
+                    'bank_sampah' => $ticket->bankSampahUser->nama_bank_sampah ?? 'N/A',
+                    'nilai' => number_format($ticket->poin) . ' poin',
+                    'tanggal' => $ticket->updated_at,
+                    'created_at' => $ticket->created_at,
+                ];
+            });
+
+        $riwayat = $selesaiSampah->concat($selesaiPoin)
+            ->sortByDesc('tanggal')
+            ->values();
+
+        $data = [
+            'page_title' => 'Riwayat Transaksi',
+            'riwayat' => $riwayat,
+        ];
+
+        return view('v2.user.masyarakat.riwayat-index', $data);
+    }
+
+    public function search(Request $request){
         $query = User::query();
 
         if ($request->has('search')) {
