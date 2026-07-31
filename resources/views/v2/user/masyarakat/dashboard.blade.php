@@ -22,7 +22,7 @@
             <div class="flex items-start justify-between">
                 <div class="flex-1">
                     <p class="text-xs font-medium text-olive-600 sm:text-sm">Total Poin</p>
-                    <p class="text-2xl font-bold text-olive-700 sm:text-3xl mt-2">{{ number_format(session('user_total_poin',0) ?? 0) }}</p>
+                    <p class="text-2xl font-bold text-olive-700 sm:text-3xl mt-2">{{ number_format($totalPoin ?? 0) }}</p>
                     <p class="mt-2 text-xs text-olive-600/70">Poin terakumulasi</p>
                 </div>
                 <span class="material-symbols-outlined">trending_up</span>
@@ -33,7 +33,7 @@
             <div class="flex items-start justify-between">
                 <div class="flex-1">
                     <p class="text-xs font-medium text-blue-600 sm:text-sm">Total Gramasi</p>
-                    <p class="text-2xl font-bold text-blue-700 sm:text-3xl mt-2">{{ number_format(session('user_total_gramasi',0) ?? 0) }}</p>
+                    <p class="text-2xl font-bold text-blue-700 sm:text-3xl mt-2">{{ number_format($totalGramasi ?? 0) }}</p>
                     <p class="mt-2 text-xs text-blue-600/70">gram</p>
                 </div>
                 <span class="material-symbols-outlined">delete</span>
@@ -44,7 +44,7 @@
             <div class="flex items-start justify-between">
                 <div class="flex-1">
                     <p class="text-xs font-medium text-green-600 sm:text-sm">Setor Selesai</p>
-                    <p class="text-2xl font-bold text-green-700 sm:text-3xl mt-2">{{number_format(session('user_total_selesai',0) ?? 0)}}</p>
+                    <p class="text-2xl font-bold text-green-700 sm:text-3xl mt-2">{{number_format($setorSelesai ?? 0)}}</p>
                     <p class="mt-2 text-xs text-green-600/70">transaksi</p>
                 </div>
                 <span class="material-symbols-outlined">check_circle</span>

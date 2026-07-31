@@ -21,7 +21,7 @@ class AuthController extends Controller {
             'password' => 'required|string',
         ]);
 
-        $identifier = $request->identifier;
+        $identifier = $credentials['identifier'] ?? null;
         $password = $credentials['password'];
 
         if (!$identifier) {
@@ -63,28 +63,38 @@ class AuthController extends Controller {
             ]);
         }
 
-        // if ($user->masyarakat && $user->masyarakat->verification) {
-        //     $verification = strtolower(trim($user->masyarakat->verification));
-            
-        //     if ($verification === 'menunggu') {
-        //         return redirect()->route('v2.waiting')
-        //             ->with('user_name', $user->name)
-        //             ->with('user_nik', $user->masyarakat->nik)
-        //             ->with('user_email', $user->email);
-        //     } elseif ($verification === 'ditolak') {
-        //         Auth::logout();
-        //         return back()
-        //             ->withErrors(['credential' => 'Akun Anda ditolak. Hubungi admin.'])
-        //             ->withInput();
-        //     }
-        // }
+        if ($user->hasRole('Super Admin')) {
+            return redirect()->route('sa.dashboard')
+                ->with('user_name', $user->name);
+        } elseif ($user->hasRole('Admin Bank Sampah')) {
+            return redirect()->route('admin.dashboard')
+                ->with('user_name', $user->name);
+        } elseif ($user->hasRole('Masyarakat')) {
+            if ($user->masyarakat && $user->masyarakat->verification) {
+                $verification = strtolower(trim($user->masyarakat->verification));
 
-        return redirect()->route('dashboard')
-            ->with('user_name', $user->name)
-            ->with('user_total_poin', $user->poin)
-            ->with('user_total_gramasi', $user->total_gramasi)
-            ->with('user_total_selesai', $user->total_selesai)
-            ->with('user_total_voucher', $user->voucher);
+                if ($verification === 'menunggu') {
+                    return redirect()->route('waiting')
+                        ->with('user_name', $user->name)
+                        ->with('user_nik', $user->masyarakat->nik)
+                        ->with('user_email', $user->email);
+                } elseif ($verification === 'ditolak') {
+                    Auth::logout();
+                    return back()
+                        ->withErrors(['credential' => 'Akun Anda ditolak. Hubungi admin.'])
+                        ->withInput();
+                }
+            }
+
+            return redirect()->route('dashboard')
+                ->with('user_name', $user->name)
+                ->with('user_total_poin', $user->poin)
+                ->with('user_total_gramasi', $user->total_gramasi)
+                ->with('user_total_selesai', $user->total_selesai)
+                ->with('user_total_voucher', $user->voucher);
+        }
+
+        return redirect()->route('v1.dashboard');
     }
 
     # register user + masyarakat data 
@@ -168,7 +178,7 @@ class AuthController extends Controller {
             ], 201);
         }
 
-        return redirect()->route('v2.waiting')
+        return redirect()->route('waiting')
             ->with('success', 'Akun berhasil dibuat! Menunggu verifikasi.')
             ->with('user_name', $user->name)
             ->with('user_nik', $masyarakat->nik)
@@ -195,8 +205,12 @@ class AuthController extends Controller {
         return redirect()->route('login');
     }
 
+    // show profile, but in here I want make universe
+    // first, create user profile view first 
+
     public function profile(Request $request)
     {
+
         $user = $request->user()->load('masyarakat');
 
         if ($request->wantsJson() || $request->is('api/*')) {

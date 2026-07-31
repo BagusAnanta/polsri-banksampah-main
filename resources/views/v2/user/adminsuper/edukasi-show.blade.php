@@ -1,0 +1,39 @@
+<x-layouts.app title="" subtitle="">
+
+<div class="max-w-3xl mx-auto space-y-6">
+    <div class="flex items-center gap-3">
+        <a href="{{ route('sa.edukasi.index') }}" class="btn btn-ghost btn-sm">
+            <span class="material-symbols-outlined">arrow_back</span>
+            Kembali ke Daftar
+        </a>
+    </div>
+
+    <div class="bg-white rounded-xl p-6 border border-slate-200 space-y-4">
+        <h1 class="text-2xl font-bold text-slate-900">{{ $artikel->judul_artikel }}</h1>
+        
+        @if($artikel->gambar_artikel)
+            <div class="w-full h-80 rounded-lg overflow-hidden">
+                <img src="{{ asset($artikel->gambar_artikel) }}" alt="{{ $artikel->judul_artikel }}" class="w-full h-full object-cover">
+            </div>
+        @endif
+        
+        <div class="prose prose-sm max-w-none">
+            {!! $artikel->isi_artikel !!}
+        </div>
+        
+        <div class="flex gap-3 pt-6 border-t border-slate-200">
+            <a href="{{ route('sa.edukasi.edit', $artikel->artikel_id) }}" class="btn btn-outline flex-1 gap-1">
+                <span class="material-symbols-outlined">edit</span> Edit
+            </a>
+            <form action="{{ route('sa.edukasi.destroy', $artikel->artikel_id) }}" method="POST" class="flex-1">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-error w-full gap-1" onclick="return confirm('Hapus artikel ini?')">
+                    <span class="material-symbols-outlined">delete</span> Hapus
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+</x-layouts.app>

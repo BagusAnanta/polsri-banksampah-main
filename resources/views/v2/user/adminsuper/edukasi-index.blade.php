@@ -1,11 +1,21 @@
+
 <x-layouts.app title="" subtitle="">
 
 <div class="space-y-6">
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div class="space-y-1">
             <h1 class="text-2xl font-bold text-slate-900">Daftar Artikel Edukasi</h1>
-            <p class="text-sm text-slate-600">Dapatkan edukasi terkait Bank Sampah</p>
+            <p class="text-sm text-slate-600">Kelola artikel edukasi masyarakat</p>
         </div>
+        <a href="{{ route('sa.edukasi.create') }}" class="btn btn-primary gap-2 self-start">
+            <span class="material-symbols-outlined">add</span> Tambah Artikel
+        </a>
+    </div>
+
+    <!-- KPI -->
+    <div class="bg-white rounded-xl p-4 border border-slate-200">
+        <p class="text-sm text-slate-600 font-medium">Total Artikel</p>
+        <p class="text-3xl font-bold text-slate-900">{{ $totalArtikel ?? 0 }}</p>
     </div>
 
     <!-- Article List -->
@@ -14,7 +24,7 @@
             <div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
                 @if($artikel->gambar_artikel)
                     <div class="h-40 overflow-hidden">
-                        <img src="{{ asset('storage/' . $artikel->gambar_artikel) }}" alt="{{ $artikel->judul_artikel }}" class="w-full h-full object-cover">
+                        <img src="{{ asset($artikel->gambar_artikel) }}" alt="{{ $artikel->judul_artikel }}" class="w-full h-full object-cover">
                     </div>
                 @else
                     <div class="h-40 bg-slate-100 flex items-center justify-center">
@@ -25,6 +35,18 @@
                     <h3 class="font-semibold text-slate-900 text-sm leading-tight">{{ $artikel->judul_artikel }}</h3>
                     <p class="text-xs text-slate-600 line-clamp-2">{{ \Illuminate\Support\Str::limit(strip_tags($artikel->isi_artikel), 120) }}</p>
                     <p class="text-xs text-slate-500">{{ \Carbon\Carbon::parse($artikel->created_at)->locale('id')->translatedFormat('d F Y') }}</p>
+                    <div class="flex gap-2">
+                        <a href="{{ route('sa.edukasi.edit', $artikel->artikel_id) }}" class="btn btn-outline btn-sm flex-1 gap-1">
+                            <span class="material-symbols-outlined" style="font-size: 16px;">edit</span> Edit
+                        </a>
+                        <form action="{{ route('sa.edukasi.destroy', $artikel->artikel_id) }}" method="POST" class="flex-1">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-ghost btn-sm w-full text-red-600 hover:bg-red-50 gap-1" onclick="return confirm('Hapus artikel ini?')">
+                                <span class="material-symbols-outlined" style="font-size: 16px;">delete</span> Hapus
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         @empty
@@ -35,5 +57,6 @@
         @endforelse
     </div>
 </div>
+
 
 </x-layouts.app>

@@ -23,13 +23,13 @@ class ArtikelController extends Controller
         $data['table_title'] = 'Daftar Artikel';
         $data['artikels'] = $artikels;
 
-        return view('artikels.index', $data);
+        return view('v2.user.adminsuper.edukasi-index', $data);
     }
 
     public function create()
     {
         $data['page_title'] = 'Tulis Artikel Baru';
-        return view('artikels.create', $data);
+        return view('v2.user.adminsuper.edukasi-create', $data);
     }
 
     public function store(Request $request)
@@ -51,16 +51,17 @@ class ArtikelController extends Controller
         $artikel->isi_artikel = $validated['isi_artikel'];
 
         if ($request->hasFile('gambar_artikel')) {
+
             $image = $request->file('gambar_artikel');
             $name = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
             $destinationPath = public_path('ui/images/artikel');
+
             if (!File::exists($destinationPath)) {
                 File::makeDirectory($destinationPath, 0755, true);
             }
+            
             $image->move($destinationPath, $name);
             $artikel->gambar_artikel = 'ui/images/artikel/' . $name;
-        } else {
-            $artikel->gambar_artikel = $request->get('gambar_artikel');
         }
 
         $artikel->save();
@@ -73,7 +74,7 @@ class ArtikelController extends Controller
             ], 201);
         }
 
-        return redirect()->route('artikels.index')->with('success', 'Artikel berhasil dibuat!');
+        return redirect()->route('sa.edukasi.index')->with('success', 'Artikel berhasil dibuat!');
     }
 
     public function show(Request $request, $id)
@@ -89,14 +90,14 @@ class ArtikelController extends Controller
 
         $data['page_title'] = $artikel->judul_artikel;
         $data['artikel'] = $artikel;
-        return view('artikels.show', $data);
+        return view('v2.user.adminsuper.edukasi-show', $data);
     }
 
     public function edit($id)
     {
         $data['page_title'] = 'Edit Artikel';
         $data['artikel'] = Artikel::findOrFail($id);
-        return view('artikels.edit', $data);
+        return view('v2.user.adminsuper.edukasi-edit', $data);
     }
 
     public function update(Request $request, $id)
@@ -149,7 +150,7 @@ class ArtikelController extends Controller
             ]);
         }
 
-        return redirect()->route('artikels.show', $id)->with('success', 'Artikel berhasil diupdate!');
+        return redirect()->route('sa.edukasi.index')->with('success', 'Artikel berhasil diupdate!');
     }
 
     public function destroy(Request $request, $id)
@@ -172,6 +173,6 @@ class ArtikelController extends Controller
             ]);
         }
 
-        return redirect()->route('artikels.index')->with('success', 'Artikel berhasil dihapus!');
+        return redirect()->route('sa.edukasi.index')->with('success', 'Artikel berhasil dihapus!');
     }
 }

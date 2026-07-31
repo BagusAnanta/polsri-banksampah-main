@@ -37,7 +37,6 @@ class BoxSampahController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         $request->validate([
             'id_box' => 'required',
             'latitude' => 'required',

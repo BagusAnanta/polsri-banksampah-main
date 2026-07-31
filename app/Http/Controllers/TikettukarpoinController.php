@@ -209,4 +209,74 @@ class TikettukarpoinController extends Controller
 
         return redirect()->route('tiket-tukar-poin.index')->with('success', 'Tiket tukar poin berhasil dihapus!');
     }
+
+    public function adminIndex()
+    {
+        $user = auth()->user();
+        $bankSampah = BankSampahUser::where('created_by', $user->id)->first();
+
+        if (!$bankSampah) {
+            return redirect()->route('login')->withErrors(['error' => 'Data bank sampah tidak ditemukan']);
+        }
+
+        $tikets = TiketTukarPoin::where('banksampah_id', $bankSampah->banksampah_id)
+            ->with(['masyarakat.user'])
+            ->latest('created_at')
+            ->get();
+
+        $totalTiket = $tikets->count();
+        $menungguProses = $tikets->where('status', 'Menunggu')->count();
+        $selesai = $tikets->where('status', 'Selesai')->count();
+
+        $data = [
+            'page_title' => 'Daftar Tiket Penukaran Voucher',
+            'tikets' => $tikets,
+            'totalTiket' => $totalTiket,
+            'menungguProses' => $menungguProses,
+            'selesai' => $selesai,
+        ];
+
+        return view('v2.user.adminbanksampah.tiket-poin-index', $data);
+    }
+
+    public function adminShow($id)
+    {
+        $ticket = TiketTukarPoin::with(['masyarakat.user', 'bankSampahUser'])->findOrFail($id);
+
+        $data = [
+            'page_title' => 'Detail Tiket Penukaran Voucher',
+            'tiket' => $ticket,
+        ];
+
+        return view('v2.user.adminbanksampah.tiket-poin-show', $data);
+    }
+
+    public function adminValidate(Request $request, $id)
+    {
+        $ticket = TiketTukarPoin::findOrFail($id);
+
+        if ($ticket->status !== 'Menunggu') {
+            return back()->withErrors(['error' => 'Tiket hanya dapat divalidasi jika status Menunggu']);
+        }
+
+        $action = $request->input('action');
+
+        if ($action === 'setuju') {
+            $ticket->status = 'Selesai';
+            $ticket->save();
+
+            $masyarakat = $ticket->masyarakat;
+            $masyarakat->poin = ($masyarakat->poin ?? 0) - $ticket->poin;
+            $masyarakat->voucher = ($masyarakat->voucher ?? 0) + 1;
+            $masyarakat->save();
+
+            return back()->with('success', 'Tiket penukaran voucher berhasil disetujui dan diterbitkan!');
+        } elseif ($action === 'batalkan') {
+            $ticket->status = 'Dibatalkan';
+            $ticket->save();
+            return back()->with('success', 'Tiket penukaran voucher berhasil dibatalkan!');
+        }
+
+        return back()->withErrors(['error' => 'Action tidak valid']);
+    }
 }

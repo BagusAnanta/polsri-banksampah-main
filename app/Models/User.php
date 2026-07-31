@@ -59,4 +59,19 @@ class User extends Authenticatable
     {
         return $this->hasOne(Masyarakat::class, 'user_id');
     }
+
+    public function registeredBy()
+    {
+        return $this->belongsTo(User::class, 'registered_by');
+    }
+
+    public function createdBankSampahUsers()
+    {
+        return $this->hasMany(BankSampahUser::class, 'created_by');
+    }
+
+    public function getRoleNameAttribute()
+    {
+        return $this->roles->first()->name ?? null;
+    }
 }

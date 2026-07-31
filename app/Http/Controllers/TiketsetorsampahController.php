@@ -180,4 +180,96 @@ class TiketsetorsampahController extends Controller
 
         return redirect()->route('tiket-setor-sampah.index')->with('success', 'Tiket setor sampah berhasil dihapus!');
     }
+
+    public function adminIndex()
+    {
+        $user = auth()->user();
+        $bankSampah = BankSampahUser::where('created_by', $user->id)->first();
+
+        if (!$bankSampah) {
+            return redirect()->route('login')->withErrors(['error' => 'Data bank sampah tidak ditemukan']);
+        }
+
+        $tikets = TiketSetorSampah::where('banksampah_id', $bankSampah->banksampah_id)
+            ->with(['masyarakat.user'])
+            ->latest('created_at')
+            ->get();
+
+        $totalTiket = $tikets->count();
+        $menungguProses = $tikets->where('status', 'Menunggu')->count();
+        $selesai = $tikets->where('status', 'Selesai')->count();
+
+        $data = [
+            'page_title' => 'Daftar Tiket Setoran Sampah',
+            'tikets' => $tikets,
+            'totalTiket' => $totalTiket,
+            'menungguProses' => $menungguProses,
+            'selesai' => $selesai,
+        ];
+
+        return view('v2.user.adminbanksampah.tiket-setor-index', $data);
+    }
+
+    public function adminShow($id)
+    {
+        $ticket = TiketSetorSampah::with(['masyarakat.user', 'bankSampahUser'])->findOrFail($id);
+        $setting = Setting::first() ?? new Setting(['gram_per_point' => 1000, 'point_per_voucher' => 500]);
+
+        $data = [
+            'page_title' => 'Detail Tiket Setoran Sampah',
+            'tiket' => $ticket,
+            'gramPerPoint' => $setting->gram_per_point,
+        ];
+
+        return view('v2.user.adminbanksampah.tiket-setor-show', $data);
+    }
+
+    public function adminValidate(Request $request, $id)
+    {
+        $ticket = TiketSetorSampah::findOrFail($id);
+
+        if ($ticket->status !== 'Menunggu') {
+            return back()->withErrors(['error' => 'Tiket hanya dapat divalidasi jika status Menunggu']);
+        }
+
+        $validated = $request->validate([
+            'berat_aktual' => 'required|integer|min:0',
+        ]);
+
+        $setting = Setting::first() ?? new Setting(['gram_per_point' => 1000]);
+        $gramPerPoint = $setting->gram_per_point ?? 1000;
+        $poin = floor($validated['berat_aktual'] / $gramPerPoint);
+
+        $action = $request->input('action');
+
+        if ($action === 'setuju') {
+            $ticket->berat_sampah_actual = $validated['berat_aktual'];
+            $ticket->poin = $poin;
+            $ticket->status = 'Selesai';
+            $ticket->save();
+
+            $masyarakat = $ticket->masyarakat;
+            $masyarakat->total_gramasi = ($masyarakat->total_gramasi ?? 0) + $validated['berat_aktual'];
+            $masyarakat->poin = ($masyarakat->poin ?? 0) + $poin;
+            $masyarakat->total_selesai = ($masyarakat->total_selesai ?? 0) + 1;
+            $masyarakat->save();
+
+            return back()->with('success', 'Tiket setoran sampah berhasil disetujui!');
+        } elseif ($action === 'tolak') {
+            $ticket->status = 'Ditolak';
+            $ticket->save();
+            return back()->with('success', 'Tiket setoran sampah berhasil ditolak!');
+        }
+
+        return back()->withErrors(['error' => 'Action tidak valid']);
+    }
+
+    public function adminScan()
+    {
+        $data = [
+            'page_title' => 'Scan QR Tiket',
+        ];
+
+        return view('v2.user.adminbanksampah.qr-scan', $data);
+    }
 }

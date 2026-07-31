@@ -18,7 +18,6 @@ class OrderController extends Controller
     {
         // $orders = Order::where('user_id', Auth::id())->with('product', 'user')->get();
         $orders = Order::with('product', 'user')->orderBy('created_at', 'asc')->paginate(25);
-        // dd($orders);
 
         return view('orders.index', compact('orders'));
     }

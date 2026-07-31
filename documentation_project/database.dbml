@@ -51,8 +51,8 @@ Table masyarakat {
   identity_photo varchar [not null]
   gender gender
   verification verification
-  poin integer [default : 0]
-  voucher integer [default : 0]
+  poin integer [default: 0]
+  voucher integer [default: 0]
   created_at timestamp
   updated_at timestamp
 }

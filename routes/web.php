@@ -20,6 +20,7 @@ use App\Http\Controllers\TiketsetorsampahController;
 use App\Http\Controllers\TikettukarpoinController;
 use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\SuperAdminController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -97,39 +98,7 @@ Route::get('/help', function() {
     return view('v2.help');
 })->name('help');
 
-// ====== Admin Bank Sampah routes (placeholder) ======
-Route::get('/admin/dashboard', function() {
-    return view('v2.admin.dashboard');
-})->name('admin.dashboard');
-
-Route::get('/admin/tiket', function() {
-    return view('v2.admin.tiket-index', ['tikets' => collect()]);
-})->name('admin.tiket.index');
-
-Route::get('/admin/scan', function() {
-    return view('v2.admin.scan');
-})->name('admin.scan');
-
-// ====== Super Admin routes (placeholder) ======
-Route::get('/sa/dashboard', function() {
-    return view('v2.sa.dashboard');
-})->name('sa.dashboard');
-
-Route::get('/sa/masyarakat', function() {
-    return view('v2.sa.masyarakat-index', ['masyarakats' => collect()]);
-})->name('sa.masyarakat.index');
-
-Route::get('/sa/bank-sampah', function() {
-    return view('v2.sa.bank-sampah-index', ['banks' => collect()]);
-})->name('sa.bank-sampah.index');
-
-Route::get('/sa/edukasi', function() {
-    return view('v2.sa.edukasi-index', ['artikels' => collect()]);
-})->name('sa.edukasi.index');
-
-Route::get('/sa/pengaturan', function() {
-    return view('v2.sa.pengaturan');
-})->name('sa.pengaturan');
+// ====== V2 Admin & Super Admin Routes (inside auth middleware group) ======
 
 
 /**
@@ -138,7 +107,7 @@ Route::get('/sa/pengaturan', function() {
 
 # Version 1 middleware 
 
-Route::prefix('v1')->middleware('auth:web')->group(function () {
+Route::prefix('v1')->middleware(['auth:web', 'role:Admin|Super Admin'])->group(function () {
 
     // Master Data
     Route::get('master-data', function () {
@@ -273,6 +242,47 @@ Route::prefix('v2')->middleware('auth:web')->group(function () {
     Route::resource('settings', SettingController::class);
     Route::resource('monitoring', MonitoringController::class);
     Route::resource('transaksi', TransaksiController::class);
+
+    // ====== V2 Admin Bank Sampah Routes ======
+    Route::prefix('admin')->name('admin.')->middleware('role:Admin Bank Sampah|Super Admin')->group(function () {
+        Route::get('/dashboard', [DashboardController::class, 'adminBankSampahDashboard'])->name('dashboard');
+
+        Route::get('/tiket-setor', [TiketsetorsampahController::class, 'adminIndex'])->name('tiket-setor.index');
+        Route::get('/tiket-setor/{id}', [TiketsetorsampahController::class, 'adminShow'])->name('tiket-setor.show');
+        Route::put('/tiket-setor/{id}/validate', [TiketsetorsampahController::class, 'adminValidate'])->name('tiket-setor.validate');
+
+        Route::get('/tiket-poin', [TikettukarpoinController::class, 'adminIndex'])->name('tiket-poin.index');
+        Route::get('/tiket-poin/{id}', [TikettukarpoinController::class, 'adminShow'])->name('tiket-poin.show');
+        Route::put('/tiket-poin/{id}/validate', [TikettukarpoinController::class, 'adminValidate'])->name('tiket-poin.validate');
+
+        Route::get('/scan', [TiketsetorsampahController::class, 'adminScan'])->name('scan');
+    });
+
+    // ====== V2 Super Admin Routes ======
+    Route::prefix('super-admin')->name('sa.')->middleware('role:Super Admin')->group(function () {
+        Route::get('/dashboard', [SuperAdminController::class, 'dashboard'])->name('dashboard');
+
+        Route::get('/masyarakat', [SuperAdminController::class, 'masyarakatIndex'])->name('masyarakat.index');
+        Route::get('/masyarakat/{id}/review', [SuperAdminController::class, 'masyarakatReview'])->name('masyarakat.review');
+        Route::post('/masyarakat/{id}/review-process', [SuperAdminController::class, 'masyarakatReviewProcess'])->name('masyarakat.review-process');
+        Route::get('/masyarakat/{id}', [SuperAdminController::class, 'masyarakatShow'])->name('masyarakat.show');
+
+        Route::get('/bank-sampah', [SuperAdminController::class, 'bankSampahIndex'])->name('bank-sampah.index');
+        Route::get('/bank-sampah/create', [SuperAdminController::class, 'bankSampahCreate'])->name('bank-sampah.create');
+        Route::post('/bank-sampah', [SuperAdminController::class, 'bankSampahStore'])->name('bank-sampah.store');
+
+        Route::resource('edukasi', ArtikelController::class)->names([
+            'index' => 'edukasi.index',
+            'create' => 'edukasi.create',
+            'store' => 'edukasi.store',
+            'edit' => 'edukasi.edit',
+            'update' => 'edukasi.update',
+            'destroy' => 'edukasi.destroy',
+        ]);
+
+        Route::get('/pengaturan', [SettingController::class, 'index'])->name('pengaturan.index');
+        Route::put('/pengaturan', [SettingController::class, 'update'])->name('pengaturan.update');
+    });
 });
 
 Route::post('/register-user', [AuthController::class, 'registerUser'])->name('registerUser');

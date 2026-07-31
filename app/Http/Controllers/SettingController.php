@@ -28,7 +28,7 @@ class SettingController extends Controller
         $data['page_title'] = 'Pengaturan Poin';
         $data['setting'] = $setting;
 
-        return view('settings.index', $data);
+        return view('v2.user.adminsuper.pengaturan', $data);
     }
 
     public function update(Request $request, $id = null)
@@ -56,6 +56,6 @@ class SettingController extends Controller
             ]);
         }
 
-        return redirect()->route('settings.index')->with('success', 'Pengaturan berhasil diperbarui!');
+        return redirect()->route('sa.pengaturan.update')->with('success', 'Pengaturan berhasil diperbarui!');
     }
 }

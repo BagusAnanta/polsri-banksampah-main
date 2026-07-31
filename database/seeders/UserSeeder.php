@@ -10,34 +10,49 @@ use Spatie\Permission\Models\Permission;
 
 class UserSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
-        $role = Role::firstOrCreate(['name' => 'Admin']);
-
-        $user = User::where('email', 'admin@gmail.com')->first();
-
-        if (!$user) {
-            $user = new User();
-            $user->name = 'Admin';
-            $user->username = 'admin';
-            $user->email = 'admin@gmail.com';
-            $user->password = Hash::make('admin');
-            $user->save();
-
-            $user->user_code = 'Admin' . str_pad($user->id, 6, '0', STR_PAD_LEFT);
-            $user->save();
-        }
+        $users = [
+            [
+                'name' => 'Admin',
+                'username' => 'admin',
+                'email' => 'admin@gmail.com',
+                'password' => 'admin',
+                'role' => 'Admin',
+                'code_prefix' => 'Admin',
+            ],
+            [
+                'name' => 'Super Admin',
+                'username' => 'superadmin',
+                'email' => 'superadmin@gmail.com',
+                'password' => 'superadmin',
+                'role' => 'Super Admin',
+                'code_prefix' => 'SA',
+            ],
+        ];
 
         $permissions = Permission::pluck('id', 'id')->all();
-        $role->syncPermissions($permissions);
 
-        if (!$user->hasRole($role->name)) {
-            $user->assignRole($role->name);
+        foreach ($users as $userData) {
+            $user = User::where('email', $userData['email'])->first();
+
+            if (!$user) {
+                $role = Role::firstOrCreate(['name' => $userData['role']]);
+                $role->syncPermissions($permissions);
+
+                $user = User::create([
+                    'name' => $userData['name'],
+                    'username' => $userData['username'],
+                    'email' => $userData['email'],
+                    'password' => Hash::make($userData['password']),
+                ]);
+
+                $user->update([
+                    'user_code' => $userData['code_prefix'] . str_pad($user->id, 6, '0', STR_PAD_LEFT),
+                ]);
+
+                $user->assignRole($userData['role']);
+            }
         }
     }
 }

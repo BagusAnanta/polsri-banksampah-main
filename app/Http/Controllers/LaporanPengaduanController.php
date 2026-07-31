@@ -129,7 +129,7 @@ class LaporanPengaduanController extends Controller
             $laporanPengaduan = LaporanPengaduan::findOrFail($id);
             $laporanPengaduan->delete();
         });
-        if (Auth::user()->role == 'Admin') {
+        if (Auth::user()->hasRole('Admin')) {
             return redirect()->route('laporan-pengaduans.index')->with('success', 'Laporan pengaduan berhasil dihapus');
         } else {
             return redirect()->route('laporan-pengaduans.indexNasabah')->with('success', 'Laporan pengaduan berhasil dihapus');

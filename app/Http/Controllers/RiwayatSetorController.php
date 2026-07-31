@@ -117,7 +117,6 @@ class RiwayatSetorController extends Controller
 
         $totalHargaTerbilang = terbilang($totalHarga);
 
-        // dd($totalHargaTerbilang, $totalHarga);
 
         $pdf = PDF::loadView('history.pdf-slip-penyetoran', compact('items', 'month', 'year', 'totalHarga', 'totalHargaTerbilang'));
         $pdf->setPaper('A4', 'landscape');

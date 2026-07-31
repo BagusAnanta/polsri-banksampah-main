@@ -15,6 +15,7 @@ use App\Models\Masyarakat;
 use App\Models\TiketSetorSampah;
 use App\Models\TiketTukarPoin;
 use App\Models\Setting;
+use App\Models\BankSampahUser;
 
 class DashboardController extends Controller
 {
@@ -228,5 +229,65 @@ class DashboardController extends Controller
     public function maps() {
         $data['box'] = BoxSampah::get();
         return view('dashboard.maps', $data);
+    }
+
+    public function adminBankSampahDashboard()
+    {
+        $user = Auth::user();
+        $bankSampah = BankSampahUser::where('created_by', $user->id)->first();
+
+        if (!$bankSampah) {
+            return redirect()->route('login')->withErrors(['error' => 'Data bank sampah tidak ditemukan']);
+        }
+
+        $totalTiketSetor = TiketSetorSampah::where('banksampah_id', $bankSampah->banksampah_id)->count();
+        $tiketSetorPending = TiketSetorSampah::where('banksampah_id', $bankSampah->banksampah_id)->where('status', 'Menunggu')->count();
+        $tiketSetorSelesai = TiketSetorSampah::where('banksampah_id', $bankSampah->banksampah_id)->where('status', 'Selesai')->count();
+        $tiketPoinPending = TiketTukarPoin::where('banksampah_id', $bankSampah->banksampah_id)->where('status', 'Menunggu')->count();
+
+        $tiketSetorPendingList = TiketSetorSampah::where('banksampah_id', $bankSampah->banksampah_id)
+            ->where('status', 'Menunggu')
+            ->with('masyarakat.user')
+            ->latest('created_at')
+            ->take(5)
+            ->get();
+
+        $tiketPoinPendingList = TiketTukarPoin::where('banksampah_id', $bankSampah->banksampah_id)
+            ->where('status', 'Menunggu')
+            ->with('masyarakat.user')
+            ->latest('created_at')
+            ->take(5)
+            ->get();
+
+        $tiketPerBulan = ['selesai' => [], 'menunggu' => []];
+        for ($i = 11; $i >= 0; $i--) {
+            $bulan = now()->subMonths($i);
+            $selesai = TiketSetorSampah::where('banksampah_id', $bankSampah->banksampah_id)
+                ->where('status', 'Selesai')
+                ->whereYear('updated_at', $bulan->year)
+                ->whereMonth('updated_at', $bulan->month)
+                ->count();
+            $menunggu = TiketSetorSampah::where('banksampah_id', $bankSampah->banksampah_id)
+                ->where('status', 'Menunggu')
+                ->whereYear('created_at', $bulan->year)
+                ->whereMonth('created_at', $bulan->month)
+                ->count();
+            $tiketPerBulan['selesai'][] = $selesai;
+            $tiketPerBulan['menunggu'][] = $menunggu;
+        }
+
+        $data = [
+            'page_title' => 'Dashboard Admin Bank Sampah',
+            'totalTiketSetor' => $totalTiketSetor,
+            'tiketSetorPending' => $tiketSetorPending,
+            'tiketSetorSelesai' => $tiketSetorSelesai,
+            'tiketPoinPending' => $tiketPoinPending,
+            'tiketSetorPendingList' => $tiketSetorPendingList,
+            'tiketPoinPendingList' => $tiketPoinPendingList,
+            'tiketPerBulan' => $tiketPerBulan,
+            'bankInfo' => $bankSampah,
+        ];
+
+        return view('v2.user.adminbanksampah.dashboard', $data);
     }
 }

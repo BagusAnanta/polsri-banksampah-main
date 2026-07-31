@@ -22,7 +22,6 @@ class TransaksiController extends Controller
 
         // $tabungan = Tabungan::where('user_id', auth()->user()->id)->get();
 
-        // dd($tabungan);
 
         $firstTabungan = Tabungan::with('bankSampah')
             ->whereHas('bankSampah', function ($query) {
@@ -41,7 +40,6 @@ class TransaksiController extends Controller
 
         // $statusPendingPenyetoran = BankSampah::where('user_id', auth()->user()->id)->where('status', 'pending')->exists();
         $lastTabungan = BankSampah::where('user_id', auth()->id())->orderBy('id', 'desc')->first();
-        // dd($lastTabungan);
 
         return view('transaksi.index', compact('tabungan', 'firstTabungan', 'kreditNasabah', 'lastTabungan'));
     }
