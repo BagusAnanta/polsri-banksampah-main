@@ -1,0 +1,89 @@
+root@polsri-prod:~# cat /etc/nginx/sites-available/smartfarm.elektropolsri.tech
+server {
+    server_name smartfarm.elektropolsri.tech;
+    root /var/www/smartfarm.elektropolsri.tech/public;
+
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-Content-Type-Options "nosniff";
+
+    index index.php;
+    charset utf-8;
+
+    # Route utama ke Laravel
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    error_page 404 /index.php;
+
+    # Proses file PHP melalui PHP-FPM
+    location ~ \.php$ {
+        fastcgi_pass unix:/var/run/php/php8.3-fpm.sock;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+    # ─── REVERSE PROXY WEBSOCKET (Wajib untuk Cloudflare) ───
+    # Ini membuat socket.io bisa menumpang di port 80/443 tanpa diblokir Cloudflare
+    location /socket.io/ {
+        proxy_pass http://127.0.0.1:3002;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+
+    # Blokir akses ke folder tersembunyi seperti .env
+    location ~ /\.(?!well-known).* {
+        deny all;
+    }
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/smartfarm.elektropolsri.tech/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/smartfarm.elektropolsri.tech/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+server {
+    if ($host = smartfarm.elektropolsri.tech) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    listen 80;
+    server_name smartfarm.elektropolsri.tech;
+    return 404; # managed by Certbot
+
+
+}
+
+
+# add new one
+server {
+    listen 80;
+
+    server_name 187.77.114.100;
+
+    root /var/www/banksampah-staging/public;
+
+    index index.php;
+    charset utf-8;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    error_page 404 /index.php;
+
+    location ~ \.php$ {
+        fastcgi_pass unix:/var/run/php/php8.3-fpm.sock;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+    location ~ /\.(?!well-known).* {
+        deny all;
+    }
+}
