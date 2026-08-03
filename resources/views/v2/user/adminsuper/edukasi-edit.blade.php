@@ -56,42 +56,10 @@
         <div class="bg-white rounded-xl p-6 border border-slate-200 space-y-4">
             <h3 class="text-lg font-semibold text-slate-900">Isi Artikel</h3>
             <div class="form-control">
-                <div class="flex gap-1 border-b border-slate-200 pb-2 mb-2 flex-wrap">
-                    <button type="button" class="rte-btn p-2 hover:bg-slate-100 rounded" data-cmd="bold" title="Bold">
-                        <span class="material-symbols-outlined text-sm">format_bold</span>
-                    </button>
-                    <button type="button" class="rte-btn p-2 hover:bg-slate-100 rounded" data-cmd="italic" title="Italic">
-                        <span class="material-symbols-outlined text-sm">format_italic</span>
-                    </button>
-                    <button type="button" class="rte-btn p-2 hover:bg-slate-100 rounded" data-cmd="underline" title="Underline">
-                        <span class="material-symbols-outlined text-sm">format_underlined</span>
-                    </button>
-                    <div class="divider divider-horizontal mx-0 w-px my-0"></div>
-                    <button type="button" class="rte-btn p-2 hover:bg-slate-100 rounded" data-cmd="formatBlock" data-arg="h1" title="Heading 1">H1</button>
-                    <button type="button" class="rte-btn p-2 hover:bg-slate-100 rounded" data-cmd="formatBlock" data-arg="h2" title="Heading 2">H2</button>
-                    <div class="divider divider-horizontal mx-0 w-px my-0"></div>
-                    <button type="button" class="rte-btn p-2 hover:bg-slate-100 rounded" data-cmd="insertUnorderedList" title="Bullet List">
-                        <span class="material-symbols-outlined text-sm">format_list_bulleted</span>
-                    </button>
-                    <button type="button" class="rte-btn p-2 hover:bg-slate-100 rounded" data-cmd="insertOrderedList" title="Number List">
-                        <span class="material-symbols-outlined text-sm">format_list_numbered</span>
-                    </button>
-                    <button type="button" class="rte-btn p-2 hover:bg-slate-100 rounded" data-cmd="formatBlock" data-arg="blockquote" title="Quote">
-                        <span class="material-symbols-outlined text-sm">format_quote</span>
-                    </button>
-                    <div class="divider divider-horizontal mx-0 w-px my-0"></div>
-                    <button type="button" class="rte-btn p-2 hover:bg-slate-100 rounded" id="linkBtn" title="Add Link">
-                        <span class="material-symbols-outlined text-sm">link</span>
-                    </button>
-                    <button type="button" class="rte-btn p-2 hover:bg-slate-100 rounded" id="unlinkBtn" title="Remove Link">
-                        <span class="material-symbols-outlined text-sm">link_off</span>
-                    </button>
-                </div>
+                <x-richtext.richtext name="isi_artikel" id="editor" :defaultvalue="$artikel->isi_artikel"/>
                 @error('isi_artikel')
                     <label class="label"><span class="label-text-alt text-error">{{ $message }}</span></label>
                 @enderror
-                <div id="editor" class="border border-slate-300 rounded-md p-3 bg-white min-h-80 focus:outline-none focus:ring-2 focus:ring-blue-500" contenteditable="true">{!! $artikel->isi_artikel !!}</div>
-                <input type="hidden" id="isiArtikelHidden" name="isi_artikel">
             </div>
         </div>
 
@@ -104,55 +72,5 @@
         </div>
     </form>
 </div>
-
-@push('scripts')
-<script>
-    const editor = document.getElementById('editor');
-    const hiddenInput = document.getElementById('isiArtikelHidden');
-    const linkBtn = document.getElementById('linkBtn');
-    const unlinkBtn = document.getElementById('unlinkBtn');
-    const form = document.querySelector('form');
-
-    document.querySelectorAll('.rte-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            const cmd = btn.dataset.cmd;
-            const arg = btn.dataset.arg || null;
-
-            if (cmd === 'createLink') {
-                const url = prompt('Enter URL:');
-                if (url) document.execCommand('createLink', false, url);
-            } else {
-                document.execCommand(cmd, false, arg);
-            }
-            editor.focus();
-        });
-    });
-
-    linkBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        const url = prompt('Enter URL:');
-        if (url) document.execCommand('createLink', false, url);
-        editor.focus();
-    });
-
-    unlinkBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        document.execCommand('unlink', false, null);
-        editor.focus();
-    });
-
-    form.addEventListener('submit', (e) => {
-        hiddenInput.value = editor.innerHTML;
-        console.log('Form submitted with isi_artikel:', hiddenInput.value);
-        
-        if (!hiddenInput.value.trim()) {
-            e.preventDefault();
-            alert('Isi artikel tidak boleh kosong!');
-            return false;
-        }
-    });
-</script>
-@endpush
 
 </x-layouts.app>

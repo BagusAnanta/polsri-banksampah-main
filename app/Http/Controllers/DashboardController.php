@@ -260,18 +260,23 @@ class DashboardController extends Controller
             ->get();
 
         $tiketPerBulan = ['selesai' => [], 'menunggu' => []];
-        for ($i = 11; $i >= 0; $i--) {
+        $bulanLabels = [];
+        for ($i = 5; $i >= 0; $i--) {
             $bulan = now()->subMonths($i);
+            $bulanLabels[] = $bulan->translatedFormat('M');
+
             $selesai = TiketSetorSampah::where('banksampah_id', $bankSampah->banksampah_id)
                 ->where('status', 'Selesai')
                 ->whereYear('updated_at', $bulan->year)
                 ->whereMonth('updated_at', $bulan->month)
                 ->count();
+
             $menunggu = TiketSetorSampah::where('banksampah_id', $bankSampah->banksampah_id)
                 ->where('status', 'Menunggu')
                 ->whereYear('created_at', $bulan->year)
                 ->whereMonth('created_at', $bulan->month)
                 ->count();
+
             $tiketPerBulan['selesai'][] = $selesai;
             $tiketPerBulan['menunggu'][] = $menunggu;
         }
@@ -285,6 +290,7 @@ class DashboardController extends Controller
             'tiketSetorPendingList' => $tiketSetorPendingList,
             'tiketPoinPendingList' => $tiketPoinPendingList,
             'tiketPerBulan' => $tiketPerBulan,
+            'bulanLabels' => $bulanLabels,
             'bankInfo' => $bankSampah,
         ];
 

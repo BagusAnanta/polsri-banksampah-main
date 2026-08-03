@@ -165,13 +165,14 @@
 <script>
     const chartOptions = {
         series: [
-            { name: 'Tiket Selesai', data: {{ json_encode($tiketPerBulan['selesai'] ?? [0,0,0,0,0,0,0,0,0,0,0,0]) }} },
-            { name: 'Tiket Menunggu', data: {{ json_encode($tiketPerBulan['menunggu'] ?? [0,0,0,0,0,0,0,0,0,0,0,0]) }} }
+            { name: 'Tiket Selesai', data: @json($tiketPerBulan['selesai'] ?? [])},
+            { name: 'Tiket Menunggu', data: @json($tiketPerBulan['menunggu'] ?? [])}
         ],
         chart: { type: 'area', height: 280, toolbar: { show: false } },
         colors: ['#10b981', '#f59e0b'],
         xaxis: { 
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
+            name: 'Bulan',
+            categories: @json($bulanLabels ?? []),
             labels: { style: { fontSize: '12px' } }
         },
         yaxis: { labels: { style: { fontSize: '12px' } } },

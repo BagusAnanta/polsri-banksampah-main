@@ -41,7 +41,14 @@
                         <p class="text-sm font-semibold text-slate-900">{{ $tiket->masyarakat->user->name ?? '-' }}</p>
                         <p class="text-xs text-slate-500 mt-0.5">{{ $tiket->masyarakat->nik ?? '-' }}</p>
                     </div>
-                    <x-layouts.status-badge status="$tiket->status" />
+                    <span @class([
+                            'rounded-full px-2.5 py-0.5 text-xs font-medium whitespace-nowrap',
+                            'bg-amber-100 text-amber-600' => strtolower($tiket->status) === 'menunggu',
+                            'bg-green-100 text-green-600' => strtolower($tiket->status) === 'selesai',
+                            'bg-red-100 text-red-600' => strtolower($tiket->status) === 'ditolak' || strtolower($tiket->status) === 'dibatalkan',
+                        ])>
+                            {{ $tiket->status }}
+                    </span>
                 </div>
                 <div class="space-y-2">
                     <div class="flex justify-between text-sm">

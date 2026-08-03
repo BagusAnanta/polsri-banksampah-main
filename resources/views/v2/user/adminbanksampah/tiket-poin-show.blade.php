@@ -17,9 +17,14 @@
         <div class="text-center border-b border-slate-100 pb-4">
             <p class="text-sm text-slate-500 font-medium">Tiket Tukar Poin</p>
             <p class="text-xl font-bold text-slate-900 mt-1">#{{ $tiket->tiketpoin_inc ?? $tiket->tiketpoin_id }}</p>
-            <div class="mt-2">
-                <x-layouts.status-badge status="$tiket->status" />
-            </div>
+            <span @class([
+                        'rounded-full px-2.5 py-0.5 text-xs font-medium whitespace-nowrap mt-2',
+                        'bg-amber-100 text-amber-600' => strtolower($tiket->status) === 'menunggu',
+                        'bg-green-100 text-green-600' => strtolower($tiket->status) === 'selesai',
+                        'bg-red-100 text-red-600' => strtolower($tiket->status) === 'ditolak' || strtolower($tiket->status) === 'dibatalkan',
+                ])>
+                {{ $tiket->status }}
+            </span>
             <p class="text-xs text-slate-500 mt-2">
                 {{ \Carbon\Carbon::parse($tiket->created_at)->locale('id')->translatedFormat('l, d F Y H:i') }}
             </p>

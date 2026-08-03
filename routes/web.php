@@ -87,9 +87,10 @@ Route::middleware('auth:web')->group(function () {
     Route::get('/tiket-poin/{id}', [TikettukarpoinController::class, 'showV2'])->name('tiket-poin.show');
     Route::put('/tiket-poin/{id}/cancel', [TikettukarpoinController::class, 'cancel'])->name('tiket-poin.cancel');
 
-    Route::get('/edukasi', function() {
-        return view('v2.user.masyarakat.edukasi-index', ['artikels' => collect()]);
-    })->name('edukasi.index');
+    // Route::get('/edukasi', function() {
+    //     return view('v2.user.masyarakat.edukasi-index', ['artikels' => collect()]);
+    // })->name('edukasi.index');
+    Route::get('/edukasi', [ArtikelController::class, 'index'])->name('edukasi.index');
 
     Route::get('/riwayat', [DashboardController::class, 'getRiwayat'])->name('riwayat.index');
 });
@@ -271,14 +272,22 @@ Route::prefix('v2')->middleware('auth:web')->group(function () {
         Route::get('/bank-sampah/create', [SuperAdminController::class, 'bankSampahCreate'])->name('bank-sampah.create');
         Route::post('/bank-sampah', [SuperAdminController::class, 'bankSampahStore'])->name('bank-sampah.store');
 
-        Route::resource('edukasi', ArtikelController::class)->names([
-            'index' => 'edukasi.index',
-            'create' => 'edukasi.create',
-            'store' => 'edukasi.store',
-            'edit' => 'edukasi.edit',
-            'update' => 'edukasi.update',
-            'destroy' => 'edukasi.destroy',
-        ]);
+        // Route::resource('edukasi', ArtikelController::class)->names([
+        //     'index' => 'edukasi.index',
+        //     'create' => 'edukasi.create',
+        //     'store' => 'edukasi.store',
+        //     'edit' => 'edukasi.edit',
+        //     'update' => 'edukasi.update',
+        //     'destroy' => 'edukasi.destroy',
+        // ]);
+
+        Route::get('/edukasi', [ArtikelController::class, 'index'])->name('edukasi.index');
+        Route::get('/edukasi/create', [ArtikelController::class, 'create'])->name('edukasi.create');
+        Route::post('/edukasi', [ArtikelController::class, 'store'])->name('edukasi.store');
+        Route::get('/edukasi/{id}', [ArtikelController::class, 'show'])->name('edukasi.show');
+        Route::get('/edukasi/{id}/edit', [ArtikelController::class, 'edit'])->name('edukasi.edit');
+        Route::put('/edukasi/{id}', [ArtikelController::class, 'update'])->name('edukasi.update');
+        Route::delete('/edukasi/{id}', [ArtikelController::class, 'destroy'])->name('edukasi.destroy');
 
         Route::get('/pengaturan', [SettingController::class, 'index'])->name('pengaturan.index');
         Route::put('/pengaturan', [SettingController::class, 'update'])->name('pengaturan.update');

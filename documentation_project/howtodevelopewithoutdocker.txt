@@ -1,0 +1,691 @@
+WKWKWKWK BROOOOO 🤣🤣🤣
+
+**INI JUSTRU BAGUS BANGET.**
+
+Gw malah nyaranin lu bikin dokumentasi sendiri. Percaya deh, dokumentasi hasil "pernah berdarah-darah" itu jauh lebih berguna daripada tutorial di internet. 🤣
+
+Gw coba ringkas dari **awal sampai akhir** ya. Nanti tinggal lu copy ke `DEPLOYMENT.md` atau Notion.
+
+---
+
+# 🚀 Laravel Deployment ke Ubuntu VPS (Tanpa Docker)
+
+## 1. Persiapan VPS
+
+Update package
+
+```bash
+sudo apt update
+sudo apt upgrade -y
+```
+
+Install software yang dibutuhkan
+
+```bash
+sudo apt install nginx git unzip curl software-properties-common -y
+```
+
+---
+
+## 2. Install PHP
+
+Tambahkan repository PHP
+
+```bash
+sudo add-apt-repository ppa:ondrej/php
+sudo apt update
+```
+
+Install PHP
+
+```bash
+sudo apt install php8.3 php8.3-fpm php8.3-cli php8.3-common
+```
+
+Install extension Laravel
+
+```bash
+sudo apt install \
+php8.3-mysql \
+php8.3-mbstring \
+php8.3-xml \
+php8.3-curl \
+php8.3-zip \
+php8.3-gd \
+php8.3-bcmath \
+php8.3-intl
+```
+
+---
+
+## 🟡 Error yang terjadi
+
+### Error
+
+```
+could not find driver
+```
+
+### Penyebab
+
+Extension MySQL belum terinstall.
+
+### Solusi
+
+```bash
+sudo apt install php8.3-mysql
+sudo systemctl restart php8.3-fpm
+```
+
+---
+
+# 3. Install Composer
+
+```bash
+sudo apt install composer
+```
+
+Cek
+
+```bash
+composer --version
+```
+
+---
+
+# 4. Install MySQL
+
+```bash
+sudo apt install mysql-server
+```
+
+Login
+
+```bash
+sudo mysql
+```
+
+Buat database
+
+```sql
+CREATE DATABASE banksampah;
+```
+
+Buat user
+
+```sql
+CREATE USER 'banksampah'@'localhost' IDENTIFIED BY 'password';
+```
+
+Grant
+
+```sql
+GRANT ALL PRIVILEGES ON banksampah.* TO 'banksampah'@'localhost';
+FLUSH PRIVILEGES;
+```
+
+---
+
+## 🟡 Error
+
+```
+Access denied for user
+```
+
+### Penyebab
+
+User belum memiliki permission.
+
+### Solusi
+
+Grant privilege lagi.
+
+---
+
+# 5. Clone Project
+
+```bash
+cd /var/www
+
+git clone <repository>
+```
+
+Masuk project
+
+```bash
+cd banksampah-staging
+```
+
+---
+
+# 6. Install Dependency
+
+```bash
+composer install
+```
+
+Kalau production
+
+```bash
+composer install --no-dev --optimize-autoloader
+```
+
+---
+
+# 7. Environment
+
+Copy
+
+```bash
+cp .env.example .env
+```
+
+Generate
+
+```bash
+php artisan key:generate
+```
+
+Edit
+
+```
+APP_NAME=
+APP_ENV=
+APP_DEBUG=
+DB_DATABASE=
+DB_USERNAME=
+DB_PASSWORD=
+```
+
+---
+
+# 8. Migration
+
+```bash
+php artisan migrate
+```
+
+---
+
+# 9. Nginx
+
+Buat config
+
+```
+/etc/nginx/sites-available/banksampah
+```
+
+Isi
+
+```nginx
+server {
+
+    listen 80;
+
+    server_name staging.example.com;
+
+    root /var/www/banksampah-staging/public;
+
+    index index.php;
+
+    location / {
+
+        try_files $uri $uri/ /index.php?$query_string;
+
+    }
+
+    location ~ \.php$ {
+
+        include snippets/fastcgi-php.conf;
+
+        fastcgi_pass unix:/run/php/php8.3-fpm.sock;
+
+    }
+
+}
+```
+
+Enable
+
+```bash
+sudo ln -s
+```
+
+Test
+
+```bash
+sudo nginx -t
+```
+
+Reload
+
+```bash
+sudo systemctl reload nginx
+```
+
+---
+
+## 🟡 Yang sempat bikin bingung
+
+Karena VPS sudah ada
+
+```
+smartfarm.elektropolsri.tech
+```
+
+Takut bentrok.
+
+### Solusi
+
+Bikin server block baru.
+
+Jangan edit project lama.
+
+---
+
+# 10. Laravel Tidak Bisa Dibuka
+
+Cek service
+
+```bash
+sudo systemctl status nginx
+```
+
+```bash
+sudo systemctl status php8.3-fpm
+```
+
+---
+
+# 11. Route Register 404
+
+Login bisa
+
+```
+/login
+```
+
+Register
+
+```
+404
+```
+
+Padahal route ada.
+
+---
+
+## 🟡 Penyebab
+
+Di
+
+```
+AppServiceProvider.php
+```
+
+ada
+
+```php
+URL::forceScheme('https');
+```
+
+Karena
+
+```
+APP_ENV=staging
+```
+
+Maka Laravel selalu membuat URL HTTPS.
+
+Padahal server belum pakai SSL.
+
+---
+
+### Solusi
+
+Sebelumnya
+
+```php
+if (!app()->environment('local'))
+```
+
+Diganti
+
+```php
+if(app()->environment('production'))
+```
+
+Lebih bagus lagi
+
+```
+FORCE_HTTPS=true
+```
+
+di `.env`.
+
+---
+
+# 12. Git Pull Error
+
+Error
+
+```
+local changes would be overwritten
+
+package-lock.json
+```
+
+---
+
+## Penyebab
+
+File berubah di server.
+
+---
+
+## Solusi
+
+```bash
+git restore package-lock.json
+```
+
+atau
+
+```bash
+git checkout -- package-lock.json
+```
+
+---
+
+# 13. Upload Gambar Gagal
+
+Error
+
+```
+Unable to write
+
+public/ui/images/masyarakat
+```
+
+---
+
+## Penyebab
+
+Owner folder
+
+```
+root
+```
+
+PHP jalan sebagai
+
+```
+www-data
+```
+
+Tidak punya permission.
+
+---
+
+## Solusi
+
+```bash
+sudo chown -R www-data:www-data public/ui/images
+```
+
+```bash
+sudo chmod -R 775 public/ui/images
+```
+
+---
+
+# 14. Error Baru
+
+Setelah upload selesai
+
+Muncul
+
+```
+storage/logs/laravel.log
+
+Permission denied
+```
+
+---
+
+## Penyebab
+
+Storage masih dimiliki
+
+```
+root
+```
+
+---
+
+## Solusi
+
+```bash
+sudo chown -R www-data:www-data storage
+```
+
+```bash
+sudo chmod -R 775 storage
+```
+
+---
+
+Dan juga
+
+```bash
+sudo chown -R www-data:www-data bootstrap/cache
+```
+
+```bash
+sudo chmod -R 775 bootstrap/cache
+```
+
+---
+
+# 15. Cek PHP-FPM User
+
+Kalau bingung PHP jalan sebagai siapa
+
+```bash
+ps aux | grep php-fpm
+```
+
+Hasil
+
+```
+www-data
+```
+
+Berarti semua folder yang ditulis Laravel harus writable oleh
+
+```
+www-data
+```
+
+---
+
+# 16. Setelah Berhasil
+
+Workflow deploy berikutnya
+
+Server
+
+```bash
+cd /var/www/banksampah-staging
+
+git pull origin develop
+
+composer install --no-dev --optimize-autoloader
+
+php artisan migrate --force
+
+php artisan optimize:clear
+
+php artisan config:cache
+
+sudo systemctl reload php8.3-fpm
+
+sudo systemctl reload nginx
+```
+
+---
+
+# 📝 Checklist Setelah Deploy
+
+* [ ] Website bisa dibuka
+* [ ] Login
+* [ ] Register
+* [ ] CRUD
+* [ ] Upload gambar
+* [ ] Delete gambar
+* [ ] Search
+* [ ] Pagination
+* [ ] Export (jika ada)
+* [ ] Logout
+
+---
+
+# 🛠️ Command Debug Favorit
+
+## Status service
+
+```bash
+sudo systemctl status nginx
+```
+
+```bash
+sudo systemctl status php8.3-fpm
+```
+
+---
+
+## Test nginx
+
+```bash
+sudo nginx -t
+```
+
+---
+
+## Restart
+
+```bash
+sudo systemctl reload nginx
+```
+
+```bash
+sudo systemctl restart php8.3-fpm
+```
+
+---
+
+## Lihat log Laravel
+
+```bash
+tail -f storage/logs/laravel.log
+```
+
+---
+
+## Lihat log Nginx
+
+```bash
+sudo tail -f /var/log/nginx/error.log
+```
+
+---
+
+## Permission
+
+```bash
+ls -lah
+```
+
+```bash
+ls -ld storage
+```
+
+```bash
+ls -ld bootstrap/cache
+```
+
+---
+
+## Owner
+
+```bash
+whoami
+```
+
+```bash
+ps aux | grep php-fpm
+```
+
+---
+
+## Git
+
+```bash
+git status
+```
+
+---
+
+# 📌 Pelajaran yang Paling Berharga Hari Ini
+
+Kalau ada error, **jangan langsung panik**. Coba identifikasi dulu error itu berasal dari lapisan mana.
+
+```
+Browser
+    │
+    ▼
+DNS
+    │
+    ▼
+Nginx
+    │
+    ▼
+PHP-FPM
+    │
+    ▼
+Laravel
+    │
+    ▼
+Database
+```
+
+Contohnya:
+
+* **404** → cek Nginx atau Route.
+* **500 Internal Server Error** → cek `storage/logs/laravel.log`.
+* **Permission denied** → cek `chown`, `chmod`, dan user `www-data`.
+* **Access denied** → cek konfigurasi MySQL.
+* **could not find driver** → cek extension PHP.
+* **Login bisa tapi URL aneh** → cek `APP_URL` dan `URL::forceScheme()`.
+
+---
+
+# 💡 Saran Dokumentasi Versi 2
+
+Kalau boleh kasih saran, jangan cuma simpan sebagai catatan. Bikin repository Git khusus, misalnya:
+
+```
+dev-notes/
+├── Laravel
+│   ├── Deployment.md
+│   ├── Nginx.md
+│   ├── Permission.md
+│   ├── Git.md
+│   ├── HTTPS.md
+│   └── Troubleshooting.md
+├── Docker
+├── Linux
+└── MySQL
+```
+
+Setiap kali ketemu error baru, tinggal tambahkan ke `Troubleshooting.md`. Dalam beberapa bulan, itu bakal jadi "buku pegangan" pribadi yang isinya pengalaman nyata, bukan sekadar teori. Dan percaya deh, dokumentasi seperti itu sering kali lebih berguna daripada bookmark puluhan tutorial di internet. 😄🍻
