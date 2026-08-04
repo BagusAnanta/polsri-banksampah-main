@@ -2,7 +2,7 @@
 
 <div class="max-w-2xl mx-auto space-y-6">
     <div class="flex items-center gap-3">
-        <a href="{{ route('sa.edukasi.index') }}" class="btn btn-ghost btn-sm">
+        <a href="{{ route('sa.edukasi-superadmin.index') }}" class="btn btn-ghost btn-sm">
             <span class="material-symbols-outlined">arrow_back</span>
             Kembali ke Daftar
         </a>
@@ -65,7 +65,7 @@
 
         <!-- Actions -->
         <div class="flex gap-3">
-            <a href="{{ route('sa.edukasi.index') }}" class="btn btn-ghost flex-1">Batal</a>
+            <a href="{{ route('sa.edukasi-superadmin.index') }}" class="btn btn-ghost flex-1">Batal</a>
             <button type="submit" class="btn btn-primary flex-1">
                 <span class="material-symbols-outlined">save</span> Simpan Perubahan
             </button>

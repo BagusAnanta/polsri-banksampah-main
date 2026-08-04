@@ -2,7 +2,7 @@
 
 <div class="max-w-3xl mx-auto space-y-6">
     <div class="flex items-center gap-3">
-        <a href="{{ route('sa.edukasi.index') }}" class="btn btn-ghost btn-sm">
+        <a href="{{ route('sa.edukasi-superadmin.index') }}" class="btn btn-ghost btn-sm">
             <span class="material-symbols-outlined">arrow_back</span>
             Kembali ke Daftar
         </a>

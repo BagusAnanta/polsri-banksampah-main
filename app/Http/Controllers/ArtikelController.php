@@ -8,7 +8,26 @@ use Illuminate\Support\Facades\File;
 
 class ArtikelController extends Controller
 {
-    public function index(Request $request)
+    public function indexsuperadmin(Request $request)
+    {
+        $artikels = Artikel::latest()->get();
+
+        if ($request->wantsJson() || $request->is('api/*')) {
+            return response()->json([
+                'success' => true,
+                'data' => $artikels
+            ]);
+        }
+
+        $data['page_title'] = 'Artikel Edukasi';
+        $data['table_title'] = 'Daftar Artikel';
+        $data['artikels'] = $artikels;
+        $data['totalArtikel'] = $artikels->count();
+
+        return view('v2.user.adminsuper.edukasi-index', $data);
+    }
+
+     public function indexmasyarakat(Request $request)
     {
         $artikels = Artikel::latest()->get();
 
@@ -23,7 +42,7 @@ class ArtikelController extends Controller
         $data['table_title'] = 'Daftar Artikel';
         $data['artikels'] = $artikels;
 
-        return view('v2.user.adminsuper.edukasi-index', $data);
+        return view('v2.user.masyarakat.edukasi-index', $data);
     }
 
     public function create()
@@ -74,7 +93,7 @@ class ArtikelController extends Controller
             ], 201);
         }
 
-        return redirect()->route('sa.edukasi.index')->with('success', 'Artikel berhasil dibuat!');
+        return redirect()->route('sa.edukasi-superadmin.index')->with('success', 'Artikel berhasil dibuat!');
     }
 
     public function show(Request $request, $id)
@@ -91,6 +110,22 @@ class ArtikelController extends Controller
         $data['page_title'] = $artikel->judul_artikel;
         $data['artikel'] = $artikel;
         return view('v2.user.adminsuper.edukasi-show', $data);
+    }
+
+     public function showmasyarakat(Request $request, $id)
+    {
+        $artikel = Artikel::findOrFail($id);
+
+        if ($request->wantsJson() || $request->is('api/*')) {
+            return response()->json([
+                'success' => true,
+                'data' => $artikel
+            ]);
+        }
+
+        $data['page_title'] = $artikel->judul_artikel;
+        $data['artikel'] = $artikel;
+        return view('v2.user.masyarakat.edukasi-show', $data);
     }
 
     public function edit($id)
@@ -150,7 +185,7 @@ class ArtikelController extends Controller
             ]);
         }
 
-        return redirect()->route('sa.edukasi.index')->with('success', 'Artikel berhasil diupdate!');
+        return redirect()->route('sa.edukasi-superadmin.index')->with('success', 'Artikel berhasil diupdate!');
     }
 
     public function destroy(Request $request, $id)
@@ -173,6 +208,6 @@ class ArtikelController extends Controller
             ]);
         }
 
-        return redirect()->route('sa.edukasi.index')->with('success', 'Artikel berhasil dihapus!');
+        return redirect()->route('sa.edukasi-superadmin.index')->with('success', 'Artikel berhasil dihapus!');
     }
 }

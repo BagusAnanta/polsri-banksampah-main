@@ -70,7 +70,7 @@
         <a href="{{ route('sa.bank-sampah.index') }}" class="btn btn-outline h-auto py-3 gap-2">
             <span class="material-symbols-outlined">store</span> Bank Sampah
         </a>
-        <a href="{{ route('sa.edukasi.index') }}" class="btn btn-outline h-auto py-3 gap-2">
+        <a href="{{ route('sa.edukasi-superadmin.index') }}" class="btn btn-outline h-auto py-3 gap-2">
             <span class="material-symbols-outlined">menu_book</span> Edukasi
         </a>
         <a href="{{ route('sa.pengaturan.index') }}" class="btn btn-outline h-auto py-3 gap-2">

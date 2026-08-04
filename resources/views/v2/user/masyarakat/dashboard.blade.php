@@ -1,19 +1,3 @@
-@php
-    $poinSaatIni = $poinSaatIni ?? 0;
-    $targetPoin = $targetPoin ?? 500;
-    $totalPoin = $totalPoin ?? 0;
-    $totalGramasi = $totalGramasi ?? 0;
-    $setorSelesai = $setorSelesai ?? 0;
-    $tiketSetorTerbaru = $tiketSetorTerbaru ?? [];
-    $tiketPoinTerbaru = $tiketPoinTerbaru ?? [];
-    $poinPerBulan = $poinPerBulan ?? [];
-    $bulanLabels = $bulanLabels ?? [];
-    
-    $sisaPoin = max($targetPoin - $poinSaatIni, 0);
-    $persentase = $targetPoin > 0 ? min(round(($poinSaatIni / $targetPoin) * 100), 100) : 0;
-    $siapDitukar = $poinSaatIni >= $targetPoin;
-@endphp
-
 <x-layouts.app title="Beranda" subtitle="Selamat datang kembali">
 
     {{-- KPI Stat Cards Row: Total Poin / Total Gramasi / Setor Selesai --}}
@@ -98,7 +82,7 @@
             {{-- Tombol / badge muncul cuma kalau sudah 100% --}}
             @if($siapDitukar)
                 <button type="button" class="w-full bg-black/20 hover:bg-black/30 text-white text-sm py-2 rounded-full transition">
-                    {{ number_format(session('user_total_voucher')) }} voucher siap ditukar!
+                    1 voucher siap ditukar!
                 </button>
             @else
                 <p class="text-xs text-white/60">
@@ -129,7 +113,7 @@
                 <span class="text-xs font-medium text-base-content">Tukar Poin</span>
             </a>
 
-            <a href="{{ route('edukasi.index') }}" 
+            <a href="{{ route('edukasi-masyarakat.index') }}" 
                class="group rounded-2xl bg-base-100 p-4 text-center transition hover:bg-sky-50 hover:shadow-md border border-base-300/20 hover:border-sky-200">
                 <div class="flex h-12 w-12 items-center justify-center rounded-full bg-sky-100 mx-auto mb-2 group-hover:bg-sky-200 transition">
                     <span class="material-symbols-outlined">import_contacts</span>
@@ -173,7 +157,8 @@
                             </span>
                         </div>
                         <div class="mt-2 flex items-center justify-between text-xs">
-                            <span class="text-base-content/60">{{ number_format($tiket->estimasi_gram ?? 0) }}g</span>
+                            <!-- berat_sampah is estimate weight of trash in grams, if not set, show 0g -->
+                            <span class="text-base-content/60">{{ number_format($tiket->berat_sampah ?? 0) }}g</span>
                         </div>
                     </div>
                 @empty

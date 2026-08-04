@@ -31,9 +31,9 @@
                     {{ request()->routeIs('tiket-poin.*') ? 'bg-olive-700 text-white' : 'text-base-content/70 hover:bg-base-300/50' }}">
                 Tiket Poin
             </a>
-            <a href="{{ route('edukasi.index') }}"
+            <a href="{{ route('edukasi-masyarakat.index') }}"
             class="rounded-full px-4 py-1.5 text-sm font-medium transition-colors
-                    {{ request()->routeIs('edukasi.*') ? 'bg-olive-700 text-white' : 'text-base-content/70 hover:bg-base-300/50' }}">
+                    {{ request()->routeIs('edukasi-masyarakat.*') ? 'bg-olive-700 text-white' : 'text-base-content/70 hover:bg-base-300/50' }}">
                 Edukasi
             </a>
             <a href="{{ route('riwayat.index') }}"
@@ -84,9 +84,9 @@
                     {{ request()->routeIs('sa.bank-sampah.*') ? 'bg-olive-700 text-white' : 'text-base-content/70 hover:bg-base-300/50' }}">
                 Bank Sampah
             </a>
-            <a href="{{ route('sa.edukasi.index') }}"
+            <a href="{{ route('sa.edukasi-superadmin.index') }}"
             class="rounded-full px-4 py-1.5 text-sm font-medium transition-colors
-                    {{ request()->routeIs('sa.edukasi.*') ? 'bg-olive-700 text-white' : 'text-base-content/70 hover:bg-base-300/50' }}">
+                    {{ request()->routeIs('sa.edukasi-superadmin.*') ? 'bg-olive-700 text-white' : 'text-base-content/70 hover:bg-base-300/50' }}">
                 Edukasi
             </a>
             <a href="{{ route('sa.pengaturan.index') }}"

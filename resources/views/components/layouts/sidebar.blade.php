@@ -13,7 +13,7 @@
         <x-layouts.nav-icon route="dashboard" icon="home" label="dashboard" />
         <x-layouts.nav-icon route="tiket-sampah.index" icon="trash" label="Tiket Sampah" />
         <x-layouts.nav-icon route="tiket-poin.index" icon="gift" label="Tiket Poin" />
-        <x-layouts.nav-icon route="edukasi.index" icon="book-open" label="Edukasi" />
+        <x-layouts.nav-icon route="edukasi-masyarakat.index" icon="book-open" label="Edukasi" />
         <x-layouts.nav-icon route="riwayat.index" icon="clock" label="Riwayat" />
     @elseif($role === 'Admin Bank Sampah')
         <x-layouts.nav-icon route="admin.dashboard" icon="grid" label="Beranda" />
@@ -24,7 +24,7 @@
         <x-layouts.nav-icon route="sa.dashboard" icon="grid" label="Beranda" />
         <x-layouts.nav-icon route="sa.masyarakat.index" icon="users" label="Masyarakat" />
         <x-layouts.nav-icon route="sa.bank-sampah.index" icon="building" label="Bank Sampah" />
-        <x-layouts.nav-icon route="sa.edukasi.index" icon="book-open" label="Edukasi" />
+        <x-layouts.nav-icon route="sa.edukasi-superadmin.index" icon="book-open" label="Edukasi" />
         <x-layouts.nav-icon route="sa.pengaturan.index" icon="cog" label="Pengaturan" />
     @endif
 

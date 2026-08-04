@@ -74,26 +74,6 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
 Route::get('/profil', [AuthController::class, 'profile'])->name('profil');
 
-Route::middleware('auth:web')->group(function () {
-    Route::get('/tiket-sampah', [TiketsetorsampahController::class, 'indexV2'])->name('tiket-sampah.index');
-    Route::get('/tiket-sampah/create', [TiketsetorsampahController::class, 'create'])->name('tiket-sampah.create');
-    Route::post('/tiket-sampah', [TiketsetorsampahController::class, 'store'])->name('tiketsetorsampahs.store');
-    Route::get('/tiket-sampah/{id}', [TiketsetorsampahController::class, 'showV2'])->name('tiket-sampah.show');
-    Route::put('/tiket-sampah/{id}/cancel', [TiketsetorsampahController::class, 'cancel'])->name('tiket-sampah.cancel');
-
-    Route::get('/tiket-poin', [TikettukarpoinController::class, 'indexV2'])->name('tiket-poin.index');
-    Route::get('/tiket-poin/create', [TikettukarpoinController::class, 'create'])->name('tiket-poin.create');
-    Route::post('/tiket-poin', [TikettukarpoinController::class, 'store'])->name('tikettukarpoin.store');
-    Route::get('/tiket-poin/{id}', [TikettukarpoinController::class, 'showV2'])->name('tiket-poin.show');
-    Route::put('/tiket-poin/{id}/cancel', [TikettukarpoinController::class, 'cancel'])->name('tiket-poin.cancel');
-
-    // Route::get('/edukasi', function() {
-    //     return view('v2.user.masyarakat.edukasi-index', ['artikels' => collect()]);
-    // })->name('edukasi.index');
-    Route::get('/edukasi', [ArtikelController::class, 'index'])->name('edukasi.index');
-
-    Route::get('/riwayat', [DashboardController::class, 'getRiwayat'])->name('riwayat.index');
-});
 
 Route::get('/help', function() {
     return view('v2.help');
@@ -210,6 +190,7 @@ Route::prefix('v1')->middleware(['auth:web', 'role:Admin|Super Admin'])->group(f
 Route::prefix('v2')->middleware('auth:web')->group(function () {
     Route::resource('departements', DepartementController::class);
     Route::resource('tickets', TicketController::class);
+
     Route::get('users', [AuthController::class, 'listUsers'])->name('users.index');
     Route::get('users/create', [AuthController::class, 'createUser'])->name('users.create');
     Route::post('users', [AuthController::class, 'storeUser'])->name('users.store');
@@ -225,6 +206,22 @@ Route::prefix('v2')->middleware('auth:web')->group(function () {
 
     // V2 Dashboard route (must be before resource to avoid conflict)
     Route::get('/dashboard', [DashboardController::class, 'indexV2'])->name('dashboard');
+
+    Route::get('/tiket-sampah', [TiketsetorsampahController::class, 'indexV2'])->name('tiket-sampah.index');
+    Route::get('/tiket-sampah/create', [TiketsetorsampahController::class, 'create'])->name('tiket-sampah.create');
+    Route::post('/tiket-sampah', [TiketsetorsampahController::class, 'store'])->name('tiketsetorsampahs.store');
+    Route::get('/tiket-sampah/{id}', [TiketsetorsampahController::class, 'showV2'])->name('tiket-sampah.show');
+    Route::put('/tiket-sampah/{id}/cancel', [TiketsetorsampahController::class, 'cancel'])->name('tiket-sampah.cancel');
+
+    Route::get('/tiket-poin', [TikettukarpoinController::class, 'indexV2'])->name('tiket-poin.index');
+    Route::get('/tiket-poin/create', [TikettukarpoinController::class, 'create'])->name('tiket-poin.create');
+    Route::post('/tiket-poin', [TikettukarpoinController::class, 'store'])->name('tikettukarpoin.store');
+    Route::get('/tiket-poin/{id}', [TikettukarpoinController::class, 'showV2'])->name('tiket-poin.show');
+    Route::put('/tiket-poin/{id}/cancel', [TikettukarpoinController::class, 'cancel'])->name('tiket-poin.cancel');
+
+    Route::get('/edukasi-masyarakat', [ArtikelController::class, 'indexmasyarakat'])->name('edukasi-masyarakat.index');
+    Route::get('/edukasi-masyarakat/{id}', [ArtikelController::class, 'showmasyarakat'])->name('edukasi-masyarakat.show');
+    Route::get('/riwayat', [DashboardController::class, 'getRiwayat'])->name('riwayat.index');
 
     Route::resource('bank-sampahs', BankSampahController::class);
     Route::resource('box-sampahs', BoxSampahController::class);
@@ -272,16 +269,7 @@ Route::prefix('v2')->middleware('auth:web')->group(function () {
         Route::get('/bank-sampah/create', [SuperAdminController::class, 'bankSampahCreate'])->name('bank-sampah.create');
         Route::post('/bank-sampah', [SuperAdminController::class, 'bankSampahStore'])->name('bank-sampah.store');
 
-        // Route::resource('edukasi', ArtikelController::class)->names([
-        //     'index' => 'edukasi.index',
-        //     'create' => 'edukasi.create',
-        //     'store' => 'edukasi.store',
-        //     'edit' => 'edukasi.edit',
-        //     'update' => 'edukasi.update',
-        //     'destroy' => 'edukasi.destroy',
-        // ]);
-
-        Route::get('/edukasi', [ArtikelController::class, 'index'])->name('edukasi.index');
+        Route::get('/edukasi-superadmin', [ArtikelController::class, 'indexsuperadmin'])->name('edukasi-superadmin.index');
         Route::get('/edukasi/create', [ArtikelController::class, 'create'])->name('edukasi.create');
         Route::post('/edukasi', [ArtikelController::class, 'store'])->name('edukasi.store');
         Route::get('/edukasi/{id}', [ArtikelController::class, 'show'])->name('edukasi.show');
