@@ -11,7 +11,7 @@
                 <p class="text-sm text-slate-600">Arahkan kamera ke QR code pada tiket pengajuan</p>
             </div>
 
-            <div id="qrReader" class="my-6 rounded-lg overflow-hidden border-2 border-blue-200" style="width: 100%;"></div>
+            <div id="qrReader" class="my-6 rounded-lg overflow-hidden border-2 border-blue-200" style="width: 100%; height: 280px; position: relative;"></div>
 
             <div class="space-y-2 text-sm text-slate-600">
                 <div class="p-3 bg-blue-50 rounded-lg">
@@ -39,47 +39,83 @@
 @push('scripts')
 <script src="https://unpkg.com/html5-qrcode@2.1.5/html5-qrcode.min.js"></script>
 <script>
-    let scanner;
+    let scanner = null;
     const startBtn = document.getElementById('startScan');
     const stopBtn = document.getElementById('stopScan');
     const resultEl = document.getElementById('scanResult');
 
-    startBtn.addEventListener('click', () => {
-        if (!scanner) {
-            scanner = new Html5QrcodeScanner('qrReader', {
-                fps: 10,
-                qrbox: { width: 250, height: 250 },
-                rememberLastUsedCamera: true
-            }, false);
+    function setResult(text, ok = false) {
+        resultEl.textContent = text;
+        resultEl.classList.toggle('text-green-600', ok);
+        resultEl.classList.toggle('text-red-600', !ok && text !== 'Menunggu pemindaian...');
+    }
+
+    if (window.isSecureContext === false) {
+        setResult('⚠️ Kamera hanya bisa diakses melalui HTTPS atau localhost');
+    }
+
+    startBtn.addEventListener('click', async () => {
+        if (scanner) return;
+
+        if (typeof Html5Qrcode === 'undefined') {
+            setResult('⚠️ Library pemindai gagal dimuat. Periksa koneksi internet.');
+            return;
         }
 
-        scanner.render(
-            (decodedText) => {
-                resultEl.textContent = `✓ ${decodedText}`;
-                resultEl.classList.remove('text-slate-600');
-                resultEl.classList.add('text-green-600');
-                setTimeout(() => {
-                    window.location.href = `/admin/tiket/${decodedText}`;
-                }, 1500);
-            },
-            (errorMessage) => {
-                resultEl.textContent = 'Scanning...';
-            }
-        );
+        scanner = new Html5Qrcode('qrReader');
 
-        startBtn.disabled = true;
-        stopBtn.disabled = false;
+        try {
+            await scanner.start(
+                { facingMode: 'environment' },
+                {
+                    fps: 10,
+                    qrbox: { width: 250, height: 250 }
+                },
+                (decodedText) => {
+                    setResult(`✓ ${decodedText}`, true);
+                    setTimeout(() => {
+                        window.location.href = `/admin/tiket-setor/${decodedText}`;
+                    }, 1500);
+                },
+                (errorMessage) => {
+                    if (resultEl.textContent === 'Menunggu pemindaian...') {
+                        setResult('Scanning...');
+                    }
+                }
+            );
+
+            startBtn.disabled = true;
+            stopBtn.disabled = false;
+        } catch (err) {
+            scanner = null;
+            let msg = 'Tidak dapat mengakses kamera.';
+            if (err && (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError')) {
+                msg = '⚠️ Izin kamera ditolak. Izinkan akses kamera di browser, lalu coba lagi.';
+            } else if (err && (err.name === 'NotFoundError' || err.name === 'DevicesNotFoundError')) {
+                msg = '⚠️ Tidak ada kamera yang terdeteksi pada perangkat.';
+            } else if (err && err.name === 'NotReadableError') {
+                msg = '⚠️ Kamera sedang digunakan aplikasi lain. Tutup aplikasi tersebut lalu coba lagi.';
+            } else if (!window.isSecureContext) {
+                msg = '⚠️ Kamera hanya bisa diakses melalui HTTPS atau localhost.';
+            }
+            setResult(msg);
+        }
     });
 
-    stopBtn.addEventListener('click', () => {
-        if (scanner) {
+    stopBtn.addEventListener('click', async () => {
+        if (!scanner) return;
+
+        try {
+            await scanner.stop();
             scanner.clear();
-            scanner = null;
+        } catch (e) {
+            // abaikan error saat menghentikan
         }
+
+        scanner = null;
         startBtn.disabled = false;
         stopBtn.disabled = true;
-        resultEl.textContent = 'Scan dihentikan';
-        resultEl.classList.add('text-slate-600');
+        setResult('Menunggu pemindaian...');
     });
 </script>
 @endpush

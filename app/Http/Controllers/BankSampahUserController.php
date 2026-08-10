@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class BanksampahuserController extends Controller
+class BankSampahUserController extends Controller
 {
     public function index(Request $request)
     {
@@ -74,9 +74,9 @@ class BanksampahuserController extends Controller
         return redirect()->route('banksampah-users.index')->with('success', 'Bank Sampah User created successfully!');
     }
 
-    public function show(Request $request, $id)
+    public function bankSampahProfile(Request $request, $id)
     {
-        $user = BankSampahUser::with('creator')->findOrFail($id);
+        $banksampah = BankSampahUser::findOrFail($id);
 
         if ($request->wantsJson() || $request->is('api/*')) {
             return response()->json([
@@ -85,9 +85,12 @@ class BanksampahuserController extends Controller
             ]);
         }
 
-        $data['page_title'] = 'Detail Bank Sampah User';
-        $data['user'] = $user;
-        return view('banksampahusers.show', $data);
+        $data = [
+            'page_title' => 'Profil Bank Sampah',
+            'banksampah' => $banksampah,
+        ];
+
+        return view('v2.user.adminbanksampah.adminbank-profile', $data);
     }
 
     public function edit($id)

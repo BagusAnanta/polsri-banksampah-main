@@ -44,7 +44,7 @@
                 </div>
                 <div class="flex justify-between text-sm">
                     <span class="text-slate-600">NIK</span>
-                    <span class="font-medium text-slate-900">{{ $tiket->masyarakat->nik ?? '-' }}</span>
+                    <span class="font-medium text-slate-900">{{ $tiket->masyarakat->decrypted_nik ?? '-' }}</span>
                 </div>
             </div>
         </div>
@@ -88,7 +88,8 @@
 <dialog id="qrScanModal" class="modal modal-bottom sm:modal-middle">
     <div class="modal-box">
         <h3 class="font-bold text-lg">Scan QR Tiket</h3>
-        <div id="qrReader" class="my-4"></div>
+        <div id="qrReader" class="my-4" style="width: 100%; height: 100%; position: relative;"></div>
+        <p id="scanMessage" class="text-sm text-center text-slate-500">Arahkan kamera ke QR tiket</p>
         <div class="modal-action">
             <form method="dialog">
                 <button class="btn">Tutup</button>
@@ -104,21 +105,58 @@
 <script src="https://unpkg.com/html5-qrcode@2.1.5/html5-qrcode.min.js"></script>
 <script>
     const modal = document.getElementById('qrScanModal');
-    document.querySelector('[data-modal="qrScanModal"]')?.addEventListener('click', () => {
-        modal?.showModal();
-        setTimeout(() => {
-            const html5QrcodeScanner = new Html5QrcodeScanner(
-                "qrReader",
+    const scanMessage = document.getElementById('scanMessage');
+    let scanner = null;
+
+    async function startScanner() {
+        if (scanner) return;
+
+        if (typeof Html5Qrcode === 'undefined') {
+            scanMessage.textContent = '⚠️ Library pemindai gagal dimuat.';
+            return;
+        }
+
+        if (window.isSecureContext === false) {
+            scanMessage.textContent = '⚠️ Kamera hanya bisa diakses melalui HTTPS atau localhost.';
+            return;
+        }
+
+        scanner = new Html5Qrcode('qrReader');
+        try {
+            await scanner.start(
+                { facingMode: 'environment' },
                 { fps: 10, qrbox: { width: 250, height: 250 } },
-                false
+                (decodedText) => {
+                    // Redirect to the tiket show page based on the scanned QR code
+                    // this for get the tiket id from the QR code and redirect to the show page
+                    console.log("QR Code:", decodedText);
+                    scanMessage.textContent = '✓ QR terbaca, memuat tiket...';
+                    setTimeout(() => stopScanner(), 800);
+                },
+                (errorMessage) => {}
             );
-            html5QrcodeScanner.render((decodedText) => {
-                console.log("QR Code:", decodedText);
-                html5QrcodeScanner.clear();
-                modal?.close();
-            });
-        }, 100);
+        } catch (err) {
+            scanner = null;
+            scanMessage.textContent = '⚠️ Tidak dapat mengakses kamera. Izinkan akses kamera lalu coba lagi.';
+        }
+    }
+
+    async function stopScanner() {
+        if (!scanner) return;
+        try {
+            await scanner.stop();
+            scanner.clear();
+        } catch (e) {}
+        scanner = null;
+    }
+
+    document.querySelector('[data-modal="qrScanModal"]')?.addEventListener('click', () => {
+        scanMessage.textContent = 'Arahkan kamera ke QR tiket';
+        modal?.showModal();
+        setTimeout(startScanner, 300);
     });
+
+    modal?.addEventListener('close', stopScanner);
 </script>
 @endpush
 

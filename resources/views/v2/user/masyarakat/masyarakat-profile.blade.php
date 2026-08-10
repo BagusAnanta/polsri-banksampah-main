@@ -1,8 +1,9 @@
 <x-layouts.app title="" subtitle="">
 
 <div class="max-w-4xl mx-auto space-y-6">
+    
     <div class="flex items-center gap-3">
-        <a href="{{ route('sa.masyarakat.index') }}" class="btn btn-ghost btn-sm">
+        <a href="{{ route('dashboard') }}" class="btn btn-ghost btn-sm">
             <span class="material-symbols-outlined">arrow_back</span>
             Kembali
         </a>
@@ -75,38 +76,21 @@
         @endif
     </div>
 
-    <!-- Card 5: Review Actions (Approval/Rejection) -->
-    @if($masyarakat->verification === 'Menunggu')
-    <div class="bg-white rounded-xl p-6 border border-slate-200 space-y-4">
-        <div>
-            <h3 class="text-lg font-semibold text-slate-900">Tinjau Pendaftaran</h3>
-            <p class="text-sm text-slate-600 mt-1">Setujui untuk memberikan akses ke platform, atau tolak dengan alasan yang jelas</p>
+    <!-- Statistics Card -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="bg-blue-50 rounded-xl p-4 border border-blue-200">
+            <p class="text-xs text-blue-600 font-medium">Total Poin</p>
+            <p class="text-2xl font-bold text-blue-700 mt-1">{{ number_format($masyarakat->poin ?? 0, 0) }}</p>
         </div>
-        <form action="{{ route('sa.masyarakat.review-process', $masyarakat->masyarakat_id) }}" method="POST" class="space-y-3">
-            @csrf
-            <div class="form-control">
-                <label class="label">
-                    <span class="label-text font-medium">Alasan (jika ditolak)</span>
-                </label>
-                <textarea class="textarea textarea-bordered bg-white" name="alasan_tolak" placeholder="Tulis alasan penolakan..." rows="3"></textarea>
-            </div>
-            <div class="flex gap-3">
-                <button type="submit" name="action" value="setuju" class="btn btn-success flex-1">
-                    <span class="material-symbols-outlined">check_circle</span> Setujui Pendaftaran
-                </button>
-                <button type="submit" name="action" value="tolak" class="btn btn-ghost text-red-600 hover:bg-red-50 flex-1" onclick="return confirm('Tolak pendaftaran masyarakat ini?')">
-                    <span class="material-symbols-outlined">cancel</span> Tolak Pendaftaran
-                </button>
-            </div>
-        </form>
+        <div class="bg-green-50 rounded-xl p-4 border border-green-200">
+            <p class="text-xs text-green-600 font-medium">Total Gramasi</p>
+            <p class="text-2xl font-bold text-green-700 mt-1">{{ number_format($masyarakat->total_gramasi ?? 0, 0) }}g</p>
+        </div>
+        <div class="bg-purple-50 rounded-xl p-4 border border-purple-200">
+            <p class="text-xs text-purple-600 font-medium">Setor Selesai</p>
+            <p class="text-2xl font-bold text-purple-700 mt-1">{{ $masyarakat->total_selesai ?? 0 }}</p>
+        </div>
     </div>
-    @else
-    <div class="bg-slate-100 rounded-xl p-4 text-center text-slate-600 text-sm">
-        Masyarakat sudah diproses ({{ $masyarakat->verification }}) dan tidak dapat diubah
-    </div>
-    @endif
 </div>
 
-
 </x-layouts.app>
-

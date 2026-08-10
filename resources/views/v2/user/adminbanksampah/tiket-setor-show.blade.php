@@ -40,7 +40,7 @@
                 </div>
                 <div class="flex justify-between text-sm">
                     <span class="text-slate-600">NIK</span>
-                    <span class="font-medium text-slate-900">{{ $tiket->masyarakat->nik ?? '-' }}</span>
+                    <span class="font-medium text-slate-900">{{ $tiket->masyarakat->decrypted_nik ?? '-' }}</span>
                 </div>
             </div>
         </div>

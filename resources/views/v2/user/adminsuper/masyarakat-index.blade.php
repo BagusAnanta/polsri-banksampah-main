@@ -35,7 +35,7 @@
 
     <!-- 3-Column Card Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        @forelse($masyarakats as $m)
+        @forelse($masyarakat as $m)
             <div class="bg-white rounded-xl p-5 border border-slate-200" data-verification="{{ $m->verification }}">
                 <div class="flex items-center gap-3 mb-3">
                     <div class="w-10 h-10 rounded-full bg-green-200 flex items-center justify-center text-sm font-bold text-green-700">
@@ -49,7 +49,7 @@
                 <div class="space-y-1.5 text-sm">
                     <div class="flex justify-between">
                         <span class="text-slate-600">NIK</span>
-                        <span class="font-medium text-slate-900">{{ $m->nik ?? '-' }}</span>
+                        <span class="font-medium text-slate-900">{{ $m->decrypted_nik ?? '-' }}</span>
                     </div>
                     <div class="flex justify-between">
                         <span class="text-slate-600">No. HP</span>

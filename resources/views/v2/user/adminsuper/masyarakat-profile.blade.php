@@ -25,7 +25,7 @@
             </div>
             <div>
                 <p class="text-xs text-slate-600 font-medium">NIK</p>
-                <p class="text-sm font-semibold text-slate-900 mt-1">{{ $masyarakat->nik ?? '-' }}</p>
+                <p class="text-sm font-semibold text-slate-900 mt-1">{{ $masyarakat->decrypted_nik ?? '-' }}</p>
             </div>
             <div>
                 <p class="text-xs text-slate-600 font-medium">Tanggal Mendaftar</p>
