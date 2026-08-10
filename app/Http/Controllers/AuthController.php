@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Crypt;
 
 class AuthController extends Controller {
 
@@ -36,9 +37,11 @@ class AuthController extends Controller {
 
         $user = null;
 
+        $nikIdentifierHash = hash_hmac('sha256', $identifier, config('app.key'));
+
         $user = User::where('username',$identifier)
-            ->orWhereHas('masyarakat', function ($querying) use ($identifier){
-                $querying->where('nik', $identifier);
+            ->orWhereHas('masyarakat', function ($querying) use ($nikIdentifierHash) {
+                $querying->where('nik_hash', $nikIdentifierHash);
             })->first();
 
         if (!$user || !Hash::check($password, $user->password)) {
@@ -76,7 +79,7 @@ class AuthController extends Controller {
                 if ($verification === 'menunggu') {
                     return redirect()->route('waiting')
                         ->with('user_name', $user->name)
-                        ->with('user_nik', $user->masyarakat->nik)
+                        ->with('user_nik', $user->masyarakat->decrypted_nik)
                         ->with('user_email', $user->email);
                 } elseif ($verification === 'ditolak') {
                     Auth::logout();
@@ -150,7 +153,9 @@ class AuthController extends Controller {
 
         $masyarakat = new Masyarakat();
         $masyarakat->user_id = $user->id;
-        $masyarakat->nik = $validated['nik'];
+
+        $masyarakat->nik = Crypt::encryptString($validated['nik']);
+        $masyarakat->nik_hash = hash_hmac('sha256', $validated['nik'], config('app.key'));
         $masyarakat->gender = $validated['gender'];
         $masyarakat->verification = 'Menunggu';
 
@@ -181,7 +186,7 @@ class AuthController extends Controller {
         return redirect()->route('waiting')
             ->with('success', 'Akun berhasil dibuat! Menunggu verifikasi.')
             ->with('user_name', $user->name)
-            ->with('user_nik', $masyarakat->nik)
+            ->with('user_nik', $masyarakat->decrypted_nik)
             ->with('user_email', $user->email);
     }
 
@@ -478,7 +483,8 @@ class AuthController extends Controller {
 
         $masyarakat = new Masyarakat();
         $masyarakat->user_id = $userId;
-        $masyarakat->nik = $validated['nik'];
+        $masyarakat->nik = Crypt::encryptString($validated['nik']);
+        $masyarakat->nik_hash = hash('sha256', $validated['nik']);
         $masyarakat->gender = $validated['gender'];
         $masyarakat->verification = $request->get('verification', 'Menunggu');
 
@@ -547,7 +553,7 @@ class AuthController extends Controller {
 
         $validated = $request->validate($rules);
 
-        $masyarakat->nik = $validated['nik'];
+        $masyarakat->nik = Crypt::encryptString($validated['nik']);
         $masyarakat->gender = $validated['gender'];
 
         if ($request->has('verification')) {

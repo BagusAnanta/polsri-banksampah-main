@@ -11,22 +11,24 @@
     <!-- Article List -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         @forelse($artikels as $artikel)
-            <div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
-                @if($artikel->gambar_artikel)
-                    <div class="h-40 overflow-hidden">
-                        <img src="{{ asset('storage/' . $artikel->gambar_artikel) }}" alt="{{ $artikel->judul_artikel }}" class="w-full h-full object-cover">
+            <button class="bg-white rounded-xl border border-slate-200 overflow-hidden text-left" onclick="window.location='{{ route('edukasi-masyarakat.show', $artikel->artikel_id) }}'">
+                <div class="flex flex-col h-full">
+                    @if($artikel->gambar_artikel)
+                        <div class="h-40 overflow-hidden">
+                            <img src="{{ asset($artikel->gambar_artikel) }}" alt="{{ $artikel->judul_artikel }}" class="w-full h-full object-cover">
+                        </div>
+                    @else
+                        <div class="h-40 bg-slate-100 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-slate-400" style="font-size: 48px;">image</span>
+                        </div>
+                    @endif
+                    <div class="p-4 space-y-3">
+                        <h3 class="font-semibold text-slate-900 text-sm leading-tight">{{ $artikel->judul_artikel }}</h3>
+                        <p class="text-xs text-slate-600 line-clamp-2">{{ \Illuminate\Support\Str::limit(strip_tags($artikel->isi_artikel), 120) }}</p>
+                        <p class="text-xs text-slate-500">{{ \Carbon\Carbon::parse($artikel->created_at)->locale('id')->translatedFormat('d F Y') }}</p>
                     </div>
-                @else
-                    <div class="h-40 bg-slate-100 flex items-center justify-center">
-                        <span class="material-symbols-outlined text-slate-400" style="font-size: 48px;">image</span>
-                    </div>
-                @endif
-                <div class="p-4 space-y-3">
-                    <h3 class="font-semibold text-slate-900 text-sm leading-tight">{{ $artikel->judul_artikel }}</h3>
-                    <p class="text-xs text-slate-600 line-clamp-2">{{ \Illuminate\Support\Str::limit(strip_tags($artikel->isi_artikel), 120) }}</p>
-                    <p class="text-xs text-slate-500">{{ \Carbon\Carbon::parse($artikel->created_at)->locale('id')->translatedFormat('d F Y') }}</p>
                 </div>
-            </div>
+            </button>
         @empty
             <div class="lg:col-span-3 py-12 text-center text-slate-500 bg-white rounded-xl border border-slate-200">
                 <span class="material-symbols-outlined text-4xl mb-2 block">menu_book</span>

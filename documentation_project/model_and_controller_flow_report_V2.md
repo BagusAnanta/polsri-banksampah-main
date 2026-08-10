@@ -241,7 +241,7 @@ erDiagram
 | **`TiketTukarPoin`** | `tikettukarpoins` | `tiketpoin_id` (UUID) | `tiketpoin_id`, `tiketpoin_inc`, `masyarakat_id`, `banksampah_id`, `poin`, `qr_code_id`, `status` | UUID PK, auto incrementing `tiketpoin_inc`, `status` enum ('Menunggu','Selesai') | - `masyarakat()`: belongsTo `Masyarakat`<br>- `bankSampahUser()`: belongsTo `BankSampahUser` |
 | **`Artikel`** | `artikels` | `artikel_id` (UUID) | `artikel_id`, `judul_artikel`, `gambar_artikel`, `isi_artikel` | UUID PK | None |
 | **`Setting`** | `settings` | `settings_id` (bigint)| `gram_per_point`, `point_per_voucher` | Bigint PK, `gram_per_point` int, `point_per_voucher` int | System conversion rates |
-| **`User`** (V2 Ext) | `users` | `id` (bigint) | `registered_by` | FK to `users.id` | - `masyarakat()`: hasOne `Masyarakat`<br>- `createdBankSampahUsers()`: hasMany `BankSampahUser` |
+| **`User`** (V2 Ext) | `users` | `id` (bigint) | `registered_by` | FK to `users.id` | - `masyarakat()`: hasOne `Masyarakat`<br>- `admin_banksampah()`: hasOne `BankSampahUser` |
 
 ---
 

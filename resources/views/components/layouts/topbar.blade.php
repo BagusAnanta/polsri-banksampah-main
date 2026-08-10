@@ -1,7 +1,3 @@
-{{--
-    Topbar: logo + pill nav + search/notif/logout + user menu.
-    Simpan di: resources/views/components/layouts/topbar.blade.php
---}}
 
 <header class="flex items-center justify-between border-b border-base-300/40 px-4 py-3 sm:px-6">
 
@@ -31,9 +27,9 @@
                     {{ request()->routeIs('tiket-poin.*') ? 'bg-olive-700 text-white' : 'text-base-content/70 hover:bg-base-300/50' }}">
                 Tiket Poin
             </a>
-            <a href="{{ route('edukasi.index') }}"
+            <a href="{{ route('edukasi-masyarakat.index') }}"
             class="rounded-full px-4 py-1.5 text-sm font-medium transition-colors
-                    {{ request()->routeIs('edukasi.*') ? 'bg-olive-700 text-white' : 'text-base-content/70 hover:bg-base-300/50' }}">
+                    {{ request()->routeIs('edukasi-masyarakat.*') ? 'bg-olive-700 text-white' : 'text-base-content/70 hover:bg-base-300/50' }}">
                 Edukasi
             </a>
             <a href="{{ route('riwayat.index') }}"
@@ -84,9 +80,9 @@
                     {{ request()->routeIs('sa.bank-sampah.*') ? 'bg-olive-700 text-white' : 'text-base-content/70 hover:bg-base-300/50' }}">
                 Bank Sampah
             </a>
-            <a href="{{ route('sa.edukasi.index') }}"
+            <a href="{{ route('sa.edukasi-superadmin.index') }}"
             class="rounded-full px-4 py-1.5 text-sm font-medium transition-colors
-                    {{ request()->routeIs('sa.edukasi.*') ? 'bg-olive-700 text-white' : 'text-base-content/70 hover:bg-base-300/50' }}">
+                    {{ request()->routeIs('sa.edukasi-superadmin.*') ? 'bg-olive-700 text-white' : 'text-base-content/70 hover:bg-base-300/50' }}">
                 Edukasi
             </a>
             <a href="{{ route('sa.pengaturan.index') }}"
@@ -140,7 +136,13 @@
             </div>
 
             <ul tabindex="0" class="dropdown-content menu z-10 mt-2 w-40 rounded-box bg-base-100 p-2 shadow">
-                <li><a href="{{ route('profil') }}">Profil</a></li>
+                <li>
+                    @if($role === 'Masyarakat')
+                        <a href="{{ route('profile-masyarakat', auth()->user()->masyarakat->masyarakat_id) }}">Profil</a>
+                    @elseif($role === 'Admin Bank Sampah')
+                        <a href="{{ route('admin.profile-banksampah', auth()->user()->admin_banksampah->banksampah_id) }}">Profil</a>
+                    @endif
+                </li>
                 <li>
                     <form id="logout-form" method="POST" action="{{ route('logout') }}" style="display: none;">
                         @csrf

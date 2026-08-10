@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Crypt;
 use Carbon\Carbon;
 
 class SuperAdminController extends Controller
@@ -49,22 +50,20 @@ class SuperAdminController extends Controller
             'bulanLabels' => $bulanLabels,
         ];
 
-        //dd($data);
-
         return view('v2.user.adminsuper.dashboard', $data);
     }
 
     public function masyarakatIndex()
     {
-        $masyarakats = Masyarakat::with('user')->latest('created_at')->get();
+        $masyarakat = Masyarakat::with('user')->latest('created_at')->get();
 
-        $totalMasyarakat = $masyarakats->count();
-        $menungguPersetujuan = $masyarakats->where('verification', 'Menunggu')->count();
-        $telahDisetujui = $masyarakats->where('verification', 'Disetujui')->count();
+        $totalMasyarakat = $masyarakat->count();
+        $menungguPersetujuan = $masyarakat->where('verification', 'Menunggu')->count();
+        $telahDisetujui = $masyarakat->where('verification', 'Disetujui')->count();
 
         $data = [
             'page_title' => 'Daftar Masyarakat',
-            'masyarakats' => $masyarakats,
+            'masyarakat' => $masyarakat,
             'totalMasyarakat' => $totalMasyarakat,
             'menungguPersetujuan' => $menungguPersetujuan,
             'telahDisetujui' => $telahDisetujui,
@@ -79,6 +78,7 @@ class SuperAdminController extends Controller
 
         $data = [
             'page_title' => 'Profil Masyarakat',
+            'masyarakat_nik' => $masyarakat->decrypted_nik,
             'masyarakat' => $masyarakat,
         ];
 
@@ -91,6 +91,7 @@ class SuperAdminController extends Controller
 
         $data = [
             'page_title' => 'Peninjauan Pengajuan Akun Masyarakat',
+            'masyarakat_nik' => $masyarakat->decrypted_nik,
             'masyarakat' => $masyarakat,
         ];
 
@@ -183,6 +184,7 @@ class SuperAdminController extends Controller
         $user->email = $validated['username'] . '@banksampah.local';
         $user->password = Hash::make($validated['password']);
         $user->registered_by = Auth::id();
+        $user->user_code = 'BNKSMP' . str_pad($user->id, 6, '0', STR_PAD_LEFT);
         $user->save();
 
         $user->assignRole('Admin Bank Sampah');

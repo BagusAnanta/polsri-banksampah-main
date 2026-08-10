@@ -9,9 +9,10 @@
         <div class="form-control w-full sm:w-64">
             <select class="select select-bordered bg-white" id="statusFilter">
                 <option value="">Semua Status</option>
-                <option value="Menunggu">Menunggu</option>
-                <option value="Selesai">Selesai</option>
-                <option value="Ditolak">Ditolak</option>
+                <option value="menunggu">Menunggu</option>
+                <option value="selesai">Selesai</option>
+                <option value="ditolak">Ditolak</option>
+                <option value="dibatalkan">Dibatalkan</option>
             </select>
         </div>
     </div>
@@ -35,11 +36,11 @@
     <!-- 3-Column Card Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         @forelse($tikets as $tiket)
-            <a href="{{ route('admin.tiket-setor.show', $tiket->tiketsampah_id) }}" class="bg-white rounded-xl p-5 border border-slate-200 hover:border-blue-300 transition block">
+            <a href="{{ route('admin.tiket-setor.show', $tiket->tiketsampah_id) }}" data-status="{{ strtolower($tiket->status) }}" class="bg-white rounded-xl p-5 border border-slate-200 hover:border-blue-300 transition block">
                 <div class="flex items-start justify-between mb-3">
                     <div>
                         <p class="text-sm font-semibold text-slate-900">{{ $tiket->masyarakat->user->name ?? '-' }}</p>
-                        <p class="text-xs text-slate-500 mt-0.5">{{ $tiket->masyarakat->nik ?? '-' }}</p>
+                        <p class="text-xs text-slate-500 mt-0.5">{{ $tiket->masyarakat->decrypted_nik ?? '-' }}</p>
                     </div>
                     <span @class([
                             'rounded-full px-2.5 py-0.5 text-xs font-medium whitespace-nowrap',
@@ -75,7 +76,7 @@
     document.getElementById('statusFilter')?.addEventListener('change', function () {
         const val = this.value;
         document.querySelectorAll('[data-status]').forEach(el => {
-            el.closest('a')?.style.display = (!val || el.dataset.status === val) ? '' : 'none';
+            el.style.display = (!val || el.dataset.status === val) ? '' : 'none';
         });
     });
 </script>

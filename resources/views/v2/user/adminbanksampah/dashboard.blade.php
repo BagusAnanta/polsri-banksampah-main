@@ -98,15 +98,15 @@
 
             <!-- Action Buttons -->
             <div class="space-y-2">
-                <button class="w-full flex items-center justify-center gap-2 px-4 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition">
+                <button class="w-full flex items-center justify-center gap-2 px-4 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition" onclick="window.location.href='{{ route('admin.scan') }}'">
                     <span class="material-symbols-outlined" style="font-size: 20px;">qr_code_2</span>
                     Scan QR
                 </button>
-                <button class="w-full flex items-center justify-center gap-2 px-4 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition">
+                <button class="w-full flex items-center justify-center gap-2 px-4 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition" onclick="window.location.href='{{ route('admin.tiket-setor.index') }}'">
                     <span class="material-symbols-outlined" style="font-size: 20px;">add</span>
                     Deposit
                 </button>
-                <button class="w-full flex items-center justify-center gap-2 px-4 py-3 bg-amber-600 text-white rounded-lg font-medium hover:bg-amber-700 transition">
+                <button class="w-full flex items-center justify-center gap-2 px-4 py-3 bg-amber-600 text-white rounded-lg font-medium hover:bg-amber-700 transition" onclick="window.location.href='{{ route('admin.tiket-poin.index') }}'">
                     <span class="material-symbols-outlined" style="font-size: 20px;">card_giftcard</span>
                     Voucher
                 </button>

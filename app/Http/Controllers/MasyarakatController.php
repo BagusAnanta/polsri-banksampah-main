@@ -1,12 +1,4 @@
 <?php
-
-
-/**
- * ON DEPRECATED, ALL LOGIC CODE HAS MOVE INTO AUTHCONTROLLER
- * THIS CODE FOR REFERENCE, PLEASE REMOVE IF ALL CODE ALREADY 
- * RUNNING AND THIS CODE UNUSED 
- */
-
 namespace App\Http\Controllers;
 
 use App\Models\Masyarakat;
@@ -185,20 +177,17 @@ class MasyarakatController extends Controller
         return redirect()->route('masyarakats.index')->with('success', 'Masyarakat profile registered successfully!');
     }
 
-    public function show(Request $request, $id)
+    public function masyarakatProfile($id)
     {
-        $masyarakat = Masyarakat::with(['user', 'approver'])->findOrFail($id);
+        $masyarakat = Masyarakat::with('user')->findOrFail($id);
 
-        if ($request->wantsJson() || $request->is('api/*')) {
-            return response()->json([
-                'success' => true,
-                'data' => $masyarakat
-            ]);
-        }
+        $data = [
+            'page_title' => 'Profil Masyarakat',
+            'masyarakat_nik' => $masyarakat->decrypted_nik,
+            'masyarakat' => $masyarakat,
+        ];
 
-        $data['page_title'] = 'Detail Masyarakat';
-        $data['masyarakat'] = $masyarakat;
-        return view('masyarakats.show', $data);
+        return view('v2.user.masyarakat.masyarakat-profile', $data);
     }
 
     public function edit($id)

@@ -34,6 +34,8 @@ class DashboardController extends Controller
             return redirect()->route('login');
         }
 
+        // get from database settings, if point per voucher is not set, use default value of 500
+        // it same for gram per point, if not set, use default value of 1000
         $setting = Setting::first() ?? new Setting([
             'gram_per_point' => 1000,
             'point_per_voucher' => 500,
@@ -86,6 +88,10 @@ class DashboardController extends Controller
 
         $poinSaatIni = $currentPoints;
         $targetPoin = $setting->point_per_voucher;
+        $persentase = $targetPoin > 0 ? min(round(($poinSaatIni / $targetPoin) * 100), 100) : 0;
+
+        $siapDitukar = $poinSaatIni >= $targetPoin;
+        $sisaPoin = max($targetPoin - $poinSaatIni, 0);
 
         $data = [
             'page_title' => 'Dashboard',
@@ -98,6 +104,9 @@ class DashboardController extends Controller
             'bulanLabels' => $bulanLabels,
             'tiketSetorTerbaru' => $tiketSetorTerbaru,
             'tiketPoinTerbaru' => $tiketPoinTerbaru,
+            'persentase' => $persentase,
+            'siapDitukar' => $siapDitukar,
+            'sisaPoin' => $sisaPoin,
         ];
 
         return view('v2.user.masyarakat.dashboard', $data);
