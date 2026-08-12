@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\MasyarakatVerificationMail;
 use Carbon\Carbon;
 
 class SuperAdminController extends Controller
@@ -113,7 +116,9 @@ class SuperAdminController extends Controller
             $masyarakat->approved_by = Auth::id();
             $masyarakat->save();
 
-            return back()->with('success', 'Pendaftaran masyarakat berhasil disetujui!');
+            $this->sendVerificationEmail($masyarakat, 'Disetujui');
+
+            return back()->with('success', 'Pendaftaran masyarakat berhasil disetujui dan email terkirim!');
         } elseif ($action === 'tolak') {
             $validated = $request->validate([
                 'alasan_tolak' => 'nullable|string|max:500',
@@ -122,10 +127,21 @@ class SuperAdminController extends Controller
             $masyarakat->verification = 'Ditolak';
             $masyarakat->save();
 
-            return back()->with('success', 'Pendaftaran masyarakat berhasil ditolak!');
+            $this->sendVerificationEmail($masyarakat, 'Ditolak', $validated['alasan_tolak'] ?? null);
+
+            return back()->with('success', 'Pendaftaran masyarakat berhasil ditolak dan email terkirim!');
         }
 
         return back()->withErrors(['error' => 'Action tidak valid']);
+    }
+
+    private function sendVerificationEmail($masyarakat, $status, $alasan = null)
+    {
+        try {
+            Mail::to($masyarakat->user->email)->send(new MasyarakatVerificationMail($masyarakat, $status, $alasan));
+        } catch (\Throwable $th) {
+            Log::warning('Gagal mengirim email verifikasi untuk masyarakat ' . $masyarakat->masyarakat_id . ': ' . $th->getMessage());
+        }
     }
 
     public function bankSampahIndex()
@@ -165,6 +181,7 @@ class SuperAdminController extends Controller
         ],[
             'username.required' => 'Username wajib diisi',
             'username.min' => 'Username minimal 3 karakter',
+            'username.unique' => 'Username sudah terdaftar',
 
             'password.required' => 'Password wajib diisi',
             'password.min' => 'Password minimal 8 karakter',

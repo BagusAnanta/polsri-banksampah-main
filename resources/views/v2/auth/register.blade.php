@@ -80,6 +80,19 @@
                         @error('name') <label class="label"><span class="label-text-alt text-red-500">{{ $message }}</span></label> @enderror
                     </div>
 
+                    <!-- Username -->
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text text-sm font-medium text-stone-700">Username *</span>
+                        </label>
+                        <input type="text" name="username" id="username"
+                               placeholder="Masukkan username"
+                               value="{{ old('username') }}"
+                               class="input input-bordered rounded-xl bg-[#EADDCD] text-sm px-4 py-3 text-stone-800 placeholder-stone-400 @error('username') input-error @enderror"
+                               required />
+                        @error('username') <label class="label"><span class="label-text-alt text-red-500">{{ $message }}</span></label> @enderror
+                    </div>
+
                     <!-- NIK -->
                     <div class="form-control">
                         <label class="label">

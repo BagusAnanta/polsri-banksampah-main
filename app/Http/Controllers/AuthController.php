@@ -84,7 +84,7 @@ class AuthController extends Controller {
                 } elseif ($verification === 'ditolak') {
                     Auth::logout();
                     return back()
-                        ->withErrors(['credential' => 'Akun Anda ditolak. Hubungi admin.'])
+                        ->withErrors(['credential' => 'Mohon maaf akun anda ditolak.'])
                         ->withInput();
                 }
             }
@@ -103,6 +103,7 @@ class AuthController extends Controller {
     # register user + masyarakat data 
     public function register(Request $request){
         $validated = $request->validate([
+            'username' => 'required|string|min:3|unique:users,username',
             'name' => 'required|string|min:3',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
@@ -112,6 +113,9 @@ class AuthController extends Controller {
             'gender' => 'required|in:Laki-laki,Perempuan',
             'identity_photo' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
         ],[
+            'username.required' => 'Username wajib diisi',
+            'username.min' => 'Username minimal 3 karakter',
+            'username.unique' => 'Username sudah terdaftar',
             'name.required' => 'Nama wajib diisi',
 
             'email.required' => 'Email wajib diisi',
@@ -140,7 +144,7 @@ class AuthController extends Controller {
 
         $user = new User();
         $user->name = $validated['name'];
-        $user->username = $validated['name'];
+        $user->username = $validated['username'];
         $user->email = $validated['email'];
         $user->phone = $validated['phone'];
         $user->address = $validated['address'];

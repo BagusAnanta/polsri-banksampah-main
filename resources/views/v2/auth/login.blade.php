@@ -70,7 +70,7 @@
                 <!-- Heading -->
                 <div class="mb-8">
                     <h2 class="text-2xl font-bold text-stone-800 mb-2">Masuk ke Akun Anda</h2>
-                    <p class="text-sm text-stone-500">Gunakan NIK dan password untuk masuk</p>
+                    <p class="text-sm text-stone-500">Gunakan NIK atau Username dan Password untuk masuk</p>
                 </div>
 
                 <!-- Success Message -->
@@ -87,10 +87,10 @@
                     <!-- NIK/Username Field -->
                     <div class="form-control">
                         <label class="label">
-                            <span class="label-text text-sm font-medium">NIK / Nama Pengguna</span>
+                            <span class="label-text text-sm font-medium">NIK / Username </span>
                         </label>
                         <input type="text" name="identifier" id="identifier"
-                               placeholder="Masukkan NIK atau nama pengguna"
+                               placeholder="Masukkan NIK atau username"
                                value="{{ old('identifier') }}"
                                class="input input-bordered rounded-xl bg-[#EADDCD] text-sm placeholder-stone-400 @error('username') input-error @enderror"
                                required />
