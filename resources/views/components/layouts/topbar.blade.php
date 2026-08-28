@@ -93,15 +93,80 @@
         </nav>
     @endif
 
-
     <div class="flex items-center gap-2 sm:gap-3">
-        <button class="btn btn-ghost btn-circle btn-sm">
-            <span class="material-symbols-outlined">search</span>
-        </button>
         
-        <button class="btn btn-ghost btn-circle btn-sm">
-            <span class="material-symbols-outlined">notifications</span>
-        </button>
+        <div class="dropdown dropdown-end">
+            {{-- Bell icon trigger with unread count badge --}}
+            <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
+                <div class="indicator">
+                    <span class="material-symbols-outlined">notifications</span>
+                    @if($unreadCount > 0)
+                        <span class="badge badge-sm badge-error indicator-item">
+                            {{ $unreadCount > 99 ? '99+' : $unreadCount }}
+                        </span>
+                    @endif
+                </div>
+            </div>
+
+            {{-- Dropdown panel --}}
+            <div tabindex="0" class="dropdown-content z-[1] mt-3 w-80 sm:w-96 bg-base-100 border border-base-300 rounded-box shadow-xl">
+
+                {{-- Header --}}
+                <div class="flex items-center justify-between px-4 py-3 border-b border-base-300">
+                    <h3 class="font-semibold text-base">Notifikasi</h3>
+
+                    <!-- @if($unreadCount > 0)
+                        <form method="POST" action="{{ route('notifications.read-all') }}">
+                            @csrf
+                            @method('PATCH')
+                            <button type="submit" class="btn btn-ghost btn-xs text-primary">
+                                Mark all read
+                            </button>
+                        </form>
+                    @endif -->
+                </div>
+
+                {{-- Scrollable message list --}}
+                <div class="max-h-96 overflow-y-auto">
+                    @forelse($notifications as $notification)
+                        <a
+                            class="flex gap-3 px-4 py-3 border-b border-base-200 last:border-b-0 hover:bg-base-200/70 transition-colors {{ $notification->read_at ? '' : 'bg-primary/5' }}"
+                        >
+                            {{-- Unread dot indicator --}}
+                            <div class="pt-1.5 shrink-0">
+                                <span class="inline-block w-2 h-2 rounded-full {{ $notification->read_at ? 'bg-transparent' : 'bg-primary' }}"></span>
+                            </div>
+
+                            <div class="flex flex-col gap-0.5 min-w-0">
+                                <span class="font-medium text-sm truncate">
+                                    {{ $notification->data['title'] ?? 'Notification' }}
+                                </span>
+                                <span class="text-xs text-base-content/70 line-clamp-2">
+                                    {{ $notification->data['message'] ?? '' }}
+                                </span>
+                                <span class="text-xs text-base-content/50 mt-0.5">
+                                    {{ $notification->created_at->diffForHumans() }}
+                                </span>
+                            </div>
+                        </a>
+                    @empty
+                        <div class="flex flex-col items-center justify-center gap-2 py-10 text-base-content/50">
+                            <span class="material-symbols-outlined text-3xl">notifications_off</span>
+                            <span class="text-sm">Belum ada notifikasi.</span>
+                        </div>
+                    @endforelse
+                </div>
+
+                <!-- {{-- Optional footer: link to full notifications page --}}
+                @if($notifications->isNotEmpty())
+                    <div class="border-t border-base-300 p-2">
+                        <a href="{{ route('notifications.index') }}" class="btn btn-ghost btn-sm w-full">
+                            Lihat semua notifikasi
+                        </a>
+                    </div>
+                @endif -->
+            </div>
+        </div>
 
         <form method="POST" action="{{ route('logout') }}">
             @csrf

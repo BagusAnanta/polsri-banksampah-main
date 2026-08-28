@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\MasyarakatVerificationMail;
+use App\Notifications\MasyarakatApprove;
 use Carbon\Carbon;
 
 class SuperAdminController extends Controller
@@ -117,6 +118,18 @@ class SuperAdminController extends Controller
             $masyarakat->save();
 
             $this->sendVerificationEmail($masyarakat, 'Disetujui');
+
+            // send notification for masyarakat with approve 
+            // get masyarakat_id and shem them
+            $masyarakatuser = User::role('Masyarakat')
+                ->whereHas('masyarakat', function ($query) use ($masyarakat) {
+                    $query->where('masyarakat_id', $masyarakat->masyarakat_id);
+                })->first();
+
+
+            if ($masyarakatuser) {
+                $masyarakatuser->notify(new MasyarakatApprove($masyarakat));
+            }
 
             return back()->with('success', 'Pendaftaran masyarakat berhasil disetujui dan email terkirim!');
         } elseif ($action === 'tolak') {

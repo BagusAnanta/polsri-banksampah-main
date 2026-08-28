@@ -1,0 +1,13 @@
+
+Example for make seeder
+=>
+php artisan make:seeder UserSeeder
+php artisan make:seeder MasyarakatSeeder
+php artisan make:seeder BankSampahUserSeeder
+php artisan make:seeder TiketSetorSampahSeeder
+
+Create seeder
+=> php artisan db:seed
+
+rebuild and seeder
+=> php artisan migrate:fresh --seed

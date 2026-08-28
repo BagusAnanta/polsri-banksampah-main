@@ -22,6 +22,7 @@ use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\MasyarakatController;
+use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -64,6 +65,14 @@ Route::get('/profil', [AuthController::class, 'profile'])->name('profil');
 Route::get('/help', function() {
     return view('v2.help');
 })->name('help');
+
+ // for V2 notification
+Route::middleware('auth')->prefix('notifications')->group(function () {
+    Route::get('/', [NotificationController::class, 'notificationIndex'])->name('notifications.index');
+    Route::get('/unread-count', [NotificationController::class, 'unreadCount'])->name('notifications.unread-count');
+    Route::patch('/{id}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
+    Route::patch('/read-all', [NotificationController::class, 'markAllAsRead'])->name('notifications.read-all');
+});
 
 // ====== V2 Admin & Super Admin Routes (inside auth middleware group) ======
 

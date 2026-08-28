@@ -1,0 +1,16 @@
+How run test code 
+
+1. for run all test
+=> php artisan test
+
+2. for run specific test file
+=> php artisan test (directory files)
+ex : php artisan test tests/Feature/SetoranSampahNotificationTest.php
+
+3. for run by test name (filter)
+=> php artisan test --filter (name files)
+ex : php artisan test --filter SetoranSampahNotificationTest
+
+4. Alternative using PHPunit directly
+=> ./vendor/bin/phpunit --filter (name files)
+ex : ./vendor/bin/phpunit --filter SetoranSampahNotificationTest

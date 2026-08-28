@@ -7,6 +7,8 @@ use App\Models\TiketSetorSampah;
 use App\Models\Masyarakat;
 use App\Models\BankSampahUser;
 use App\Models\Setting;
+use App\Notifications\SetoranPoinBaru;
+use App\Notifications\SetoranPoinStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -137,6 +139,18 @@ class TikettukarpoinController extends Controller
         $ticket->qr_code_id = 'TP-' . strtoupper(Str::random(10));
         $ticket->status = 'Menunggu';
         $ticket->save();
+
+        // in here, we gonna send notification to admin bank sampah that a new deposit ticket has been created
+        // it still same like for setor sampah before
+        $banksampahuseradmin = User::role('Admin Bank Sampah')->whereHas('admin_banksampah', function ($query) use ($validated) {
+            $query->where('banksampah_id', $validated['banksampah_id']);
+        })->first();
+
+        // if user request for create tiket setor sampah, it will send notification into admin
+        if ($banksampahuseradmin) {
+            $banksampahuseradmin->notify(new SetoranPoinBaru($ticket));
+        }
+        
 
         if ($request->wantsJson() || $request->is('api/*')) {
             return response()->json([
@@ -270,10 +284,34 @@ class TikettukarpoinController extends Controller
             $masyarakat->voucher = ($masyarakat->voucher ?? 0) + 1;
             $masyarakat->save();
 
+            // prefer the direct relation if available, fallback to a safe whereHas lookup
+            $masyarakatuser = User::role('Masyarakat')
+                ->whereHas('masyarakat', function ($query) use ($masyarakat) {
+                    $query->where('masyarakat_id', $masyarakat->masyarakat_id);
+                })->first();
+
+
+            if ($masyarakatuser) {
+                $masyarakatuser->notify(new SetoranPoinStatus($ticket));
+            }
+
             return back()->with('success', 'Tiket penukaran voucher berhasil disetujui dan diterbitkan!');
         } elseif ($action === 'batalkan') {
             $ticket->status = 'Dibatalkan';
             $ticket->save();
+
+            $masyarakat = $ticket->masyarakat;
+
+             // prefer the direct relation if available, fallback to a safe whereHas lookup
+            $masyarakatuser = User::role('Masyarakat')
+                ->whereHas('masyarakat', function ($query) use ($masyarakat) {
+                    $query->where('masyarakat_id', $masyarakat->masyarakat_id);
+                })->first();
+
+            if ($masyarakatuser) {
+                $masyarakatuser->notify(new SetoranPoinStatus($ticket));
+            }
+
             return back()->with('success', 'Tiket penukaran voucher berhasil dibatalkan!');
         }
 

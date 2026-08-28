@@ -9,7 +9,10 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\View;
 use Spatie\Permission\Models\Role;
+
+use App\View\Composers\NavbarComposer;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -46,6 +49,13 @@ class AppServiceProvider extends ServiceProvider
             view()->share('roles', []);
         }
 
+        // Notification Navbar
+        View::composer(
+            'components.layouts.topbar',
+            NavbarComposer::class
+        );
+
         Paginator::useBootstrap();
+
     }
 }

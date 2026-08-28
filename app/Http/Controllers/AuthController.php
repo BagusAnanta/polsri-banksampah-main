@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Masyarakat;
 use App\Models\User;
+use App\Notifications\MasyarakatRegister;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -100,7 +101,7 @@ class AuthController extends Controller {
         return redirect()->route('v1.dashboard');
     }
 
-    # register user + masyarakat data 
+    //register user + masyarakat data 
     public function register(Request $request){
         $validated = $request->validate([
             'username' => 'required|string|min:3|unique:users,username',
@@ -175,6 +176,12 @@ class AuthController extends Controller {
         }
 
         $masyarakat->save();
+
+        // Send notification to Super Admin
+        $superadmins = User::role('Super Admin')->get();
+        foreach ($superadmins as $superadmin) {
+            $superadmin->notify(new MasyarakatRegister($masyarakat));
+        }
 
         if ($request->wantsJson() || $request->is('api/*')) {
             return response()->json([
