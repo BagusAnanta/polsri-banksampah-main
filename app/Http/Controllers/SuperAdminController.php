@@ -187,6 +187,7 @@ class SuperAdminController extends Controller
             'password' => 'required|string|min:8',
             'nama_bank_sampah' => 'required|min:3|string',
             'alamat' => 'required|string',
+            'email' => 'required|email|unique:users,email',
             'kecamatan' => 'required|string',
             'jam_operasional' => 'required|string',
             'nomor_telepon' => 'nullable|string',
@@ -195,6 +196,10 @@ class SuperAdminController extends Controller
             'username.required' => 'Username wajib diisi',
             'username.min' => 'Username minimal 3 karakter',
             'username.unique' => 'Username sudah terdaftar',
+
+            'email.required' => 'Email wajib diisi',
+            'email.email' => 'Format email tidak valid',
+            'email.unique' => 'Email sudah terdaftar',
 
             'password.required' => 'Password wajib diisi',
             'password.min' => 'Password minimal 8 karakter',
@@ -211,7 +216,7 @@ class SuperAdminController extends Controller
         $user = new User();
         $user->name = $validated['nama_bank_sampah'];
         $user->username = $validated['username'];
-        $user->email = $validated['username'] . '@banksampah.local';
+        $user->email = $validated['email'];
         $user->password = Hash::make($validated['password']);
         $user->registered_by = Auth::id();
         $user->user_code = 'BNKSMP' . str_pad($user->id, 6, '0', STR_PAD_LEFT);

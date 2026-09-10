@@ -74,4 +74,10 @@ class User extends Authenticatable
     {
         return $this->roles->first()->name ?? null;
     }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $mail = new \App\Mail\ResetPasswordMail($token, $this);
+        \Illuminate\Support\Facades\Mail::to($this->email)->send($mail);
+    }
 }

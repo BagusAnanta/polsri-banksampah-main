@@ -2,7 +2,7 @@
 
     {{-- KPI Stat Cards Row: Total Poin / Total Gramasi / Setor Selesai --}}
     <div class="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <div class="rounded-2xl bg-gradient-to-br from-olive-50 to-olive-100 p-5 shadow-sm">
+        <div class="rounded-2xl bg-[#E4CEA5] from-olive-50 to-olive-100 p-5 shadow-sm">
             <div class="flex items-start justify-between">
                 <div class="flex-1">
                     <p class="text-xs font-medium text-olive-600 sm:text-sm">Total Poin</p>
@@ -13,7 +13,7 @@
             </div>
         </div>
 
-        <div class="rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100 p-5 shadow-sm">
+        <div class="rounded-2xl bg-[#E4CEA5] from-blue-50 to-blue-100 p-5 shadow-sm">
             <div class="flex items-start justify-between">
                 <div class="flex-1">
                     <p class="text-xs font-medium text-blue-600 sm:text-sm">Total Gramasi</p>
@@ -24,7 +24,7 @@
             </div>
         </div>
 
-        <div class="rounded-2xl bg-gradient-to-br from-green-50 to-green-100 p-5 shadow-sm">
+        <div class="rounded-2xl bg-[#E4CEA5] from-green-50 to-green-100 p-5 shadow-sm">
             <div class="flex items-start justify-between">
                 <div class="flex-1">
                     <p class="text-xs font-medium text-green-600 sm:text-sm">Setor Selesai</p>
@@ -40,7 +40,7 @@
     <div class="mb-6 grid grid-cols-1 gap-6 lg:grid-cols-3">
         
         {{-- Chart Card (2/3 width on desktop) --}}
-        <div class="rounded-2xl bg-base-100 p-5 lg:col-span-2 border border-base-300/20 shadow-sm">
+        <div class="rounded-2xl bg-[#E4CEA5] p-5 lg:col-span-2 border border-base-300/20 shadow-sm">
             <div class="mb-4 flex items-center justify-between">
                 <div>
                     <h2 class="text-base font-semibold text-base-content">Poin Per Bulan</h2>
@@ -55,34 +55,34 @@
         </div>
 
         {{-- Voucher Progress Card (1/3 width on desktop) --}}
-        <div class="rounded-2xl bg-olive-700 text-black p-5 shadow-sm lg:col-span-1">
+        <div class="rounded-2xl bg-[#A3A85C] text-black p-5 shadow-sm lg:col-span-1">
             {{-- Header dengan ikon --}}
             <div class="flex items-center gap-2 mb-3">
                 <span class="text-xl">🎁</span>
-                <h3 class="text-base font-semibold">Progress Voucher</h3>
+                <h3 class="text-base font-semibold text-white">Progress Voucher</h3>
             </div>
 
-            <p class="text-xs text-black/70 mb-4">Poin menuju voucher berikutnya</p>
+            <p class="text-xs text-black/70 mb-4 text-white">Poin menuju voucher berikutnya</p>
 
             {{-- Angka poin besar --}}
             <div class="flex items-baseline gap-1 mb-3">
-                <span class="text-3xl font-bold leading-none">{{ number_format($poinSaatIni) }}</span>
-                <span class="text-sm text-black/70">/ {{ number_format($targetPoin) }}</span>
+                <span class="text-3xl font-bold leading-none text-white">{{ number_format($poinSaatIni) }}</span>
+                <span class="text-sm text-white">/ {{ number_format($targetPoin) }}</span>
             </div>
 
             {{-- Progress bar --}}
             <div class="mb-2">
                 <div class="w-full bg-black/25 rounded-full h-2">
-                    <div class="bg-black h-2 rounded-full transition-all" style="width: {{ $persentase }}%"></div>
+                    <div class="h-2 rounded-full transition-all bg-white" style="width: {{ $persentase }}%"></div>
                 </div>
             </div>
 
-            <p class="text-xs text-black/70 mb-3">{{ $persentase }}% tercapai</p>
+            <p class="text-xs text-white mb-3">{{ $persentase }}% tercapai</p>
 
             {{-- Tombol / badge muncul cuma kalau sudah 100% --}}
             @if($siapDitukar)
-                <button type="button" class="w-full bg-black/20 hover:bg-black/30 text-white text-sm py-2 rounded-full transition">
-                    1 voucher siap ditukar!
+                <button type="button" class="w-full bg-[#B5B97D] hover:bg-black/30 text-white text-sm py-2 rounded-full transition">
+                    voucher siap ditukar!
                 </button>
             @else
                 <p class="text-xs text-white/60">
@@ -98,15 +98,15 @@
         <h2 class="mb-4 text-base font-semibold text-base-content">Menu Cepat</h2>
         <div class="grid grid-cols-3 gap-3 sm:grid-cols-3 lg:grid-cols-3">
             <a href="{{ route('tiket-sampah.index') }}" 
-               class="group rounded-2xl bg-base-100 p-4 text-center transition hover:bg-olive-50 hover:shadow-md border border-base-300/20 hover:border-olive-200">
-                <div class="flex h-12 w-12 items-center justify-center rounded-full bg-olive-100 mx-auto mb-2 group-hover:bg-olive-200 transition">
+               class="group rounded-2xl bg-[#E4CEA5] p-4 text-center transition hover:bg-[#FAFBF7] hover:shadow-md border border-base-300/20 hover:bg-[#E7E8D5]">
+                <div class="flex h-12 w-12 items-center justify-center rounded-full bg-[#A3A85C] mx-auto mb-2 group-hover:bg-[#E7E8D5] transition">
                     <span class="material-symbols-outlined">delete</span>
                 </div>
                 <span class="text-xs font-medium text-base-content">Setor Sampah</span>
             </a>
 
             <a href="{{ route('tiket-poin.index') }}" 
-               class="group rounded-2xl bg-base-100 p-4 text-center transition hover:bg-amber-50 hover:shadow-md border border-base-300/20 hover:border-amber-200">
+               class="group rounded-2xl bg-[#E4CEA5] p-4 text-center transition hover:bg-amber-50 hover:shadow-md border border-base-300/20 hover:border-amber-200">
                 <div class="flex h-12 w-12 items-center justify-center rounded-full bg-amber-100 mx-auto mb-2 group-hover:bg-amber-200 transition">
                     <span class="material-symbols-outlined">confirmation_number</span>
                 </div>
@@ -114,7 +114,7 @@
             </a>
 
             <a href="{{ route('edukasi-masyarakat.index') }}" 
-               class="group rounded-2xl bg-base-100 p-4 text-center transition hover:bg-sky-50 hover:shadow-md border border-base-300/20 hover:border-sky-200">
+               class="group rounded-2xl bg-[#E4CEA5] p-4 text-center transition hover:bg-sky-50 hover:shadow-md border border-base-300/20 hover:border-sky-200">
                 <div class="flex h-12 w-12 items-center justify-center rounded-full bg-sky-100 mx-auto mb-2 group-hover:bg-sky-200 transition">
                     <span class="material-symbols-outlined">import_contacts</span>
                 </div>
@@ -127,7 +127,7 @@
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
         
         {{-- Tiket Setor Terbaru --}}
-        <div class="rounded-2xl bg-base-100 p-5 border border-base-300/20 shadow-sm">
+        <div class="rounded-2xl bg-[#E4CEA5] p-5 border border-base-300/20 shadow-sm">
             <div class="mb-4 flex items-center justify-between">
                 <h3 class="text-base font-semibold text-base-content">Tiket Setor Terbaru</h3>
                 <a href="{{ route('tiket-sampah.index') }}" class="text-xs font-medium text-olive-600 hover:text-olive-700 transition">
@@ -136,7 +136,7 @@
             </div>
             <div class="space-y-2">
                 @forelse($tiketSetorTerbaru ?? [] as $tiket)
-                    <div class="rounded-lg bg-base-200/40 p-3 hover:bg-base-200/60 transition">
+                    <div class="rounded-lg bg-[#F1E3C7] p-3 hover:bg-base-200/60 transition">
                         <div class="flex items-center justify-between gap-3">
                             <div class="flex-1 min-w-0">
                                 <p class="text-xs font-semibold text-base-content truncate">Tiket #{{ $tiket->id }}</p>
@@ -173,7 +173,7 @@
         </div>
 
         {{-- Tiket Tukar Poin Terbaru --}}
-        <div class="rounded-2xl bg-base-100 p-5 border border-base-300/20 shadow-sm">
+        <div class="rounded-2xl bg-[#E4CEA5] p-5 border border-base-300/20 shadow-sm">
             <div class="mb-4 flex items-center justify-between">
                 <h3 class="text-base font-semibold text-base-content">Tiket Tukar Poin Terbaru</h3>
                 <a href="{{ route('tiket-poin.index') }}" class="text-xs font-medium text-olive-600 hover:text-olive-700 transition">
@@ -182,7 +182,7 @@
             </div>
             <div class="space-y-2">
                 @forelse($tiketPoinTerbaru ?? [] as $tiket)
-                    <div class="rounded-lg bg-base-200/40 p-3 hover:bg-base-200/60 transition">
+                    <div class="rounded-lg bg-[#F1E3C7] p-3 hover:bg-base-200/60 transition">
                         <div class="flex items-center justify-between gap-3">
                             <div class="flex-1 min-w-0">
                                 <p class="text-xs font-semibold text-base-content truncate">Tiket #{{ $tiket->id }}</p>
@@ -228,11 +228,11 @@
             },
             stroke: { curve: 'smooth', width: 3 },
             fill: { type: 'gradient', gradient: { shadeIntensity: 1, opacityFrom: 0.5, opacityTo: 0.1, stops: [0, 100] } },
-            colors: ['#6b7280'],
+            colors: ['#7EB978'],
             series: [{ name: 'Poin', data: @json($poinPerBulan ?? []) }],
             xaxis: { categories: @json($bulanLabels ?? []), axisBorder: { show: false }, axisTicks: { show: false }, labels: { style: { fontSize: '12px', fontWeight: 500 } } },
             yaxis: { axisBorder: { show: false }, axisTicks: { show: false }, labels: { style: { fontSize: '12px' } } },
-            grid: { borderColor: '#e5e7eb', strokeDashArray: 4, xaxis: { lines: { show: false } } },
+            grid: { borderColor: '#59B167', strokeDashArray: 4, xaxis: { lines: { show: false } } },
             dataLabels: { enabled: false },
             responsive: [{ breakpoint: 768, options: { chart: { height: 250 } } }]
         };

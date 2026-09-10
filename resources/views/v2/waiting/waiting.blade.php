@@ -13,9 +13,9 @@
     </style>
 </head>
 <body>
-    <div class="min-h-screen bg-[#FAF5EB]">
+    <div class="min-h-screen bg-[#E4CEA5]">
         <!-- TopBar -->
-        <div class="bg-white border-b border-stone-200">
+        <div class="bg-[#EFDBB8] border-b border-stone-200">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
                 <div class="flex items-center gap-3">
                     <div class="h-9 w-9 rounded-full bg-[#5B6E33] flex items-center justify-center flex-shrink-0">
@@ -28,7 +28,7 @@
                         <p class="text-[10px] text-stone-500 -mt-0.5">Sekanak Connect</p>
                     </div>
                 </div>
-                <a href="{{ route('login') }}" class="btn btn-ghost btn-sm gap-2 text-stone-500 hover:text-red-600">
+                <a href="{{ route('login') }}" class="btn btn-ghost btn-sm gap-2 text-stone-500 hover:text-red-600 hover:bg-[#F1E3C7] rounded-full">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
                     </svg>
@@ -43,7 +43,7 @@
 
                 <!-- Left Column: StatusCard (spans 3/5) -->
                 <div class="lg:col-span-3">
-                    <div class="card bg-[#EADDCD] rounded-2xl p-7">
+                    <div class="card bg-[#F2DFBC] rounded-2xl p-7">
                         <div class="card-body p-0">
                             <div class="flex items-center justify-between mb-6">
                                 <div class="h-14 w-14 rounded-full bg-amber-100 flex items-center justify-center">
@@ -68,7 +68,7 @@
                     </div>
 
                     <!-- InfoCard: Informasi Pendaftar -->
-                    <div class="card bg-[#EADDCD] rounded-2xl p-7 mt-6">
+                    <div class="card bg-[#F2DFBC] rounded-2xl p-7 mt-6">
                         <div class="card-body p-0">
                             <h4 class="text-base font-bold text-stone-800 mb-4 flex items-center gap-2">
                                 <svg class="w-5 h-5 text-[#5B6E33]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -118,7 +118,7 @@
                 <!-- Right Column (stacks on mobile, spans 2/5 on desktop) -->
                 <div class="lg:col-span-2 flex flex-col gap-6">
                     <!-- ProgressStepper -->
-                    <div class="card bg-[#EADDCD] rounded-2xl p-7">
+                    <div class="card bg-[#F2DFBC] rounded-2xl p-7">
                         <div class="card-body p-0">
                             <h4 class="text-base font-bold text-stone-800 mb-6">Status Pendaftaran</h4>
                             <div class="flex flex-col gap-0">
@@ -169,7 +169,7 @@
                     </div>
 
                     <!-- InfoCard: Apa yang Bisa Kamu Lakukan -->
-                    <div class="card bg-[#EADDCD] rounded-2xl p-7">
+                    <div class="card bg-[#F2DFBC] rounded-2xl p-7">
                         <div class="card-body p-0">
                             <div class="flex items-start gap-3 mb-4">
                                 <div class="h-8 w-8 rounded-full bg-sky-100 flex items-center justify-center flex-shrink-0">
@@ -190,7 +190,7 @@
                                 <span class="text-xs font-semibold text-[#5B6E33]">1×24 Jam</span>
                             </div>
 
-                            <a href="{{ route('login') }}" class="btn btn-block btn-sm rounded-full bg-stone-200 text-stone-600 border-none hover:bg-stone-300 text-sm mt-4">
+                            <a href="{{ route('login') }}" class="btn btn-block btn-sm rounded-full text-stone-600 border-none hover:bg-red-600 text-sm mt-4 bg-[#785D24] text-white">
                                 Kembali ke Halaman Login
                             </a>
                         </div>

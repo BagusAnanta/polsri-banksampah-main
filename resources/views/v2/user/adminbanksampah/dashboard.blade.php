@@ -1,16 +1,11 @@
-<x-layouts.app title="" subtitle="">
+<x-layouts.app title="Dashboard Admin Bank Sampah" subtitle="Kelola setoran dan penukaran poin sampah">
 
-    <div class="space-y-6">
-    <!-- Page Header -->
-    <div class="space-y-1">
-        <h1 class="text-2xl font-bold text-slate-900">Dashboard Admin Bank Sampah</h1>
-        <p class="text-sm text-slate-600">Kelola setoran dan penukaran poin sampah</p>
-    </div>
+<div class="space-y-6">
 
     <!-- KPI Cards Row -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <!-- Total Tiket Setor -->
-        <div class="bg-white rounded-xl p-4 border border-slate-200">
+        <div class="bg-[#E4CEA5] rounded-xl p-4 border border-slate-200">
             <div class="flex items-start justify-between">
                 <div>
                     <p class="text-sm text-slate-600 font-medium">Total Tiket Setor</p>
@@ -23,7 +18,7 @@
         </div>
 
         <!-- Tiket Setor Pending -->
-        <div class="bg-white rounded-xl p-4 border border-slate-200">
+        <div class="bg-[#E4CEA5] rounded-xl p-4 border border-slate-200">
             <div class="flex items-start justify-between">
                 <div>
                     <p class="text-sm text-slate-600 font-medium">Tiket Setor Pending</p>
@@ -36,7 +31,7 @@
         </div>
 
         <!-- Tiket Setor Selesai -->
-        <div class="bg-white rounded-xl p-4 border border-slate-200">
+        <div class="bg-[#E4CEA5] rounded-xl p-4 border border-slate-200">
             <div class="flex items-start justify-between">
                 <div>
                     <p class="text-sm text-slate-600 font-medium">Tiket Setor Selesai</p>
@@ -49,7 +44,7 @@
         </div>
 
         <!-- Tiket Poin Pending -->
-        <div class="bg-white rounded-xl p-4 border border-slate-200">
+        <div class="bg-[#E4CEA5] rounded-xl p-4 border border-slate-200">
             <div class="flex items-start justify-between">
                 <div>
                     <p class="text-sm text-slate-600 font-medium">Tiket Poin Pending</p>
@@ -65,7 +60,7 @@
     <!-- Content Grid (Chart + Info + Buttons) -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <!-- Chart Card (Tiket Per Bulan) -->
-        <div class="lg:col-span-2 bg-white rounded-xl p-6 border border-slate-200">
+        <div class="lg:col-span-2 bg-[#E4CEA5] rounded-xl p-6 border border-slate-200">
             <div class="space-y-4">
                 <div>
                     <h3 class="text-lg font-semibold text-slate-900">Tiket Per Bulan</h3>
@@ -78,7 +73,7 @@
         <!-- Info & Actions Card -->
         <div class="space-y-4">
             <!-- Bank Info -->
-            <div class="bg-white rounded-xl p-6 border border-slate-200">
+            <div class="bg-[#E4CEA5] rounded-xl p-6 border border-slate-200">
                 <h3 class="text-sm font-semibold text-slate-900 mb-4">Informasi Bank Sampah</h3>
                 <div class="space-y-3">
                     <div>
@@ -98,15 +93,15 @@
 
             <!-- Action Buttons -->
             <div class="space-y-2">
-                <button class="w-full flex items-center justify-center gap-2 px-4 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition" onclick="window.location.href='{{ route('admin.scan') }}'">
+                <button class="w-full flex items-center justify-center gap-2 px-4 py-3 bg-[#A3A85C] text-white rounded-lg font-medium" onclick="window.location.href='{{ route('admin.scan') }}'">
                     <span class="material-symbols-outlined" style="font-size: 20px;">qr_code_2</span>
                     Scan QR
                 </button>
-                <button class="w-full flex items-center justify-center gap-2 px-4 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition" onclick="window.location.href='{{ route('admin.tiket-setor.index') }}'">
+                <button class="w-full flex items-center justify-center gap-2 px-4 py-3 bg-[#E4CEA5] text-black rounded-lg font-medium" onclick="window.location.href='{{ route('admin.tiket-setor.index') }}'">
                     <span class="material-symbols-outlined" style="font-size: 20px;">add</span>
                     Deposit
                 </button>
-                <button class="w-full flex items-center justify-center gap-2 px-4 py-3 bg-amber-600 text-white rounded-lg font-medium hover:bg-amber-700 transition" onclick="window.location.href='{{ route('admin.tiket-poin.index') }}'">
+                <button class="w-full flex items-center justify-center gap-2 px-4 py-3 bg-[#E4CEA5] text-black rounded-lg font-medium" onclick="window.location.href='{{ route('admin.tiket-poin.index') }}'">
                     <span class="material-symbols-outlined" style="font-size: 20px;">card_giftcard</span>
                     Voucher
                 </button>
@@ -117,10 +112,10 @@
     <!-- Lists Section -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <!-- Tiket Setor Pending List -->
-        <div class="bg-white rounded-xl p-6 border border-slate-200">
+        <div class="bg-[#E4CEA5] rounded-xl p-6 border border-slate-200">
             <div class="flex items-center justify-between mb-4">
                 <h3 class="text-lg font-semibold text-slate-900">Tiket Setor Pending</h3>
-                <a href="{{ route('admin.tiket-setor.index') }}" class="text-sm text-blue-600 hover:text-blue-700 font-medium">Lihat Semua</a>
+                <a href="{{ route('admin.tiket-setor.index') }}" class="text-sm text-[#A3A85C] font-medium">Lihat Semua</a>
             </div>
             <div class="space-y-3 max-h-64 overflow-y-auto">
                 @forelse($tiketSetorPendingList ?? [] as $tiket)
@@ -138,10 +133,10 @@
         </div>
 
         <!-- Tiket Poin Pending List -->
-        <div class="bg-white rounded-xl p-6 border border-slate-200">
+        <div class="bg-[#E4CEA5] rounded-xl p-6 border border-slate-200">
             <div class="flex items-center justify-between mb-4">
                 <h3 class="text-lg font-semibold text-slate-900">Tiket Poin Pending</h3>
-                <a href="{{ route('admin.tiket-poin.index') }}" class="text-sm text-blue-600 hover:text-blue-700 font-medium">Lihat Semua</a>
+                <a href="{{ route('admin.tiket-poin.index') }}" class="text-sm text-[#A3A85C] font-medium">Lihat Semua</a>
             </div>
             <div class="space-y-3 max-h-64 overflow-y-auto">
                 @forelse($tiketPoinPendingList ?? [] as $tiket)

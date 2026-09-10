@@ -10,8 +10,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title ? $title . ' - Trash Bank' : 'Trash Bank' }}</title>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: 'var(--dark)'
+                    }
+                }
+            }
+        }
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .material-symbols-outlined {
@@ -32,7 +44,7 @@
         }
     </style>
 </head>
-<body class="bg-base-100 text-base-content">
+<body class="bg-[#F1E3C7] text-base-content rounded-2xl">
 
     <div class="flex h-screen flex-col overflow-hidden lg:flex-row">
 

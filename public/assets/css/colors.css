@@ -1,0 +1,51 @@
+/* Central color variables for the theme
+   Edit colors here to change theme across the frontend */
+:root {
+    --primary: #04764E;
+    --primary-hover: #058f5e;
+    --primary-dark: black;
+    --secondary: #F6DBB3;
+    --secondary-light: #fcf5ea;
+    --rgba-primary-1: rgba(4, 118, 78, 0.1);
+    --rgba-primary-2: rgba(4, 118, 78, 0.2);
+    --rgba-primary-3: rgba(4, 118, 78, 0.3);
+    --rgba-primary-4: rgba(4, 118, 78, 0.4);
+    --rgba-primary-5: rgba(4, 118, 78, 0.5);
+    --rgba-primary-6: rgba(4, 118, 78, 0.6);
+    --rgba-primary-7: rgba(4, 118, 78, 0.7);
+    --rgba-primary-8: rgba(4, 118, 78, 0.8);
+    --rgba-primary-9: rgba(4, 118, 78, 0.9);
+    --font-family-title: Poppins, sans-serif;
+    --font-family-base: Poppins, sans-serif;
+    --box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
+    --bg-gradient: linear-gradient(180deg, #EBEBEB 0%, #FFF 100%);
+    --border-radius-lg: 18px;
+    --border-radius-xl: 22px;
+    --border-radius: 12px;
+    --border-radius-sm: 8px;
+    --border-color: rgba(0, 0, 0, 0.1);
+    --body-bg: #fff;
+    --body-color: #1B1B1B;
+    --dark: #000;
+    --bg-white: #FFF;
+    --bg-light: #F9F9F9;
+    --title: #000;
+    --banner-bg: #FFEEEB;
+    --card-bg: #fff;
+    --theme-text-color: #fff;
+    --light: #EEEEEE;
+    --text-label: #8A8A8A;
+    --text-light: rgba(0, 0, 0, 0.5);
+    --text-muted: #939393;
+    --input-bg: #FAFAFA;
+    --input-border-color: #EBEBEB;
+
+
+    --bg-olive: #5B6E33;
+    --bg-login: #FAF5EB;
+    --bg-input: #EADDCD;
+    --lupa-password: #5B6E33;
+    --lupa-password-hover: #4A5D23;
+}
+
+/* dark/light theme overrides are handled by the main stylesheet's bootstrap variables */

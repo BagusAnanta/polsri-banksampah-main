@@ -1,36 +1,30 @@
-<x-layouts.app title="" subtitle="">
+<x-layouts.app title="Dashboard Super Admin" subtitle="Ringkasan dan monitoring aplikasi Bank Sampah">
 
 <div class="space-y-6">
-
-    <!-- Titile and subtitle -->
-    <div class="space-y-1">
-        <h1 class="text-2xl font-bold text-slate-900">Dashboard Super Admin</h1>
-        <p class="text-sm text-slate-600">Ringkasan dan monitoring aplikasi Bank Sampah</p>
-    </div>
     
     <!-- KPI Cards -->
     <div class="grid grid-cols-2 lg:grid-cols-6 gap-3">
-        <div class="bg-white rounded-xl p-4 border border-slate-200">
+        <div class="bg-[#E4CEA5] rounded-xl p-4 border border-slate-200">
             <p class="text-xs text-slate-600 font-medium">Total Masyarakat</p>
             <p class="text-2xl font-bold text-slate-900">{{ $totalMasyarakat ?? 0 }}</p>
         </div>
-        <div class="bg-white rounded-xl p-4 border border-slate-200">
+        <div class="bg-[#E4CEA5] rounded-xl p-4 border border-slate-200">
             <p class="text-xs text-slate-600 font-medium">Menunggu Approval</p>
             <p class="text-2xl font-bold text-amber-600">{{ $menungguApproval ?? 0 }}</p>
         </div>
-        <div class="bg-white rounded-xl p-4 border border-slate-200">
+        <div class="bg-[#E4CEA5] rounded-xl p-4 border border-slate-200">
             <p class="text-xs text-slate-600 font-medium">Disetujui</p>
             <p class="text-2xl font-bold text-green-600">{{ $disetujui ?? 0 }}</p>
         </div>
-        <div class="bg-white rounded-xl p-4 border border-slate-200">
+        <div class="bg-[#E4CEA5] rounded-xl p-4 border border-slate-200">
             <p class="text-xs text-slate-600 font-medium">Ditolak</p>
             <p class="text-2xl font-bold text-red-600">{{ $ditolak ?? 0 }}</p>
         </div>
-        <div class="bg-white rounded-xl p-4 border border-slate-200">
+        <div class="bg-[#E4CEA5] rounded-xl p-4 border border-slate-200">
             <p class="text-xs text-slate-600 font-medium">Bank Sampah</p>
             <p class="text-2xl font-bold text-sky-600">{{ $totalBankSampah ?? 0 }}</p>
         </div>
-        <div class="bg-white rounded-xl p-4 border border-slate-200">
+        <div class="bg-[#E4CEA5] rounded-xl p-4 border border-slate-200">
             <p class="text-xs text-slate-600 font-medium">Artikel Edukasi</p>
             <p class="text-2xl font-bold text-purple-600">{{ $totalArtikel ?? 0 }}</p>
         </div>
@@ -38,7 +32,7 @@
 
     <!-- Warning Card -->
     @if(($menungguApproval ?? 0) > 0)
-    <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 flex items-center gap-3">
+    <div class="bg-[#E4CEA5] border border-amber-200 rounded-xl p-4 flex items-center gap-3">
         <span class="material-symbols-outlined text-amber-600">warning</span>
         <p class="text-sm text-amber-800">
             Terdapat <strong>{{ $menungguApproval }}</strong> masyarakat menunggu persetujuan.
@@ -50,13 +44,13 @@
     <!-- Charts Row -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <!-- Donut Chart (Status Masyarakat) -->
-        <div class="bg-white rounded-xl p-6 border border-slate-200">
+        <div class="bg-[#E4CEA5] rounded-xl p-6 border border-slate-200">
             <h3 class="text-lg font-semibold text-slate-900 mb-4">Status Masyarakat</h3>
             <div id="statusDonutChart" class="h-64"></div>
         </div>
 
         <!-- Bar Chart (Pendaftaran per Bulan) -->
-        <div class="bg-white rounded-xl p-6 border border-slate-200">
+        <div class="bg-[#E4CEA5] rounded-xl p-6 border border-slate-200">
             <h3 class="text-lg font-semibold text-slate-900 mb-4">Pendaftaran per Bulan</h3>
             <div id="pendaftaranBarChart" class="h-64"></div>
         </div>
@@ -64,16 +58,16 @@
 
     <!-- Quick Navigation Buttons -->
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <a href="{{ route('sa.masyarakat.index') }}" class="btn btn-outline h-auto py-3 gap-2">
+        <a href="{{ route('sa.masyarakat.index') }}" class="btn h-auto py-3 gap-2 bg-[#E4CEA5] rounded-full hover:bg-[#D4C88A] transition">
             <span class="material-symbols-outlined">group</span> Masyarakat
         </a>
-        <a href="{{ route('sa.bank-sampah.index') }}" class="btn btn-outline h-auto py-3 gap-2">
+        <a href="{{ route('sa.bank-sampah.index') }}" class="btn h-auto py-3 gap-2 bg-[#E4CEA5] rounded-full hover:bg-[#D4C88A] transition">
             <span class="material-symbols-outlined">store</span> Bank Sampah
         </a>
-        <a href="{{ route('sa.edukasi-superadmin.index') }}" class="btn btn-outline h-auto py-3 gap-2">
+        <a href="{{ route('sa.edukasi-superadmin.index') }}" class="btn h-auto py-3 gap-2 bg-[#E4CEA5] rounded-full hover:bg-[#D4C88A] transition">
             <span class="material-symbols-outlined">menu_book</span> Edukasi
         </a>
-        <a href="{{ route('sa.pengaturan.index') }}" class="btn btn-outline h-auto py-3 gap-2">
+        <a href="{{ route('sa.pengaturan.index') }}" class="btn h-auto py-3 gap-2 bg-[#E4CEA5] rounded-full hover:bg-[#D4C88A] transition">
             <span class="material-symbols-outlined">settings</span> Pengaturan
         </a>
     </div>

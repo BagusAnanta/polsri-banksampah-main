@@ -1,11 +1,4 @@
-{{--
-    Sidebar icon-rail, dipakai di semua halaman lewat <x-layouts.app>.
-    Simpan di: resources/views/components/layouts/sidebar.blade.php
-
-    Menu bisa dibedakan per role dengan cek auth()->user()->role di sini.
---}}
-
-<aside class="flex h-full w-16 flex-col items-center gap-4 bg-base-200/60 py-4">
+<aside class="flex h-full w-16 flex-col items-center gap-4 bg-[#E4CEA5] py-4">
 
     @php $role = auth()->user()->getRoleNames()->first() ?? 'Masyarakat'; @endphp
 
@@ -30,7 +23,7 @@
 
     <div class="mt-auto flex flex-col gap-3">
         <x-layouts.nav-icon route="help" icon="question-mark-circle" label="Bantuan" />
-        <div class="flex h-8 w-8 items-center justify-center rounded-full bg-olive-200 text-xs font-semibold">
+        <div class="flex h-8 w-8 items-center justify-center rounded-full bg-[#A3A85C] text-xs font-semibold">
             {{ Str::of(auth()->user()->name)->explode(' ')->map(fn($w) => Str::substr($w, 0, 1))->take(2)->implode('') }}
         </div>
     </div>

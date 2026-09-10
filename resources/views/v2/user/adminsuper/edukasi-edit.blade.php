@@ -23,10 +23,10 @@
         @method('PUT')
 
         <!-- Card 1: Judul Artikel -->
-        <div class="bg-white rounded-xl p-6 border border-slate-200 space-y-4">
+        <div class="bg-[#E4CEA5] rounded-xl p-6 border border-slate-200 space-y-4">
             <h3 class="text-lg font-semibold text-slate-900">Judul Artikel</h3>
             <div class="form-control">
-                <input type="text" name="judul_artikel" class="input input-bordered bg-white text-lg @error('judul_artikel') input-error @enderror" value="{{ old('judul_artikel', $artikel->judul_artikel) }}" required>
+                <input type="text" name="judul_artikel" class="input input-bordered rounded-xl bg-[#E4CEA5] text-sm px-4 py-3 pr-12 text-stone-800 placeholder-[#93764A] w-full" value="{{ old('judul_artikel', $artikel->judul_artikel) }}" required>
                 @error('judul_artikel')
                     <label class="label"><span class="label-text-alt text-error">{{ $message }}</span></label>
                 @enderror
@@ -34,7 +34,7 @@
         </div>
 
         <!-- Card 2: Gambar Sampul -->
-        <div class="bg-white rounded-xl p-6 border border-slate-200 space-y-4">
+        <div class="bg-[#E4CEA5] rounded-xl p-6 border border-slate-200 space-y-4">
             <h3 class="text-lg font-semibold text-slate-900">Gambar Sampul (Opsional)</h3>
             @if($artikel->gambar_artikel)
                 <div class="w-full h-40 rounded-lg overflow-hidden">
@@ -53,7 +53,7 @@
         </div>
 
         <!-- Card 3: Isi Artikel dengan Rich Text Editor -->
-        <div class="bg-white rounded-xl p-6 border border-slate-200 space-y-4">
+        <div class="bg-[#E4CEA5] rounded-xl p-6 border border-slate-200 space-y-4">
             <h3 class="text-lg font-semibold text-slate-900">Isi Artikel</h3>
             <div class="form-control">
                 <x-richtext.richtext name="isi_artikel" id="editor" :defaultvalue="$artikel->isi_artikel"/>
@@ -65,8 +65,8 @@
 
         <!-- Actions -->
         <div class="flex gap-3">
-            <a href="{{ route('sa.edukasi-superadmin.index') }}" class="btn btn-ghost flex-1">Batal</a>
-            <button type="submit" class="btn btn-primary flex-1">
+            <a href="{{ route('sa.edukasi-superadmin.index') }}" class="btn flex-1 rounded-xl bg-[#E4CEA5] hover:bg-red-600">Batal</a>
+            <button type="submit" class="btn flex-1 rounded-xl bg-[#A3A85C] hover:bg-[#A3A85C] text-white">
                 <span class="material-symbols-outlined">save</span> Simpan Perubahan
             </button>
         </div>

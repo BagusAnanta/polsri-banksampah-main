@@ -23,6 +23,7 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\MasyarakatController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PasswordResetController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -61,6 +62,34 @@ Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
 Route::get('/profil', [AuthController::class, 'profile'])->name('profil');
+
+// Forget Password route
+Route::get('/forgot-password', function (){
+    $data['page_title'] = "Lupa Password";
+    return view('v2.auth.forgetpassword.forgot-password', $data);
+})->name('forget-password');
+
+// submit email to send reset link
+Route::post('/forgot-password', [PasswordResetController::class, 'sendResetLinkEmail'])->name('password.email');
+
+// page shown after sending reset link
+Route::get('/forgot-password/sent', function () {
+    $data['email'] = session('email', old('email'));
+    return view('v2.auth.forgetpassword.forgot-password-sent', $data);
+})->name('forgot-password.sent');
+
+// Reset password form (link from email)
+Route::get('/reset-password/{token}', [PasswordResetController::class, 'showResetForm'])->name('password.reset');
+
+// Perform password update
+Route::post('/reset-password', [PasswordResetController::class, 'reset'])->name('password.update');
+
+// Status page after attempting reset
+Route::get('/reset-password-status', function () {
+    $data['status'] = session('status', 'failed');
+    $data['message'] = session('message', '');
+    return view('v2.auth.forgetpassword.reset-password-status', $data);
+})->name('reset-password-status');
 
 Route::get('/help', function() {
     return view('v2.help');

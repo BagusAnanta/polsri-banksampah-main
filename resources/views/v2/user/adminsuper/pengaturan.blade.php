@@ -11,7 +11,7 @@
         @method('PUT')
 
         <!-- Card 1: Konversi Gramasi ke Poin -->
-        <div class="bg-white rounded-xl p-6 border border-slate-200 space-y-4">
+        <div class="bg-[#E4CEA5] rounded-xl p-6 border border-slate-200 space-y-4">
             <h3 class="text-lg font-semibold text-slate-900">Konversi Gramasi ke Poin</h3>
             <p class="text-sm text-slate-600">Tentukan berapa gram sampah setara dengan 1 poin</p>
             <div class="form-control">
@@ -19,8 +19,7 @@
                     <span class="label-text font-medium">Gram per Poin</span>
                 </label>
                 <div class="input-group">
-                    <input type="number" name="gram_per_point" class="input input-bordered bg-white flex-1" value="{{ $setting->gram_per_point ?? 10 }}" min="1" step="0.1" required>
-                    <span class="bg-slate-100 px-4 flex items-center text-slate-600">gram</span>
+                    <input type="number" name="gram_per_point" class="input input-bordered bg-[#E4CEA5] flex-1" value="{{ $setting->gram_per_point ?? 10 }}" min="1" step="0.1" required>
                 </div>
                 <label class="label">
                     <span class="label-text-alt">Contoh: 10 gram = 1 poin</span>
@@ -29,7 +28,7 @@
         </div>
 
         <!-- Card 2: Konversi Poin ke Voucher -->
-        <div class="bg-white rounded-xl p-6 border border-slate-200 space-y-4">
+        <div class="bg-[#E4CEA5] rounded-xl p-6 border border-slate-200 space-y-4">
             <h3 class="text-lg font-semibold text-slate-900">Konversi Poin ke Voucher</h3>
             <p class="text-sm text-slate-600">Tentukan berapa poin yang dibutuhkan untuk 1 voucher</p>
             <div class="form-control">
@@ -37,8 +36,7 @@
                     <span class="label-text font-medium">Poin per Voucher</span>
                 </label>
                 <div class="input-group">
-                    <input type="number" name="point_per_voucher" class="input input-bordered bg-white flex-1" value="{{ $setting->point_per_voucher ?? 500 }}" min="1" step="1" required>
-                    <span class="bg-slate-100 px-4 flex items-center text-slate-600">poin</span>
+                    <input type="number" name="point_per_voucher" class="input input-bordered bg-[#E4CEA5] flex-1" value="{{ $setting->point_per_voucher ?? 500 }}" min="1" step="1" required>
                 </div>
                 <label class="label">
                     <span class="label-text-alt">Contoh: 500 poin = 1 voucher</span>
@@ -59,8 +57,8 @@
 
         <!-- Actions -->
         <div class="flex gap-3">
-            <button type="reset" class="btn btn-ghost flex-1">Reset</button>
-            <button type="submit" class="btn btn-primary flex-1">
+            <button type="reset" class="btn flex-1 rounded-xl bg-[#E4CEA5] hover:bg-red-600">Reset</button>
+            <button type="submit" class="btn flex-1 rounded-xl bg-[#A3A85C] hover:bg-[#A3A85C] text-white">
                 <span class="material-symbols-outlined">save</span> Simpan Pengaturan
             </button>
         </div>

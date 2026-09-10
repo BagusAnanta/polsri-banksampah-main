@@ -1,9 +1,9 @@
 
-<header class="flex items-center justify-between border-b border-base-300/40 px-4 py-3 sm:px-6">
+<header class="flex items-center justify-between border-b border-base-300/40 px-4 py-3 sm:px-6 bg-[#E4CEA5]">
 
     @php $role = auth()->user()->getRoleNames()->first() ?? 'Masyarakat'; @endphp
 
-    <div class="flex items-center gap-2">
+    <div class="flex items-center gap-2 rounded-full px-2 py-1 bg-[#F1E3C7]">
         <img src="/images/logo-icon.svg" alt="Trash Bank" class="h-5 w-5 sm:h-6 sm:w-6" />
         <span class="hidden font-semibold sm:inline">Trash Bank</span>
     </div>
@@ -11,83 +11,83 @@
     {{-- Pill navigation (hidden on mobile) --}}
 
     @if($role === 'Masyarakat')
-        <nav class="hidden items-center gap-1 rounded-full bg-base-200 p-1 lg:inline-flex">
+        <nav class="hidden items-center gap-1 rounded-full bg-base-200 p-1 lg:inline-flex bg-[#F1E3C7]">
             <a href="{{ route('dashboard') }}"
             class="rounded-full px-4 py-1.5 text-sm font-medium transition-colors
-                    {{ request()->routeIs('dashboard') ? 'bg-olive-700 text-white' : 'text-base-content/70 hover:bg-base-300/50' }}">
+                    {{ request()->routeIs('dashboard') ? 'bg-[#61440A] text-white' : 'text-base-content/70 hover:bg-[#E4CEA5]' }}">
                 Beranda
             </a>
             <a href="{{ route('tiket-sampah.index') }}"
             class="rounded-full px-4 py-1.5 text-sm font-medium transition-colors
-                    {{ request()->routeIs('tiket-sampah.*') ? 'bg-olive-700 text-white' : 'text-base-content/70 hover:bg-base-300/50' }}">
+                    {{ request()->routeIs('tiket-sampah.*') ? 'bg-[#61440A] text-white' : 'text-base-content/70 hover:bg-[#E4CEA5]' }}">
                 Tiket Sampah
             </a>
             <a href="{{ route('tiket-poin.index') }}"
             class="rounded-full px-4 py-1.5 text-sm font-medium transition-colors
-                    {{ request()->routeIs('tiket-poin.*') ? 'bg-olive-700 text-white' : 'text-base-content/70 hover:bg-base-300/50' }}">
+                    {{ request()->routeIs('tiket-poin.*') ? 'bg-[#61440A] text-white' : 'text-base-content/70 hover:bg-[#E4CEA5]' }}">
                 Tiket Poin
             </a>
             <a href="{{ route('edukasi-masyarakat.index') }}"
             class="rounded-full px-4 py-1.5 text-sm font-medium transition-colors
-                    {{ request()->routeIs('edukasi-masyarakat.*') ? 'bg-olive-700 text-white' : 'text-base-content/70 hover:bg-base-300/50' }}">
+                    {{ request()->routeIs('edukasi-masyarakat.*') ? 'bg-[#61440A] text-white' : 'text-base-content/70 hover:bg-[#E4CEA5]' }}">
                 Edukasi
             </a>
             <a href="{{ route('riwayat.index') }}"
             class="rounded-full px-4 py-1.5 text-sm font-medium transition-colors
-                    {{ request()->routeIs('riwayat.*') ? 'bg-olive-700 text-white' : 'text-base-content/70 hover:bg-base-300/50' }}">
+                    {{ request()->routeIs('riwayat.*') ? 'bg-[#61440A] text-white' : 'text-base-content/70 hover:bg-[#E4CEA5]' }}">
                 Riwayat
             </a>
         </nav>
         
     @elseif($role === 'Admin Bank Sampah')
-        <nav class="hidden items-center gap-1 rounded-full bg-base-200 p-1 lg:inline-flex">
+        <nav class="hidden items-center gap-1 rounded-full bg-base-200 p-1 lg:inline-flex bg-[#F1E3C7]">
             <a href="{{ route('admin.dashboard') }}"
             class="rounded-full px-4 py-1.5 text-sm font-medium transition-colors
-                    {{ request()->routeIs('admin.dashboard') ? 'bg-olive-700 text-white' : 'text-base-content/70 hover:bg-base-300/50' }}">
+                    {{ request()->routeIs('admin.dashboard') ? 'bg-[#61440A] text-white' : 'text-base-content/70 hover:bg-[#E4CEA5]' }}">
                 Beranda
             </a>
             <a href="{{ route('admin.tiket-setor.index') }}"
             class="rounded-full px-4 py-1.5 text-sm font-medium transition-colors
-                    {{ request()->routeIs('admin.tiket-setor.*') ? 'bg-olive-700 text-white' : 'text-base-content/70 hover:bg-base-300/50' }}">
+                    {{ request()->routeIs('admin.tiket-setor.*') ? 'bg-[#61440A] text-white' : 'text-base-content/70 hover:bg-[#E4CEA5]' }}">
                 Tiket Sampah
             </a>
             <a href="{{ route('admin.tiket-poin.index') }}"
             class="rounded-full px-4 py-1.5 text-sm font-medium transition-colors
-                    {{ request()->routeIs('admin.tiket-poin.*') ? 'bg-olive-700 text-white' : 'text-base-content/70 hover:bg-base-300/50' }}">
+                    {{ request()->routeIs('admin.tiket-poin.*') ? 'bg-[#61440A] text-white' : 'text-base-content/70 hover:bg-[#E4CEA5]' }}">
                 Tiket Poin
             </a>
             <a href="{{ route('admin.scan') }}"
             class="rounded-full px-4 py-1.5 text-sm font-medium transition-colors
-                    {{ request()->routeIs('admin.scan.*') ? 'bg-olive-700 text-white' : 'text-base-content/70 hover:bg-base-300/50' }}">
+                    {{ request()->routeIs('admin.scan.*') ? 'bg-[#61440A] text-white' : 'text-base-content/70 hover:bg-[#E4CEA5]' }}">
                 Scan QR
             </a>
         </nav>
 
     @elseif($role === 'Super Admin')
-        <nav class="hidden items-center gap-1 rounded-full bg-base-200 p-1 lg:inline-flex">
+        <nav class="hidden items-center gap-1 rounded-full bg-base-200 p-1 lg:inline-flex bg-[#F1E3C7]">
             <a href="{{ route('sa.dashboard') }}"
             class="rounded-full px-4 py-1.5 text-sm font-medium transition-colors
-                    {{ request()->routeIs('sa.dashboard') ? 'bg-olive-700 text-white' : 'text-base-content/70 hover:bg-base-300/50' }}">
+                    {{ request()->routeIs('sa.dashboard') ? 'bg-[#61440A] text-white' : 'text-base-content/70 hover:bg-[#E4CEA5]' }}">
                 Beranda
             </a>
             <a href="{{ route('sa.masyarakat.index') }}"
             class="rounded-full px-4 py-1.5 text-sm font-medium transition-colors
-                    {{ request()->routeIs('sa.masyarakat.*') ? 'bg-olive-700 text-white' : 'text-base-content/70 hover:bg-base-300/50' }}">
+                    {{ request()->routeIs('sa.masyarakat.*') ? 'bg-[#61440A] text-white' : 'text-base-content/70 hover:bg-[#E4CEA5]' }}">
                 Masyarakat
             </a>
             <a href="{{ route('sa.bank-sampah.index') }}"
             class="rounded-full px-4 py-1.5 text-sm font-medium transition-colors
-                    {{ request()->routeIs('sa.bank-sampah.*') ? 'bg-olive-700 text-white' : 'text-base-content/70 hover:bg-base-300/50' }}">
+                    {{ request()->routeIs('sa.bank-sampah.*') ? 'bg-[#61440A] text-white' : 'text-base-content/70 hover:bg-[#E4CEA5]' }}">
                 Bank Sampah
             </a>
             <a href="{{ route('sa.edukasi-superadmin.index') }}"
             class="rounded-full px-4 py-1.5 text-sm font-medium transition-colors
-                    {{ request()->routeIs('sa.edukasi-superadmin.*') ? 'bg-olive-700 text-white' : 'text-base-content/70 hover:bg-base-300/50' }}">
+                    {{ request()->routeIs('sa.edukasi-superadmin.*') ? 'bg-[#61440A] text-white' : 'text-base-content/70 hover:bg-[#E4CEA5]' }}">
                 Edukasi
             </a>
             <a href="{{ route('sa.pengaturan.index') }}"
             class="rounded-full px-4 py-1.5 text-sm font-medium transition-colors
-                    {{ request()->routeIs('sa.pengaturan.*') ? 'bg-olive-700 text-white' : 'text-base-content/70 hover:bg-base-300/50' }}">
+                    {{ request()->routeIs('sa.pengaturan.*') ? 'bg-[#61440A] text-white' : 'text-base-content/70 hover:bg-[#E4CEA5]' }}">
                 Pengaturan
             </a>
         </nav>
@@ -101,7 +101,7 @@
                 <div class="indicator">
                     <span class="material-symbols-outlined">notifications</span>
                     @if($unreadCount > 0)
-                        <span class="badge badge-sm badge-error indicator-item">
+                        <span class="badge badge-sm badge-error indicator-item rounded-full bg-[#61440A] text-white">
                             {{ $unreadCount > 99 ? '99+' : $unreadCount }}
                         </span>
                     @endif
@@ -176,8 +176,8 @@
         </form>
 
         <div class="dropdown dropdown-end">
-            <div tabindex="0" role="button" class="flex items-center gap-2 rounded-full px-2 py-1 hover:bg-base-200">
-                <div class="flex h-8 w-8 items-center justify-center rounded-full bg-olive-200 text-xs font-semibold">
+            <div tabindex="0" role="button" class="flex items-center gap-2 rounded-full px-2 py-1 hover:bg-[#E4CEA5] bg-[#F1E3C7]">
+                <div class="flex h-8 w-8 items-center justify-center rounded-full bg-[#A3A85C] text-xs font-semibold">
                     {{ Str::of(auth()->user()->name)->explode(' ')->map(fn($w) => Str::substr($w, 0, 1))->take(2)->implode('') }}
                 </div>
 

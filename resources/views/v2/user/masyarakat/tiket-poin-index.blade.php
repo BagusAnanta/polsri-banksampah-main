@@ -2,21 +2,21 @@
 
      <x-slot name="actions">
         <a href="{{ route('tiket-poin.create') }}"
-           class="btn btn-sm w-full rounded-lg bg-olive-700 text-white hover:bg-olive-800 sm:w-auto sm:rounded-full">
+           class="btn btn-sm w-full rounded-lg bg-[#A3A85C] text-white hover:bg-olive-800 sm:w-auto sm:rounded-full">
              + Tukar Poin
         </a>
     </x-slot>
 
     <div class="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
-        <div class="rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 p-4">
+        <div class="rounded-xl bg-[#E4CEA5] from-blue-50 to-blue-100 p-4">
             <p class="text-xs text-blue-600 sm:text-sm">Poin Saya</p>
             <p class="text-xl font-bold text-blue-700 sm:text-2xl">{{ number_format($totalGramasi ?? 0) }}</p>
         </div>
-        <div class="rounded-xl bg-gradient-to-br from-amber-50 to-amber-100 p-4">
+        <div class="rounded-xl bg-[#E4CEA5] from-amber-50 to-amber-100 p-4">
             <p class="text-xs text-amber-600 sm:text-sm">Menunggu</p>
             <p class="text-xl font-bold text-amber-700 sm:text-2xl">{{ ($tikets ?? collect())->where('status', 'Menunggu')->count() }}</p>
         </div>
-        <div class="rounded-xl bg-gradient-to-br from-green-50 to-green-100 p-4">
+        <div class="rounded-xl bg-[#E4CEA5] from-green-50 to-green-100 p-4">
             <p class="text-xs text-green-600 sm:text-sm">Selesai</p>
             <p class="text-xl font-bold text-green-700 sm:text-2xl">{{ ($tikets ?? collect())->where('status', 'Selesai')->count() }}</p>
             <p class="mt-0.5 text-xs text-green-600/70">tiket</p>
@@ -25,21 +25,25 @@
 
      <div class="space-y-3">
         @forelse($tikets ?? collect() as $tiket)
-            <div class="overflow-hidden rounded-xl bg-base-200/50 transition hover:bg-base-200">
+            <div class="overflow-hidden rounded-xl bg-base-200/50 transition hover:bg-[#E4CEA5]">
                 <div class="p-3 sm:p-4">
                     <div class="mb-3 flex items-center justify-between">
                         <div>
                             <p class="text-xs font-medium text-base-content sm:text-sm">Tiket #{{ $tiket->tiketpoin_inc }}</p>
                             <p class="text-xs text-base-content/50">{{ $tiket->created_at->translatedFormat('d M Y H:i') }}</p>
                         </div>
-                        <span @class([
+                        <div class="mt-1">
+                            <x-layouts.status-badge :status="strtolower($tiket->status)" />
+                        </div>
+
+                        <!-- <span @class([
                             'rounded-full px-2.5 py-0.5 text-xs font-medium whitespace-nowrap',
                             'bg-amber-100 text-amber-600' => strtolower($tiket->status) === 'menunggu',
                             'bg-green-100 text-green-600' => strtolower($tiket->status) === 'selesai',
                             'bg-red-100 text-red-600' => strtolower($tiket->status) === 'ditolak' || strtolower($tiket->status) === 'dibatalkan',
                         ])>
                             {{ $tiket->status }}
-                        </span>
+                        </span> -->
                     </div>
 
                     <div class="mb-3 flex flex-wrap gap-2 text-xs">
@@ -53,7 +57,8 @@
                         <div class="flex flex-col gap-2 sm:flex-row">
                             <button class="btn btn-outline btn-sm flex-1 rounded-lg text-xs" 
                                     onclick="document.getElementById('qr_modal_{{ $tiket->tiketpoin_id }}').showModal()">
-                                📱 Tampilkan QR
+                                    <span class="material-symbols-outlined">qr_code_2</span>
+                                    Tampilkan QR
                             </button>
                             <form method="POST" action="{{ route('tiket-poin.cancel', $tiket->tiketpoin_id) }}" class="flex-1">
                                 @csrf
@@ -108,7 +113,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
                 <p class="mt-2 text-sm text-base-content/50">Belum ada tiket poin</p>
-                <a href="{{ route('tiket-poin.create') }}" class="btn btn-primary btn-sm mt-3 rounded-full">
+                <a href="{{ route('tiket-poin.create') }}" class="btn btn-sm mt-3 rounded-full bg-[#A3A85C] text-white hover:bg-olive-800 sm:w-auto sm:rounded-full">
                     Buat Tiket Pertama
                 </a>
             </div>

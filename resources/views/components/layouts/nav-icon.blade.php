@@ -7,7 +7,7 @@
 <a href="{{ route($route) }}"
    title="{{ $label }}"
    class="group relative flex h-10 w-10 items-center justify-center rounded-full transition-all duration-200
-          {{ $isActive ? 'bg-olive-700 text-white' : 'text-base-content/60 hover:bg-base-300/50' }}">
+          {{ $isActive ? 'bg-[#61440A] text-white' : 'text-base-content/60 hover:bg-[#F1E3C7]' }}">
 
     <div>
         @if($icon === 'home')

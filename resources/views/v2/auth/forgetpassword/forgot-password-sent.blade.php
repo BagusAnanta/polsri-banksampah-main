@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Bank Sampah Sekanak Connect</title>
+    <title>Reset Password - Bank Sampah Sekanak Connect</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4/dist/full.min.css" rel="stylesheet" type="text/css" />
 
@@ -71,90 +71,49 @@
 
                 <!-- Heading -->
                 <div class="mb-8">
-                    <h2 class="text-2xl font-bold text-stone-800 mb-2">Masuk ke Akun Anda</h2>
-                    <p class="text-sm text-stone-500">Gunakan NIK atau Username dan Password untuk masuk</p>
+                    <h2 class="text-2xl font-bold text-stone-800 mb-2">Proses Ubah Password</h2>
+                    <p class="text-sm text-stone-500">
+                        Cek notifikasi pada akun email anda ({{ $email ?? old('email') }}).
+                        Jika anda tidak menerima email permintaan pergantian password,
+                        tekan kirimkan ulang email dibawah berikut.
+                    </p>
                 </div>
 
-                <!-- Success Message -->
-                @if (session('success'))
-                    <div class="alert alert-success mb-6">
-                        <p class="text-sm">{{ session('success') }}</p>
+                <span class="material-symbols-outlined text-primary text-4xl">mark_email_read</span>
+    
+                @if (session('status'))
+                    <div role="alert" class="alert alert-success text-sm w-full">
+                        <span>{{ session('status') }}</span>
                     </div>
                 @endif
-
+                
                 <!-- Form -->
-                <form method="POST" action="{{ route('login') }}" class="space-y-5">
+                <form method="POST" action="{{ route('password.email')  }}" class="space-y-5">
                     @csrf
 
-                    <!-- NIK/Username Field -->
+                    <!-- Email Field -->
+                    <fieldset class="fieldset">
                     <div class="form-control">
-                        <label class="label">
-                            <span class="label-text text-sm font-medium">NIK / Username </span>
-                        </label>
-                        <input type="text" name="identifier" id="identifier"
-                               placeholder="Masukkan NIK atau username"
-                               value="{{ old('identifier') }}"
-                               class="input input-bordered rounded-xl bg-[#EADDCD] text-sm placeholder-stone-400 @error('username') input-error @enderror"
-                               required />
-                    </div>
-
-                    <!-- Password Field -->
-                    <div class="form-control">
-                        <label class="label">
-                            <span class="label-text text-sm font-medium">Password</span>
+                        <label class="label" for="email">
+                            <span class="label-text text-sm font-medium">Email</span>
                         </label>
                         <div class="relative">
-                            <input type="password" name="password" id="password"
-                                   placeholder="Masukkan password"
-                                   class="input input-bordered rounded-xl bg-[#EADDCD] text-sm placeholder-stone-400 w-full pr-12 @error('password') input-error @enderror"
+                            <input type="email" name="email" id="email"
+                                   placeholder="Masukkan email terdaftar"
+                                   value="{{ $email ?? old('email') }}"
+                                   class="input input-bordered rounded-xl bg-[#EADDCD] text-sm placeholder-stone-400 w-full pr-12 @error('email') input-error @enderror"
                                    required />
-                            <button type="button" onclick="togglePassword('password')"
-                                    class="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600 transition">
-                                
-                                <div class="w-5 h-5 hidden" id="password-eye">
-                                    <span class="material-symbols-outlined">visibility</span>
-                                </div>
-
-                                <div class="w-5 h-5" id="password-eye-off">
-                                    <span class="material-symbols-outlined">visibility_off</span>
-                                </div>
-
-                            </button>
                         </div>
-                        @error('identifier')
-                            <label class="label">
-                                <span class="label-text-alt text-red-500">{{ $message }}</span>
-                            </label>
-                        @enderror
                     </div>
-
-                    <!-- Forgot Password Link -->
-                    <div class="text-right">
-                        <a href="{{ route('forget-password') }}" class="text-xs text-[#5B6E33] hover:text-[#4A5D23] font-medium transition">
-                            Lupa password?
-                        </a>
-                    </div>
+                    </fieldset>
 
                     <!-- Submit Button -->
                     <button type="submit" class="btn btn-block rounded-full bg-[#5B6E33] text-white border-none hover:bg-[#4A5D23] text-sm">
-                        Masuk
+                        Kirim Ulang Email
                     </button>
                 </form>
-
-                <!-- Divider -->
-                <div class="divider my-6"></div>
-
-                <!-- Register Link -->
-                <p class="text-center text-sm text-stone-600 mb-4">
-                    Belum memiliki akun?
-                </p>
-                <a href="{{ route('register') }}" class="btn btn-block btn-outline rounded-full border-2 border-[#5B6E33] text-[#5B6E33] hover:bg-[#5B6E33]/5 text-sm">
-                    Daftar Sekarang
-                </a>
             </div>
 
-            <!-- Footer -->
-            <p class="text-center text-xs text-stone-400 mt-12">&copy; {{ date('Y') }} Bank Sampah. Hak cipta dilindungi.</p>
         </div>
 
         <!-- Promo Panel -->
@@ -211,3 +170,4 @@
     </script>
 </body>
 </html>
+

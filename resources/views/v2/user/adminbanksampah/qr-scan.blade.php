@@ -2,7 +2,7 @@
 
 <div class="flex items-center justify-center min-h-screen">
     <div class="w-full max-w-sm">
-        <div class="bg-white rounded-2xl p-6 border border-slate-200">
+        <div class="bg-[#E4CEA5] rounded-2xl p-6 border border-slate-200">
             <div class="text-center space-y-4">
                 <div class="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full">
                     <span class="material-symbols-outlined text-blue-600" style="font-size: 32px;">qr_code_2</span>
@@ -11,11 +11,11 @@
                 <p class="text-sm text-slate-600">Arahkan kamera ke QR code pada tiket pengajuan</p>
             </div>
 
-            <div id="qrReader" class="my-6 rounded-lg overflow-hidden border-2 border-blue-200" style="width: 100%; height: 280px; position: relative;"></div>
+            <div id="qrReader" class="my-6 rounded-lg overflow-hidden border-2 border-white" style="width: 100%; height: 280px; position: relative;"></div>
 
             <div class="space-y-2 text-sm text-slate-600">
-                <div class="p-3 bg-blue-50 rounded-lg">
-                    <p class="font-medium text-blue-900">Hasil Scan:</p>
+                <div class="p-3 bg-[#A3A85C] rounded-lg">
+                    <p class="font-medium text-white">Hasil Scan:</p>
                     <p id="scanResult" class="text-sm mt-1 font-mono">Menunggu pemindaian...</p>
                 </div>
             </div>

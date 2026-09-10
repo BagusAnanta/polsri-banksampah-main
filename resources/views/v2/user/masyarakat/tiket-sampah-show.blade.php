@@ -1,7 +1,7 @@
 <x-layouts.app title="Detail Tiket Setor Sampah" subtitle="Tiket #{{ $tiket->tiketsampah_inc }}">
 
     <div class="mx-auto max-w-md">
-        <div class="card divide-y divide-base-300/40 rounded-2xl bg-base-100 shadow-sm">
+        <div class="card divide-y divide-base-300/40 rounded-2xl bg-[#E4CEA5] shadow-sm">
             <div class="card-body gap-4 p-6">
 
                 <div class="flex items-start justify-between">
@@ -14,14 +14,18 @@
                             {{ $tiket->created_at->translatedFormat('l, d M Y · H:i') }}
                         </p>
                     </div>
-                    <span @class([
+                    <div class="mt-1">
+                        <x-layouts.status-badge :status="strtolower($tiket->status)" />
+                    </div>
+
+                     <!-- <span @class([
                         'inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-medium whitespace-nowrap flex-shrink-0',
                         'bg-amber-100 text-amber-700' => strtolower($tiket->status) === 'menunggu',
                         'bg-green-100 text-green-700' => strtolower($tiket->status) === 'selesai',
                         'bg-red-100 text-red-700' => strtolower($tiket->status) === 'dibatalkan',
                     ])>
                         {{ $tiket->status }}
-                    </span>
+                    </span> -->
                 </div>
 
                 <div class="pt-4">

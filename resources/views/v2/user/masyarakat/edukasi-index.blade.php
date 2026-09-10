@@ -11,7 +11,7 @@
     <!-- Article List -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         @forelse($artikels as $artikel)
-            <button class="bg-white rounded-xl border border-slate-200 overflow-hidden text-left" onclick="window.location='{{ route('edukasi-masyarakat.show', $artikel->artikel_id) }}'">
+            <button class="bg-base-200/30 rounded-xl border border-slate-200 overflow-hidden text-left" onclick="window.location='{{ route('edukasi-masyarakat.show', $artikel->artikel_id) }}'">
                 <div class="flex flex-col h-full">
                     @if($artikel->gambar_artikel)
                         <div class="h-40 overflow-hidden">
@@ -30,7 +30,7 @@
                 </div>
             </button>
         @empty
-            <div class="lg:col-span-3 py-12 text-center text-slate-500 bg-white rounded-xl border border-slate-200">
+            <div class="lg:col-span-3 py-12 text-center text-slate-500 bg-base-200/30 rounded-xl border border-slate-200">
                 <span class="material-symbols-outlined text-4xl mb-2 block">menu_book</span>
                 Belum ada artikel edukasi
             </div>

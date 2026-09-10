@@ -1,7 +1,7 @@
 <x-layouts.app title="Buat Tiket Setor Sampah">
 
     <div class="mx-auto max-w-2xl">
-        <div class="rounded-2xl bg-base-100 p-6 shadow-sm">
+        <div class="rounded-2xl bg-[#E4CEA5] p-6 shadow-sm">
             <div class="mb-6">
                 <h1 class="text-2xl font-bold text-base-content">Buat Tiket Setor Sampah</h1>
                 <p class="mt-1 text-sm text-base-content/60">Isi form di bawah untuk membuat tiket setor sampah baru</p>
@@ -19,7 +19,7 @@
                         id="berat_sampah"
                         name="berat_sampah" 
                         placeholder="Masukkan berat sampah dalam gram"
-                        class="input input-bordered w-full rounded-lg @error('berat_sampah') input-error @enderror"
+                        class="input input-bordered bg-[#EADDCD] w-full rounded-lg @error('berat_sampah') input-error @enderror"
                         min="1"
                         required
                     >
@@ -40,7 +40,7 @@
                     <select 
                         id="banksampah_id"
                         name="banksampah_id"
-                        class="select select-bordered w-full rounded-lg @error('banksampah_id') select-error @enderror"
+                        class="select select-bordered bg-[#EADDCD] w-full rounded-lg @error('banksampah_id') select-error @enderror"
                         required
                     >
                         <option value="">-- Pilih Bank Sampah --</option>
@@ -72,10 +72,10 @@
                 </div>
 
                 <div class="flex gap-3 pt-4">
-                    <a href="{{ route('tiket-sampah.index') }}" class="btn btn-outline flex-1 rounded-lg">
+                    <a href="{{ route('tiket-sampah.index') }}" class="btn btn-outline flex-1 rounded-lg text-sm text-base-content hover:bg-red-700">
                         Batal
                     </a>
-                    <button type="submit" class="btn btn-primary flex-1 rounded-lg">
+                    <button type="submit" class="btn btn-primary flex-1 rounded-lg bg-[#785D24] border-none hover:bg-[#5B6E33] text-white">
                         Buat Tiket
                     </button>
                 </div>

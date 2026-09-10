@@ -14,6 +14,7 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Password;
 
 class AuthController extends Controller {
 
@@ -221,23 +222,6 @@ class AuthController extends Controller {
         return redirect()->route('login');
     }
 
-    // show profile, but in here I want make universe
-    // first, create user profile view first 
-
-    public function profile(Request $request)
-    {
-
-        $user = $request->user()->load('masyarakat');
-
-        if ($request->wantsJson() || $request->is('api/*')) {
-            return response()->json([
-                'success' => true,
-                'data' => $user,
-            ]);
-        }
-
-        return redirect()->route('users.show', $user->id);
-    }
 
     public function changePassword(Request $request)
     {
@@ -270,6 +254,24 @@ class AuthController extends Controller {
         }
 
         return redirect()->route('users.edit', $user->id)->with('success', 'Password changed successfully!');
+    }
+
+    // show profile, but in here I want make universe
+    // first, create user profile view first 
+
+    public function profile(Request $request)
+    {
+
+        $user = $request->user()->load('masyarakat');
+
+        if ($request->wantsJson() || $request->is('api/*')) {
+            return response()->json([
+                'success' => true,
+                'data' => $user,
+            ]);
+        }
+
+        return redirect()->route('users.show', $user->id);
     }
 
     public function listUsers(Request $request)

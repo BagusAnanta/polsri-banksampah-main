@@ -1,0 +1,6 @@
+/* Application compiled CSS entry.
+	Import the centralized color variables below so builds include them.
+*/
+@import "./colors.css";
+
+/* Add custom app-level rules here (kept empty for now) */

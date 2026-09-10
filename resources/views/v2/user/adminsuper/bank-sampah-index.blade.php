@@ -1,8 +1,8 @@
 
-<x-layouts.app title="" subtitle="">
+<x-layouts.app title="Daftar Admin/Bank Sampah" subtitle="Semua bank sampah yang terdaftar dalam sistem">
 
 <div class="space-y-6">
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+    <!-- <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div class="space-y-1">
             <h1 class="text-2xl font-bold text-slate-900">Daftar Admin/Bank Sampah</h1>
             <p class="text-sm text-slate-600">Semua bank sampah yang terdaftar dalam sistem</p>
@@ -10,10 +10,17 @@
         <a href="{{ route('sa.bank-sampah.create') }}" class="btn btn-primary gap-2 self-start">
             <span class="material-symbols-outlined">add</span> Tambah Bank Sampah
         </a>
-    </div>
+    </div> -->
+
+     <x-slot name="actions">
+        <a href="{{ route('sa.bank-sampah.create') }}"
+           class="btn w-full rounded-lg bg-[#A3A85C] hover:bg-[#A3A85C] text-white sm:w-auto sm:rounded-full">
+             + Tambah Bank Sampah
+        </a>
+    </x-slot>
 
     <!-- KPI -->
-    <div class="bg-white rounded-xl p-4 border border-slate-200">
+    <div class="bg-[#E4CEA5] rounded-xl p-4 border border-slate-200">
         <p class="text-sm text-slate-600 font-medium">Total Bank Sampah</p>
         <p class="text-3xl font-bold text-slate-900">{{ $totalBankSampah ?? 0 }}</p>
     </div>
@@ -21,7 +28,7 @@
     <!-- Bank List (1 Column per row) -->
     <div class="space-y-3">
         @forelse($banks as $bank)
-            <div class="bg-white rounded-xl p-5 border border-slate-200 hover:border-blue-300 transition">
+            <div class="bg-[#E4CEA5] rounded-xl p-5 border border-slate-200 hover:border-[#A3A85C] transition">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
                     <div>
                         <p class="text-xs text-slate-600 font-medium">Nama Bank Sampah</p>
@@ -46,7 +53,7 @@
                 </div>
             </div>
         @empty
-            <div class="py-12 text-center text-slate-500 bg-white rounded-xl border border-slate-200">
+            <div class="py-12 text-center text-slate-500 bg-[#E4CEA5] rounded-xl border border-slate-200">
                 <span class="material-symbols-outlined text-4xl mb-2 block">store</span>
                 Belum ada bank sampah terdaftar
             </div>
