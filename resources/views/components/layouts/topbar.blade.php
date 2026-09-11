@@ -4,8 +4,8 @@
     @php $role = auth()->user()->getRoleNames()->first() ?? 'Masyarakat'; @endphp
 
     <div class="flex items-center gap-2 rounded-full px-2 py-1 bg-[#F1E3C7]">
-        <img src="/images/logo-icon.svg" alt="Trash Bank" class="h-5 w-5 sm:h-6 sm:w-6" />
-        <span class="hidden font-semibold sm:inline">Trash Bank</span>
+        <img src="{{ asset('assets/icons/project2_icon2.svg') }}" alt="Bank Sampah Sekanak" class="h-5 w-5 sm:h-6 sm:w-6" />
+        <span class="hidden font-semibold sm:inline">Bank Sampah Sekanak</span>
     </div>
 
     {{-- Pill navigation (hidden on mobile) --}}

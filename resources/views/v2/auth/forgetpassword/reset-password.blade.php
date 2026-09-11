@@ -6,6 +6,7 @@
     <title>Reset Password - Bank Sampah Sekanak Connect</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <link rel="icon" href="{{ asset('assets/icons/project2.ico') }}" type="image/x-icon">
 
     <!-- Google Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=visibility,visibility_off" />
@@ -167,11 +168,11 @@
 
             <div class="absolute top-6 left-6 z-10">
                 <div class="flex items-center gap-3 bg-white/15 backdrop-blur-md rounded-full px-4 py-2">
-                    <div class="h-8 w-8 rounded-full bg-white/30 flex items-center justify-center">
-                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                        </svg>
-                    </div>
+                    <img
+                        src="{{ asset('assets/icons/project2_icon1.svg') }}"
+                        alt="project2_icon1"
+                        class="size-16"
+                    >
                     <span class="text-white text-sm font-medium">Bank Sampah Sekanak</span>
                 </div>
             </div>

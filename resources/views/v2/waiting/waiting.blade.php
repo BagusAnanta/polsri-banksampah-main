@@ -6,6 +6,7 @@
     <title>Menunggu Verifikasi - Bank Sampah Sekanak Connect</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <link rel="icon" href="{{ asset('assets/icons/project2.ico') }}" type="image/x-icon">
     <style>
         body {
             background-color: #FAF5EB;
