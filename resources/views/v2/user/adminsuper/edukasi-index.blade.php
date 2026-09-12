@@ -14,13 +14,13 @@
 
     <x-slot name="actions">
         <a href="{{ route('sa.edukasi.create') }}"
-           class="btn w-full rounded-lg bg-[#A3A85C] hover:bg-[#A3A85C] text-white sm:w-auto sm:rounded-full">
+           class="btn w-full rounded-lg bg-[#16A34A] hover:bg-[#16A34A] text-white sm:w-auto sm:rounded-full">
              + Tambah Artikel
         </a>
     </x-slot>
 
     <!-- KPI -->
-    <div class="bg-[#E4CEA5] rounded-xl p-4 border border-slate-200">
+    <div class="bg-[#E1EFE3] rounded-xl p-4 border border-slate-200">
         <p class="text-sm text-slate-600 font-medium">Total Artikel</p>
         <p class="text-3xl font-bold text-slate-900">{{ $totalArtikel ?? 0 }}</p>
     </div>
@@ -28,7 +28,7 @@
     <!-- Article List -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         @forelse($artikels as $artikel)
-            <div class="bg-[#E4CEA5] rounded-xl border border-slate-200 overflow-hidden">
+            <div class="bg-[#E1EFE3] rounded-xl border border-slate-200 overflow-hidden">
                 @if($artikel->gambar_artikel)
                     <div class="h-40 overflow-hidden">
                         <img src="{{ asset($artikel->gambar_artikel) }}" alt="{{ $artikel->judul_artikel }}" class="w-full h-full object-cover">
@@ -57,7 +57,7 @@
                 </div>
             </div>
         @empty
-            <div class="lg:col-span-3 py-12 text-center text-slate-500 bg-[#E4CEA5] rounded-xl border border-slate-200">
+            <div class="lg:col-span-3 py-12 text-center text-slate-500 bg-[#E1EFE3] rounded-xl border border-slate-200">
                 <span class="material-symbols-outlined text-4xl mb-2 block">menu_book</span>
                 Belum ada artikel edukasi
             </div>

@@ -7,6 +7,7 @@ use App\Models\TiketSetorSampah;
 use App\Models\Masyarakat;
 use App\Models\BankSampahUser;
 use App\Models\Setting;
+use App\Models\User;
 use App\Notifications\SetoranPoinBaru;
 use App\Notifications\SetoranPoinStatus;
 use Illuminate\Http\Request;

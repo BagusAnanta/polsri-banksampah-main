@@ -20,7 +20,7 @@
     <div
         data-dropzone
         class="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed
-               border-base-content/25 bg-[#EADDCD] px-6 py-8 text-center transition-colors duration-150
+               border-base-content/25 bg-[#F3F8F4] px-6 py-8 text-center transition-colors duration-150
                hover:bg-base-200/60"
     >
         {{-- State kosong: ikon upload --}}

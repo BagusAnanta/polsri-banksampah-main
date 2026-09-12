@@ -1,6 +1,6 @@
 <x-layouts.app title="Riwayat Transaksi" subtitle="Riwayat setor sampah dan tukar poin selesai">
 
-    <div class="rounded-2xl bg-[#E4CEA5] p-5 shadow-sm">
+    <div class="rounded-2xl bg-[#E1EFE3] p-5 shadow-sm">
         <h3 class="text-base font-semibold text-base-content mb-4">Riwayat Transaksi</h3>
 
         @if(count($riwayat ?? []) > 0)
@@ -52,7 +52,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
                 <p class="mt-2 text-sm text-base-content/50">Belum ada riwayat transaksi selesai</p>
-                <a href="{{ route('tiket-sampah.create') }}" class="btn btn-sm mt-3 rounded-full bg-[#A3A85C] text-white hover:bg-olive-800 sm:w-auto sm:rounded-full">
+                <a href="{{ route('tiket-sampah.create') }}" class="btn btn-sm mt-3 rounded-full bg-[#16A34A] text-white hover:bg-olive-800 sm:w-auto sm:rounded-full">
                     Setor Sampah Sekarang
                 </a>
             </div>

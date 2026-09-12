@@ -22,18 +22,18 @@
         @csrf
 
         <!-- Card 1: Judul Artikel -->
-        <div class="bg-[#E4CEA5] rounded-xl p-6 border border-slate-200 space-y-4">
+        <div class="bg-[#E1EFE3] rounded-xl p-6 border border-slate-200 space-y-4">
             <h3 class="text-lg font-semibold text-slate-900">Judul Artikel</h3>
             <div class="form-control">
-                <input type="text" name="judul_artikel" class="input input-bordered rounded-xl bg-[#E4CEA5] text-sm px-4 py-3 pr-12 text-stone-800 placeholder-[#93764A] w-full" placeholder="Masukkan judul artikel" value="{{ old('judul_artikel') }}" required>
+                <input type="text" name="judul_artikel" class="input input-bordered rounded-xl bg-[#E1EFE3] text-sm px-4 py-3 pr-12 text-stone-800 placeholder-[#5B6B63] w-full" placeholder="Masukkan judul artikel" value="{{ old('judul_artikel') }}" required>
             </div>
         </div>
 
         <!-- Card 2: Gambar Sampul -->
-        <div class="bg-[#E4CEA5] rounded-xl p-6 border border-slate-200 space-y-4">
+        <div class="bg-[#E1EFE3] rounded-xl p-6 border border-slate-200 space-y-4">
             <h3 class="text-lg font-semibold text-slate-900">Gambar Sampul (Opsional)</h3>
             <div class="form-control">
-                <input type="file" name="gambar_artikel" class="file-input file-input-bordered rounded-xl bg-[#E4CEA5]" accept="image/*">
+                <input type="file" name="gambar_artikel" class="file-input file-input-bordered rounded-xl bg-[#E1EFE3]" accept="image/*">
                 <label class="label">
                     <span class="label-text-alt">Format: JPG, PNG. Ukuran maksimal: 2MB</span>
                 </label>
@@ -41,7 +41,7 @@
         </div>
 
         <!-- Card 3: Isi Artikel dengan Rich Text Editor -->
-        <div class="bg-[#E4CEA5] rounded-xl p-6 border border-slate-200 space-y-4">
+        <div class="bg-[#E1EFE3] rounded-xl p-6 border border-slate-200 space-y-4">
             <h3 class="text-lg font-semibold text-slate-900">Isi Artikel</h3>
             <div class="form-control">
                <x-richtext.richtext name="isi_artikel" id="editor" :defaultvalue="old('isi_artikel')"/>
@@ -50,8 +50,8 @@
 
         <!-- Actions -->
         <div class="flex gap-3">
-            <a href="{{ route('sa.edukasi-superadmin.index') }}" class="btn flex-1 rounded-xl bg-[#E4CEA5] hover:bg-red-600">Batal</a>
-            <button type="submit" class="btn flex-1 rounded-xl bg-[#A3A85C] hover:bg-[#A3A85C] text-white">
+            <a href="{{ route('sa.edukasi-superadmin.index') }}" class="btn flex-1 rounded-xl bg-[#E1EFE3] hover:bg-red-600">Batal</a>
+            <button type="submit" class="btn flex-1 rounded-xl bg-[#16A34A] hover:bg-[#16A34A] text-white">
                 <span class="material-symbols-outlined">publish</span> Terbitkan Artikel
             </button>
         </div>

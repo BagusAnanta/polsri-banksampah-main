@@ -7,7 +7,7 @@
             <p class="text-sm text-slate-600">Semua tiket penukaran poin dari masyarakat</p>
         </div>
         <div class="form-control w-full sm:w-64">
-            <select class="select select-bordered bg-[#E4CEA5] rounded-lg" id="statusFilter">
+            <select class="select select-bordered bg-[#E1EFE3] rounded-lg" id="statusFilter">
                 <option value="">Semua Status</option>
                 <option value="menunggu">Menunggu</option>
                 <option value="selesai">Selesai</option>
@@ -18,15 +18,15 @@
 
     <!-- KPI -->
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div class="bg-[#E4CEA5] rounded-xl p-4 border border-slate-200">
+        <div class="bg-[#E1EFE3] rounded-xl p-4 border border-slate-200">
             <p class="text-sm text-slate-600 font-medium">Total Tiket</p>
             <p class="text-2xl font-bold text-slate-900 mt-1">{{ $totalTiket ?? 0 }}</p>
         </div>
-        <div class="bg-[#E4CEA5] rounded-xl p-4 border border-slate-200">
+        <div class="bg-[#E1EFE3] rounded-xl p-4 border border-slate-200">
             <p class="text-sm text-slate-600 font-medium">Menunggu Proses</p>
             <p class="text-2xl font-bold text-amber-600 mt-1">{{ $menungguProses ?? 0 }}</p>
         </div>
-        <div class="bg-[#E4CEA5] rounded-xl p-4 border border-slate-200">
+        <div class="bg-[#E1EFE3] rounded-xl p-4 border border-slate-200">
             <p class="text-sm text-slate-600 font-medium">Selesai</p>
             <p class="text-2xl font-bold text-green-600 mt-1">{{ $selesai ?? 0 }}</p>
         </div>
@@ -35,7 +35,7 @@
     <!-- 3-Column Card Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         @forelse($tikets as $tiket)
-            <a href="{{ route('admin.tiket-poin.show', $tiket->tiketpoin_id) }}" data-status="{{ strtolower($tiket->status) }}" class="bg-[#E4CEA5] rounded-xl p-5 border border-slate-200 hover:border-blue-300 transition block">
+            <a href="{{ route('admin.tiket-poin.show', $tiket->tiketpoin_id) }}" data-status="{{ strtolower($tiket->status) }}" class="bg-[#E1EFE3] rounded-xl p-5 border border-slate-200 hover:border-blue-300 transition block">
                 <div class="flex items-start justify-between mb-3">
                     <div>
                         <p class="text-sm font-semibold text-slate-900">{{ $tiket->masyarakat->user->name ?? '-' }}</p>
@@ -59,7 +59,7 @@
                 </div>
             </a>
         @empty
-            <div class="lg:col-span-3 py-12 text-center text-slate-500 bg-[#E4CEA5] rounded-xl border border-slate-200">
+            <div class="lg:col-span-3 py-12 text-center text-slate-500 bg-[#E1EFE3] rounded-xl border border-slate-200">
                 <span class="material-symbols-outlined text-4xl mb-2 block">inbox</span>
                 Belum ada tiket pengajuan penukaran
             </div>

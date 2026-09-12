@@ -45,7 +45,7 @@
         }
     </style>
 </head>
-<body class="bg-[#F1E3C7] text-base-content rounded-2xl">
+<body class="bg-[#F3F8F4] text-base-content rounded-2xl">
 
     <div class="flex h-screen flex-col overflow-hidden lg:flex-row">
 

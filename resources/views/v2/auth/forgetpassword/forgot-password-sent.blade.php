@@ -36,10 +36,10 @@
             theme: {
                 extend: {
                     colors: {
-                        'bg-primary': '#FAF5EB',
-                        'bg-surface': '#EADDCD',
-                        'primary': '#5B6E33',
-                        'primary-dark': '#4A5D23',
+                        'bg-primary': '#FFFFFF',
+                        'bg-surface': '#F3F8F4',
+                        'primary': '#14532D',
+                        'primary-dark': '#1B3B2B',
                     }
                 }
             }
@@ -47,19 +47,19 @@
     </script>
     <style>
         body {
-            background-color: #FAF5EB;
+            background-color: #FFFFFF;
         }
     </style>
 </head>
 <body>
-    <div class="min-h-screen grid grid-cols-1 lg:grid-cols-[6fr_4fr] bg-[#FAF5EB]">
+    <div class="min-h-screen grid grid-cols-1 lg:grid-cols-[6fr_4fr] bg-[#FFFFFF]">
         <!-- Form Column -->
         <div class="flex flex-col justify-center px-6 sm:px-12 lg:px-16 py-8">
             <div class="w-full max-w-md mx-auto">
                 
                 <!-- Logo -->
                 <div class="flex items-center gap-3 mb-10">
-                    <div class="h-10 w-10 rounded-full bg-[#5B6E33] flex items-center justify-center flex-shrink-0">
+                    <div class="h-10 w-10 rounded-full bg-[#14532D] flex items-center justify-center flex-shrink-0">
                         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                         </svg>
@@ -102,14 +102,14 @@
                             <input type="email" name="email" id="email"
                                    placeholder="Masukkan email terdaftar"
                                    value="{{ $email ?? old('email') }}"
-                                   class="input input-bordered rounded-xl bg-[#EADDCD] text-sm placeholder-stone-400 w-full pr-12 @error('email') input-error @enderror"
+                                   class="input input-bordered rounded-xl bg-[#F3F8F4] text-sm placeholder-stone-400 w-full pr-12 @error('email') input-error @enderror"
                                    required />
                         </div>
                     </div>
                     </fieldset>
 
                     <!-- Submit Button -->
-                    <button type="submit" class="btn btn-block rounded-full bg-[#5B6E33] text-white border-none hover:bg-[#4A5D23] text-sm">
+                    <button type="submit" class="btn btn-block rounded-full bg-[#14532D] text-white border-none hover:bg-[#1B3B2B] text-sm">
                         Kirim Ulang Email
                     </button>
                 </form>

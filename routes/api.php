@@ -17,7 +17,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RiwayatSetorController;
 use App\Http\Controllers\TransaksiController;
-use App\Http\Controllers\BanksampahuserController;
+use App\Http\Controllers\BankSampahUserController;
 use App\Http\Controllers\TiketsetorsampahController;
 use App\Http\Controllers\TikettukarpoinController;
 use App\Http\Controllers\ArtikelController;
@@ -72,7 +72,7 @@ Route::middleware('auth:api')->group(function () {
         Route::apiResource('data-products', ProductController::class);
         Route::apiResource('riwayat-setors', RiwayatSetorController::class);
         Route::apiResource('masyarakats', AuthController::class);
-        Route::apiResource('banksampahusers', BanksampahuserController::class);
+        Route::apiResource('banksampahusers', BankSampahUserController::class);
         Route::apiResource('tiketsetorsampahs', TiketsetorsampahController::class);
         Route::apiResource('tikettukarpoin', TikettukarpoinController::class);
         Route::apiResource('artikels', ArtikelController::class);
@@ -120,7 +120,7 @@ Route::middleware('auth:api')->group(function () {
         Route::apiResource('data-products', ProductController::class);
         Route::apiResource('riwayat-setors', RiwayatSetorController::class);
         Route::apiResource('masyarakats', AuthController::class);
-        Route::apiResource('banksampahusers', BanksampahuserController::class);
+        Route::apiResource('banksampahusers', BankSampahUserController::class);
         Route::apiResource('tiketsetorsampahs', TiketsetorsampahController::class);
         Route::apiResource('tikettukarpoin', TikettukarpoinController::class);
         Route::apiResource('artikels', ArtikelController::class);

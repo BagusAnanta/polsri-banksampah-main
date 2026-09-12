@@ -8,7 +8,7 @@
         </a>
     </div>
 
-    <div class="bg-[#E4CEA5] rounded-xl p-6 border border-slate-200 space-y-4">
+    <div class="bg-[#E1EFE3] rounded-xl p-6 border border-slate-200 space-y-4">
         <h1 class="text-2xl font-bold text-slate-900">{{ $artikel->judul_artikel }}</h1>
         
         @if($artikel->gambar_artikel)

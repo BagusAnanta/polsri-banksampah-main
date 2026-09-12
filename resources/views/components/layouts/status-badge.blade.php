@@ -10,7 +10,7 @@
 
 @php
     $map = [
-        'Disetujui' => ['label' => 'Disetujui', 'class' => 'bg-[#A3A85C] text-white'],
+        'Disetujui' => ['label' => 'Disetujui', 'class' => 'bg-[#16A34A] text-white'],
         'menunggu'  => ['label' => 'Menunggu',  'class' => 'bg-amber-100 text-amber-600'],
         'selesai'   => ['label' => 'Selesai',   'class' => 'bg-green-100 text-green-600'],
         'ditolak'   => ['label' => 'Ditolak',   'class' => 'bg-red-100 text-red-500'],

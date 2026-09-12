@@ -258,7 +258,7 @@ Route::prefix('v2')->middleware('auth:web')->group(function () {
     Route::resource('orders', OrderController::class);
     Route::resource('riwayat-setor', RiwayatSetorController::class);
     Route::resource('masyarakats', AuthController::class);
-    Route::resource('banksampahusers', BanksampahuserController::class);
+    Route::resource('banksampahusers', BankSampahUserController::class);
     Route::resource('tiketsetorsampahs', TiketsetorsampahController::class);
     Route::resource('tikettukarpoin', TikettukarpoinController::class);
     Route::resource('artikels', ArtikelController::class);

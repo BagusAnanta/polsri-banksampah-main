@@ -35,10 +35,10 @@
             theme: {
                 extend: {
                     colors: {
-                        'bg-primary': '#FAF5EB',
-                        'bg-surface': '#EADDCD',
-                        'primary': '#5B6E33',
-                        'primary-dark': '#4A5D23',
+                        'bg-primary': '#FFFFFF',
+                        'bg-surface': '#F3F8F4',
+                        'primary': '#14532D',
+                        'primary-dark': '#1B3B2B',
                     }
                 }
             }
@@ -46,19 +46,19 @@
     </script>
     <style>
         body {
-            background-color: #FAF5EB;
+            background-color: #FFFFFF;
         }
     </style>
 </head>
 <body>
-    <div class="min-h-screen grid grid-cols-1 lg:grid-cols-[6fr_4fr] bg-[#FAF5EB]">
+    <div class="min-h-screen grid grid-cols-1 lg:grid-cols-[6fr_4fr] bg-[#FFFFFF]">
         <!-- Form Column -->
         <div class="flex flex-col justify-center px-6 sm:px-12 lg:px-16 py-8">
             <div class="w-full max-w-md mx-auto">
                 
                 <!-- Logo -->
                 <div class="flex items-center gap-3 mb-10">
-                    <div class="h-10 w-10 rounded-full bg-[#5B6E33] flex items-center justify-center flex-shrink-0">
+                    <div class="h-10 w-10 rounded-full bg-[#14532D] flex items-center justify-center flex-shrink-0">
                         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                         </svg>
@@ -94,7 +94,7 @@
                         <input type="text" name="identifier" id="identifier"
                                placeholder="Masukkan NIK atau username"
                                value="{{ old('identifier') }}"
-                               class="input input-bordered rounded-xl bg-[#EADDCD] text-sm placeholder-stone-400 @error('username') input-error @enderror"
+                               class="input input-bordered rounded-xl bg-[#F3F8F4] text-sm placeholder-stone-400 @error('username') input-error @enderror"
                                required />
                     </div>
 
@@ -106,7 +106,7 @@
                         <div class="relative">
                             <input type="password" name="password" id="password"
                                    placeholder="Masukkan password"
-                                   class="input input-bordered rounded-xl bg-[#EADDCD] text-sm placeholder-stone-400 w-full pr-12 @error('password') input-error @enderror"
+                                   class="input input-bordered rounded-xl bg-[#F3F8F4] text-sm placeholder-stone-400 w-full pr-12 @error('password') input-error @enderror"
                                    required />
                             <button type="button" onclick="togglePassword('password')"
                                     class="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600 transition">
@@ -130,13 +130,13 @@
 
                     <!-- Forgot Password Link -->
                     <div class="text-right">
-                        <a href="{{ route('forget-password') }}" class="text-xs text-[#5B6E33] hover:text-[#4A5D23] font-medium transition">
+                        <a href="{{ route('forget-password') }}" class="text-xs text-[#14532D] hover:text-[#1B3B2B] font-medium transition">
                             Lupa password?
                         </a>
                     </div>
 
                     <!-- Submit Button -->
-                    <button type="submit" class="btn btn-block rounded-full bg-[#5B6E33] text-white border-none hover:bg-[#4A5D23] text-sm">
+                    <button type="submit" class="btn btn-block rounded-full bg-[#14532D] text-white border-none hover:bg-[#1B3B2B] text-sm">
                         Masuk
                     </button>
                 </form>
@@ -148,7 +148,7 @@
                 <p class="text-center text-sm text-stone-600 mb-4">
                     Belum memiliki akun?
                 </p>
-                <a href="{{ route('register') }}" class="btn btn-block btn-outline rounded-full border-2 border-[#5B6E33] text-[#5B6E33] hover:bg-[#5B6E33]/5 text-sm">
+                <a href="{{ route('register') }}" class="btn btn-block btn-outline rounded-full border-2 border-[#14532D] text-[#14532D] hover:bg-[#14532D]/5 text-sm">
                     Daftar Sekarang
                 </a>
             </div>

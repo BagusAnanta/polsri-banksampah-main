@@ -1,7 +1,7 @@
 <x-layouts.app title="Detail Tiket Tukar Poin" subtitle="Tiket #{{ $tiket->tiketpoin_inc }}">
 
     <div class="mx-auto max-w-md">
-        <div class="card divide-y divide-base-300/40 rounded-2xl bg-[#E4CEA5] shadow-sm">
+        <div class="card divide-y divide-base-300/40 rounded-2xl bg-[#E1EFE3] shadow-sm">
             <div class="card-body gap-4 p-6">
 
                 <div class="flex items-start justify-between">

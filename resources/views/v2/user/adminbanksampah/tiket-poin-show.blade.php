@@ -12,7 +12,7 @@
         </button>
     </div>
 
-    <div class="bg-[#E4CEA5] rounded-2xl p-6 border border-slate-200 space-y-6">
+    <div class="bg-[#E1EFE3] rounded-2xl p-6 border border-slate-200 space-y-6">
         <!-- Header -->
         <div class="text-center border-b border-slate-100 pb-4">
             <p class="text-sm text-slate-500 font-medium">Tiket Tukar Poin</p>

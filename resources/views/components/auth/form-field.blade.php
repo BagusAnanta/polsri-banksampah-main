@@ -7,14 +7,14 @@
     </label>
     @if($type === 'select')
         <select name="{{ $name }}" id="{{ $name }}"
-                {{ $attributes->merge(['class' => 'w-full rounded-xl bg-[#EADDCD] px-4 py-3 text-sm text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-[#5B6E33] focus:ring-offset-2 focus:ring-offset-[#FAF5EB] transition']) }}>
+                {{ $attributes->merge(['class' => 'w-full rounded-xl bg-[#F3F8F4] px-4 py-3 text-sm text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-[#14532D] focus:ring-offset-2 focus:ring-offset-[#FFFFFF] transition']) }}>
             {{ $slot }}
         </select>
     @elseif($type === 'password')
         <div class="relative">
             <input type="password" name="{{ $name }}" id="{{ $name }}"
                    placeholder="{{ $placeholder }}"
-                   {{ $attributes->merge(['class' => 'w-full rounded-xl bg-[#EADDCD] px-4 py-3 text-sm text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-[#5B6E33] focus:ring-offset-2 focus:ring-offset-[#FAF5EB] transition pr-12']) }} />
+                   {{ $attributes->merge(['class' => 'w-full rounded-xl bg-[#F3F8F4] px-4 py-3 text-sm text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-[#14532D] focus:ring-offset-2 focus:ring-offset-[#FFFFFF] transition pr-12']) }} />
             <button type="button" onclick="togglePassword('{{ $name }}')"
                     class="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -26,11 +26,11 @@
     @elseif($type === 'tel')
         <input type="tel" name="{{ $name }}" id="{{ $name }}"
                placeholder="{{ $placeholder }}"
-               {{ $attributes->merge(['class' => 'w-full rounded-xl bg-[#EADDCD] px-4 py-3 text-sm text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-[#5B6E33] focus:ring-offset-2 focus:ring-offset-[#FAF5EB] transition']) }} />
+               {{ $attributes->merge(['class' => 'w-full rounded-xl bg-[#F3F8F4] px-4 py-3 text-sm text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-[#14532D] focus:ring-offset-2 focus:ring-offset-[#FFFFFF] transition']) }} />
     @else
         <input type="{{ $type }}" name="{{ $name }}" id="{{ $name }}"
                placeholder="{{ $placeholder }}"
-               {{ $attributes->merge(['class' => 'w-full rounded-xl bg-[#EADDCD] px-4 py-3 text-sm text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-[#5B6E33] focus:ring-offset-2 focus:ring-offset-[#FAF5EB] transition']) }} />
+               {{ $attributes->merge(['class' => 'w-full rounded-xl bg-[#F3F8F4] px-4 py-3 text-sm text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-[#14532D] focus:ring-offset-2 focus:ring-offset-[#FFFFFF] transition']) }} />
     @endif
     @error($name)
         <p class="text-xs text-red-500 mt-1">{{ $message }}</p>

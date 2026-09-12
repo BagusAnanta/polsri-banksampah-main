@@ -1,4 +1,4 @@
-<aside class="flex h-full w-16 flex-col items-center gap-4 bg-[#E4CEA5] py-4">
+<aside class="flex h-full w-16 flex-col items-center gap-4 bg-[#E1EFE3] py-4">
 
     @php $role = auth()->user()->getRoleNames()->first() ?? 'Masyarakat'; @endphp
 
@@ -23,7 +23,7 @@
 
     <div class="mt-auto flex flex-col gap-3">
         <x-layouts.nav-icon route="help" icon="question-mark-circle" label="Bantuan" />
-        <div class="flex h-8 w-8 items-center justify-center rounded-full bg-[#A3A85C] text-xs font-semibold">
+        <div class="flex h-8 w-8 items-center justify-center rounded-full bg-[#16A34A] text-xs font-semibold">
             {{ Str::of(auth()->user()->name)->explode(' ')->map(fn($w) => Str::substr($w, 0, 1))->take(2)->implode('') }}
         </div>
     </div>

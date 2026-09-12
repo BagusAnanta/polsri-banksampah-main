@@ -10,7 +10,7 @@
     </div>
 
     <!-- Card 1: Identity -->
-    <div class="bg-[#E4CEA5] rounded-xl p-6 border border-slate-200 space-y-4">
+    <div class="bg-[#E1EFE3] rounded-xl p-6 border border-slate-200 space-y-4">
         <h3 class="text-lg font-semibold text-slate-900">Profile Bank Sampah</h3>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
@@ -33,7 +33,7 @@
     </div>
 
     <!-- Card 2: Contact Info -->
-    <div class="bg-[#E4CEA5] rounded-xl p-6 border border-slate-200 space-y-4">
+    <div class="bg-[#E1EFE3] rounded-xl p-6 border border-slate-200 space-y-4">
         <h3 class="text-lg font-semibold text-slate-900">Informasi Kontak</h3>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <!-- <div>
@@ -48,7 +48,7 @@
     </div>
 
     <!-- Card 3: Address -->
-    <div class="bg-[#E4CEA5] rounded-xl p-6 border border-slate-200 space-y-4">
+    <div class="bg-[#E1EFE3] rounded-xl p-6 border border-slate-200 space-y-4">
         <h3 class="text-lg font-semibold text-slate-900">Alamat dan Kecamatan</h3>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>

@@ -10,7 +10,7 @@
     </div>
 
     <!-- Card 1: Identity -->
-    <div class="bg-[#E4CEA5] rounded-xl p-6 border border-slate-200 space-y-4">
+    <div class="bg-[#E1EFE3] rounded-xl p-6 border border-slate-200 space-y-4">
         <h3 class="text-lg font-semibold text-slate-900">Data Masyarakat</h3>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
@@ -35,7 +35,7 @@
     </div>
 
     <!-- Card 2: Contact Info -->
-    <div class="bg-[#E4CEA5] rounded-xl p-6 border border-slate-200 space-y-4">
+    <div class="bg-[#E1EFE3] rounded-xl p-6 border border-slate-200 space-y-4">
         <h3 class="text-lg font-semibold text-slate-900">Informasi Kontak</h3>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
@@ -50,7 +50,7 @@
     </div>
 
     <!-- Card 3: Personal Data -->
-    <div class="bg-[#E4CEA5] rounded-xl p-6 border border-slate-200 space-y-4">
+    <div class="bg-[#E1EFE3] rounded-xl p-6 border border-slate-200 space-y-4">
         <h3 class="text-lg font-semibold text-slate-900">Data Pribadi</h3>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
@@ -65,7 +65,7 @@
     </div>
 
     <!-- Card 4: KTP Photo -->
-    <div class="bg-[#E4CEA5] rounded-xl p-6 border border-slate-200 space-y-4">
+    <div class="bg-[#E1EFE3] rounded-xl p-6 border border-slate-200 space-y-4">
         <h3 class="text-lg font-semibold text-slate-900">Foto KTP</h3>
         @if($masyarakat->identity_photo)
             <img src="{{ asset($masyarakat->identity_photo) }}" alt="KTP" class="w-full h-auto rounded-lg border border-slate-200">
@@ -78,15 +78,15 @@
 
     <!-- Statistics Card -->
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div class="bg-[#E4CEA5] rounded-xl p-4 border border-blue-200">
+        <div class="bg-[#E1EFE3] rounded-xl p-4 border border-blue-200">
             <p class="text-xs text-blue-600 font-medium">Total Poin</p>
             <p class="text-2xl font-bold text-blue-700 mt-1">{{ number_format($masyarakat->poin ?? 0, 0) }}</p>
         </div>
-        <div class="bg-[#E4CEA5] rounded-xl p-4 border border-green-200">
+        <div class="bg-[#E1EFE3] rounded-xl p-4 border border-green-200">
             <p class="text-xs text-green-600 font-medium">Total Gramasi</p>
             <p class="text-2xl font-bold text-green-700 mt-1">{{ number_format($masyarakat->total_gramasi ?? 0, 0) }}g</p>
         </div>
-        <div class="bg-[#E4CEA5] rounded-xl p-4 border border-purple-200">
+        <div class="bg-[#E1EFE3] rounded-xl p-4 border border-purple-200">
             <p class="text-xs text-purple-600 font-medium">Setor Selesai</p>
             <p class="text-2xl font-bold text-purple-700 mt-1">{{ $masyarakat->total_selesai ?? 0 }}</p>
         </div>

@@ -6,10 +6,10 @@
 
 <a href="{{ route($route) }}"
    class="flex flex-col items-center gap-0.5 px-3 py-1 text-xs font-medium transition-colors
-          {{ $isActive ? 'text-[#61440A]' : 'text-base-content/50 hover:text-base-content/80' }}">
+          {{ $isActive ? 'text-[#14532D]' : 'text-base-content/50 hover:text-base-content/80' }}">
 
     <div class="flex items-center justify-center w-9 h-9 rounded-full transition-colors
-                {{ $isActive ? 'bg-[#61440A]' : '' }}">
+                {{ $isActive ? 'bg-[#14532D]' : '' }}">
         @if($icon === 'home')
             <span class="material-symbols-outlined {{ $isActive ? 'text-white' : '' }}">home</span>
         @elseif($icon === 'trash')

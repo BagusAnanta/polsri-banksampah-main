@@ -9,17 +9,17 @@
     <link rel="icon" href="{{ asset('assets/icons/project2.ico') }}" type="image/x-icon">
     <style>
         body {
-            background-color: #FAF5EB;
+            background-color: #FFFFFF;
         }
     </style>
 </head>
 <body>
-    <div class="min-h-screen bg-[#E4CEA5]">
+    <div class="min-h-screen bg-[#E1EFE3]">
         <!-- TopBar -->
-        <div class="bg-[#EFDBB8] border-b border-stone-200">
+        <div class="bg-[#F3F8F4] border-b border-stone-200">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
                 <div class="flex items-center gap-3">
-                    <div class="h-9 w-9 rounded-full bg-[#5B6E33] flex items-center justify-center flex-shrink-0">
+                    <div class="h-9 w-9 rounded-full bg-[#14532D] flex items-center justify-center flex-shrink-0">
                         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                         </svg>
@@ -29,7 +29,7 @@
                         <p class="text-[10px] text-stone-500 -mt-0.5">Sekanak Connect</p>
                     </div>
                 </div>
-                <a href="{{ route('login') }}" class="btn btn-ghost btn-sm gap-2 text-stone-500 hover:text-red-600 hover:bg-[#F1E3C7] rounded-full">
+                <a href="{{ route('login') }}" class="btn btn-ghost btn-sm gap-2 text-stone-500 hover:text-red-600 hover:bg-[#F3F8F4] rounded-full">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
                     </svg>
@@ -44,7 +44,7 @@
 
                 <!-- Left Column: StatusCard (spans 3/5) -->
                 <div class="lg:col-span-3">
-                    <div class="card bg-[#F2DFBC] rounded-2xl p-7">
+                    <div class="card bg-[#F3F8F4] rounded-2xl p-7">
                         <div class="card-body p-0">
                             <div class="flex items-center justify-between mb-6">
                                 <div class="h-14 w-14 rounded-full bg-amber-100 flex items-center justify-center">
@@ -62,24 +62,24 @@
                                 Terima kasih telah mendaftar. Tim kami akan memeriksa data pendaftaran Anda.
                                 Proses verifikasi biasanya memakan waktu 1×24 jam.
                             </p>
-                            <p class="text-sm text-[#5B6E33] font-medium">
+                            <p class="text-sm text-[#14532D] font-medium">
                                 Selamat datang, <span class="font-semibold">{{ session('user_name', 'Calon Anggota') }}</span> 👋
                             </p>
                         </div>
                     </div>
 
                     <!-- InfoCard: Informasi Pendaftar -->
-                    <div class="card bg-[#F2DFBC] rounded-2xl p-7 mt-6">
+                    <div class="card bg-[#F3F8F4] rounded-2xl p-7 mt-6">
                         <div class="card-body p-0">
                             <h4 class="text-base font-bold text-stone-800 mb-4 flex items-center gap-2">
-                                <svg class="w-5 h-5 text-[#5B6E33]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-5 h-5 text-[#14532D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
                                 Informasi Pendaftar
                             </h4>
                             <div class="space-y-3">
                                 <div class="flex items-center gap-3">
-                                    <div class="h-8 w-8 rounded-full bg-[#FAF5EB] flex items-center justify-center flex-shrink-0">
+                                    <div class="h-8 w-8 rounded-full bg-[#FFFFFF] flex items-center justify-center flex-shrink-0">
                                         <svg class="w-4 h-4 text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                                         </svg>
@@ -90,7 +90,7 @@
                                     </div>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <div class="h-8 w-8 rounded-full bg-[#FAF5EB] flex items-center justify-center flex-shrink-0">
+                                    <div class="h-8 w-8 rounded-full bg-[#FFFFFF] flex items-center justify-center flex-shrink-0">
                                         <svg class="w-4 h-4 text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0"/>
                                         </svg>
@@ -101,7 +101,7 @@
                                     </div>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <div class="h-8 w-8 rounded-full bg-[#FAF5EB] flex items-center justify-center flex-shrink-0">
+                                    <div class="h-8 w-8 rounded-full bg-[#FFFFFF] flex items-center justify-center flex-shrink-0">
                                         <svg class="w-4 h-4 text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                                         </svg>
@@ -119,22 +119,22 @@
                 <!-- Right Column (stacks on mobile, spans 2/5 on desktop) -->
                 <div class="lg:col-span-2 flex flex-col gap-6">
                     <!-- ProgressStepper -->
-                    <div class="card bg-[#F2DFBC] rounded-2xl p-7">
+                    <div class="card bg-[#F3F8F4] rounded-2xl p-7">
                         <div class="card-body p-0">
                             <h4 class="text-base font-bold text-stone-800 mb-6">Status Pendaftaran</h4>
                             <div class="flex flex-col gap-0">
                                 <!-- Step 1: Pendaftaran (completed) -->
                                 <div class="flex items-start gap-4">
                                     <div class="flex flex-col items-center">
-                                        <div class="h-8 w-8 rounded-full bg-[#5B6E33] flex items-center justify-center flex-shrink-0">
+                                        <div class="h-8 w-8 rounded-full bg-[#14532D] flex items-center justify-center flex-shrink-0">
                                             <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                                             </svg>
                                         </div>
-                                        <div class="w-0.5 h-10 bg-[#5B6E33]/30 mt-1"></div>
+                                        <div class="w-0.5 h-10 bg-[#14532D]/30 mt-1"></div>
                                     </div>
                                     <div class="pb-4">
-                                        <p class="text-sm font-semibold text-[#5B6E33]">Pendaftaran</p>
+                                        <p class="text-sm font-semibold text-[#14532D]">Pendaftaran</p>
                                         <p class="text-xs text-stone-500">Data berhasil dikirim</p>
                                     </div>
                                 </div>
@@ -170,7 +170,7 @@
                     </div>
 
                     <!-- InfoCard: Apa yang Bisa Kamu Lakukan -->
-                    <div class="card bg-[#F2DFBC] rounded-2xl p-7">
+                    <div class="card bg-[#F3F8F4] rounded-2xl p-7">
                         <div class="card-body p-0">
                             <div class="flex items-start gap-3 mb-4">
                                 <div class="h-8 w-8 rounded-full bg-sky-100 flex items-center justify-center flex-shrink-0">
@@ -188,10 +188,10 @@
 
                             <div class="flex items-center justify-between py-3 border-t border-stone-300/50">
                                 <span class="text-xs text-stone-500">Estimasi verifikasi</span>
-                                <span class="text-xs font-semibold text-[#5B6E33]">1×24 Jam</span>
+                                <span class="text-xs font-semibold text-[#14532D]">1×24 Jam</span>
                             </div>
 
-                            <a href="{{ route('login') }}" class="btn btn-block btn-sm rounded-full text-stone-600 border-none hover:bg-red-600 text-sm mt-4 bg-[#785D24] text-white">
+                            <a href="{{ route('login') }}" class="btn btn-block btn-sm rounded-full text-stone-600 border-none hover:bg-red-600 text-sm mt-4 bg-[#1B3B2B] text-white">
                                 Kembali ke Halaman Login
                             </a>
                         </div>

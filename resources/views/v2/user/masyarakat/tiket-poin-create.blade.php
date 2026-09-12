@@ -1,7 +1,7 @@
 <x-layouts.app title="Buat Tiket Tukar Poin">
 
     <div class="mx-auto max-w-2xl">
-        <div class="rounded-2xl bg-[#E4CEA5] p-6 shadow-sm">
+        <div class="rounded-2xl bg-[#E1EFE3] p-6 shadow-sm">
             <div class="mb-6">
                 <h1 class="text-2xl font-bold text-base-content">Buat Tiket Tukar Poin</h1>
                 <p class="mt-1 text-sm text-base-content/60">Tukarkan poin Anda dengan voucher di bank sampah pilihan</p>
@@ -10,7 +10,7 @@
             <form action="{{ route('tikettukarpoin.store') }}" method="POST" class="space-y-5">
                 @csrf
 
-                <div class="alert alert-info bg-[#A3A85C]" role="alert">
+                <div class="alert alert-info bg-[#16A34A]" role="alert">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     <span>Poin Anda saat ini: <strong>{{ $userCurrentPoints ?? 0 }}</strong> poin</span>
                 </div>
@@ -24,7 +24,7 @@
                         id="poin"
                         name="poin" 
                         placeholder="Masukkan jumlah poin yang ingin ditukar"
-                        class="input input-bordered bg-[#EADDCD] w-full rounded-lg @error('poin') input-error @enderror"
+                        class="input input-bordered bg-[#F3F8F4] w-full rounded-lg @error('poin') input-error @enderror"
                         min="1"
                     >
                     @error('poin')
@@ -48,7 +48,7 @@
                         id="voucher"
                         name="voucher"
                         placeholder="Masukkan jumlah voucher yang ingin diperoleh"
-                        class="input input-bordered bg-[#EADDCD] w-full rounded-lg"
+                        class="input input-bordered bg-[#F3F8F4] w-full rounded-lg"
                         min="1"
                     >
                     <label class="label">
@@ -68,7 +68,7 @@
                     <select 
                         id="banksampah_id"
                         name="banksampah_id"
-                        class="select select-bordered bg-[#EADDCD] w-full rounded-lg @error('banksampah_id') select-error @enderror"
+                        class="select select-bordered bg-[#F3F8F4] w-full rounded-lg @error('banksampah_id') select-error @enderror"
                         required
                     >
                         <option value="">-- Pilih Bank Sampah --</option>
@@ -106,7 +106,7 @@
                     <a href="{{ route('tiket-poin.index') }}" class="btn btn-outline flex-1 rounded-lg text-sm text-base-content hover:bg-red-700">
                         Batal
                     </a>
-                    <button type="submit" id="submit-btn" class="btn btn-primary flex-1 rounded-lg bg-[#785D24] border-none hover:bg-[#5B6E33] text-white" disabled>
+                    <button type="submit" id="submit-btn" class="btn btn-primary flex-1 rounded-lg bg-[#1B3B2B] border-none hover:bg-[#14532D] text-white" disabled>
                         Buat Tiket
                     </button>
                 </div>

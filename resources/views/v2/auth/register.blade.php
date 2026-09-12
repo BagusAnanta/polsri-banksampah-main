@@ -31,25 +31,25 @@
 
     <style>
         body {
-            background-color: #FAF5EB;
+            background-color: #FFFFFF;
         }
     </style>
 </head>
 <body>
-    <div class="min-h-screen grid grid-cols-1 lg:grid-cols-[6fr_4fr] bg-[#FAF5EB]">
+    <div class="min-h-screen grid grid-cols-1 lg:grid-cols-[6fr_4fr] bg-[#FFFFFF]">
         <!-- Form Column -->
         <div class="flex flex-col justify-start px-6 sm:px-12 lg:px-16 py-8">
             <div class="w-full max-w-md mx-auto">
                 <!-- Back Button & Logo -->
                 <div class="flex items-center justify-between mb-10">
-                    <a href="{{ route('login') }}" class="btn btn-ghost btn-sm text-[#5B6E33] hover:text-[#4A5D23]">
+                    <a href="{{ route('login') }}" class="btn btn-ghost btn-sm text-[#14532D] hover:text-[#1B3B2B]">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                         </svg>
                         <span class="text-sm font-medium">Kembali</span>
                     </a>
                     <div class="flex items-center gap-2">
-                        <div class="h-8 w-8 rounded-full bg-[#5B6E33] flex items-center justify-center flex-shrink-0">
+                        <div class="h-8 w-8 rounded-full bg-[#14532D] flex items-center justify-center flex-shrink-0">
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                             </svg>
@@ -75,7 +75,7 @@
                         <input type="text" name="name" id="name"
                                placeholder="Masukkan nama lengkap"
                                value="{{ old('name') }}"
-                               class="input input-bordered rounded-xl bg-[#EADDCD] text-sm px-4 py-3 text-stone-800 placeholder-stone-400 @error('name') input-error @enderror"
+                               class="input input-bordered rounded-xl bg-[#F3F8F4] text-sm px-4 py-3 text-stone-800 placeholder-stone-400 @error('name') input-error @enderror"
                                required />
                         @error('name') <label class="label"><span class="label-text-alt text-red-500">{{ $message }}</span></label> @enderror
                     </div>
@@ -88,7 +88,7 @@
                         <input type="text" name="username" id="username"
                                placeholder="Masukkan username"
                                value="{{ old('username') }}"
-                               class="input input-bordered rounded-xl bg-[#EADDCD] text-sm px-4 py-3 text-stone-800 placeholder-stone-400 @error('username') input-error @enderror"
+                               class="input input-bordered rounded-xl bg-[#F3F8F4] text-sm px-4 py-3 text-stone-800 placeholder-stone-400 @error('username') input-error @enderror"
                                required />
                         @error('username') <label class="label"><span class="label-text-alt text-red-500">{{ $message }}</span></label> @enderror
                     </div>
@@ -101,7 +101,7 @@
                         <input type="text" name="nik" id="nik"
                                placeholder="Masukkan NIK"
                                value="{{ old('nik') }}"
-                               class="input input-bordered rounded-xl bg-[#EADDCD] text-sm px-4 py-3 text-stone-800 placeholder-stone-400 @error('nik') input-error @enderror"
+                               class="input input-bordered rounded-xl bg-[#F3F8F4] text-sm px-4 py-3 text-stone-800 placeholder-stone-400 @error('nik') input-error @enderror"
                                required />
                         @error('nik') <label class="label"><span class="label-text-alt text-red-500">{{ $message }}</span></label> @enderror
                     </div>
@@ -112,7 +112,7 @@
                             <span class="label-text text-sm font-medium text-stone-700">Jenis Kelamin *</span>
                         </label>
                         <select name="gender" id="gender"
-                                class="select select-bordered rounded-xl bg-[#EADDCD] text-sm text-stone-800 @error('gender') select-error @enderror"
+                                class="select select-bordered rounded-xl bg-[#F3F8F4] text-sm text-stone-800 @error('gender') select-error @enderror"
                                 required>
                             <option value="">-- Pilih Jenis Kelamin --</option>
                             <option value="Laki-laki" {{ old('gender') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
@@ -129,7 +129,7 @@
                         <input type="email" name="email" id="email"
                                placeholder="Masukkan email"
                                value="{{ old('email') }}"
-                               class="input input-bordered rounded-xl bg-[#EADDCD] text-sm px-4 py-3 text-stone-800 placeholder-stone-400 @error('email') input-error @enderror"
+                               class="input input-bordered rounded-xl bg-[#F3F8F4] text-sm px-4 py-3 text-stone-800 placeholder-stone-400 @error('email') input-error @enderror"
                                required />
                         @error('email') <label class="label"><span class="label-text-alt text-red-500">{{ $message }}</span></label> @enderror
                     </div>
@@ -142,7 +142,7 @@
                         <input type="tel" name="phone" id="phone"
                                placeholder="Masukkan nomor telepon"
                                value="{{ old('phone') }}"
-                               class="input input-bordered rounded-xl bg-[#EADDCD] text-sm px-4 py-3 text-stone-800 placeholder-stone-400 @error('phone') input-error @enderror"
+                               class="input input-bordered rounded-xl bg-[#F3F8F4] text-sm px-4 py-3 text-stone-800 placeholder-stone-400 @error('phone') input-error @enderror"
                                required />
                         @error('phone') <label class="label"><span class="label-text-alt text-red-500">{{ $message }}</span></label> @enderror
                     </div>
@@ -155,7 +155,7 @@
                         <textarea name="address" id="address"
                                   placeholder="Masukkan alamat lengkap"
                                   rows="3"
-                                  class="textarea textarea-bordered rounded-xl bg-[#EADDCD] text-sm px-4 py-3 text-stone-800 placeholder-stone-400 @error('address') textarea-error @enderror"
+                                  class="textarea textarea-bordered rounded-xl bg-[#F3F8F4] text-sm px-4 py-3 text-stone-800 placeholder-stone-400 @error('address') textarea-error @enderror"
                                   required>{{ old('address') }}</textarea>
                         @error('address') <label class="label"><span class="label-text-alt text-red-500">{{ $message }}</span></label> @enderror
                     </div>
@@ -171,7 +171,7 @@
                         <div class="relative">
                             <input type="password" name="password" id="password"
                                    placeholder="Buat password yang kuat"
-                                   class="input input-bordered rounded-xl bg-[#EADDCD] text-sm px-4 py-3 pr-12 text-stone-800 placeholder-stone-400 w-full @error('password') input-error @enderror"
+                                   class="input input-bordered rounded-xl bg-[#F3F8F4] text-sm px-4 py-3 pr-12 text-stone-800 placeholder-stone-400 w-full @error('password') input-error @enderror"
                                    required />
                             <button type="button" onclick="togglePassword('password')"
                                     class="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600 transition">
@@ -196,7 +196,7 @@
                         <div class="relative">
                             <input type="password" name="password_confirmation" id="password_confirmation"
                                    placeholder="Konfirmasi password"
-                                   class="input input-bordered rounded-xl bg-[#EADDCD] text-sm px-4 py-3 pr-12 text-stone-800 placeholder-stone-400 w-full"
+                                   class="input input-bordered rounded-xl bg-[#F3F8F4] text-sm px-4 py-3 pr-12 text-stone-800 placeholder-stone-400 w-full"
                                    required />
                             <button type="button" onclick="togglePassword('password_confirmation')"
                                     class="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600 transition">
@@ -214,7 +214,7 @@
                     </div>
 
                     <!-- Submit Button -->
-                    <button type="submit" class="btn btn-block rounded-full bg-[#5B6E33] text-white border-none hover:bg-[#4A5D23] text-sm mt-6">
+                    <button type="submit" class="btn btn-block rounded-full bg-[#14532D] text-white border-none hover:bg-[#1B3B2B] text-sm mt-6">
                         Daftar
                     </button>
                 </form>
@@ -222,7 +222,7 @@
                 <!-- Login Link -->
                 <p class="text-center text-xs text-stone-400 mt-6">
                     Sudah memiliki akun?
-                    <a href="{{ route('login') }}" class="text-[#5B6E33] hover:text-[#4A5D23] font-medium transition">
+                    <a href="{{ route('login') }}" class="text-[#14532D] hover:text-[#1B3B2B] font-medium transition">
                         Masuk di sini
                     </a>
                 </p>

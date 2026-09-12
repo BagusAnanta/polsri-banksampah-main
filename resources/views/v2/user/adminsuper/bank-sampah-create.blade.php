@@ -12,14 +12,14 @@
         @csrf
 
         <!-- Card 1: Akun Login -->
-        <div class="bg-[#E4CEA5] rounded-xl p-6 border border-slate-200 space-y-4">
+        <div class="bg-[#E1EFE3] rounded-xl p-6 border border-slate-200 space-y-4">
             <h3 class="text-lg font-semibold text-slate-900">Akun Login</h3>
 
             <div class="form-control">
                 <label class="label">
                     <span class="label-text font-medium">Username Login Admin *</span>
                 </label>
-                <input type="text" name="username" placeholder="Masukkan Username Admin" class="input input-bordered rounded-xl bg-[#E4CEA5] text-sm px-4 py-3 pr-12 text-stone-800 placeholder-[#93764A] w-full" required>
+                <input type="text" name="username" placeholder="Masukkan Username Admin" class="input input-bordered rounded-xl bg-[#E1EFE3] text-sm px-4 py-3 pr-12 text-stone-800 placeholder-[#5B6B63] w-full" required>
                 @error('username') <label class="label"><span class="label-text-alt text-red-500">{{ $message }}</span></label> @enderror
             </div>
 
@@ -27,7 +27,7 @@
                 <label class="label">
                     <span class="label-text font-medium">Email *</span>
                 </label>
-                <input type="email" name="email" placeholder="Masukkan Email Admin Bank Sampah" class="input input-bordered rounded-xl bg-[#E4CEA5] text-sm px-4 py-3 pr-12 text-stone-800 placeholder-[#93764A] w-full" required>
+                <input type="email" name="email" placeholder="Masukkan Email Admin Bank Sampah" class="input input-bordered rounded-xl bg-[#E1EFE3] text-sm px-4 py-3 pr-12 text-stone-800 placeholder-[#5B6B63] w-full" required>
                 @error('email') <label class="label"><span class="label-text-alt text-red-500">{{ $message }}</span></label> @enderror
             </div>
 
@@ -38,7 +38,7 @@
                 <div class="relative">
                     <input type="password" name="password" id="password"
                             placeholder="Buat password yang kuat"
-                            class="input input-bordered rounded-xl bg-[#E4CEA5] text-sm px-4 py-3 pr-12 text-stone-800 placeholder-[#93764A] w-full @error('password') input-error @enderror"
+                            class="input input-bordered rounded-xl bg-[#E1EFE3] text-sm px-4 py-3 pr-12 text-stone-800 placeholder-[#5B6B63] w-full @error('password') input-error @enderror"
                             required />
                     <button type="button" onclick="togglePassword('password')" class="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600 transition">
                         <div class="w-5 h-5 hidden" id="password-eye">
@@ -55,14 +55,14 @@
         </div>
 
         <!-- Card 2: Informasi Bank Sampah -->
-        <div class="bg-[#E4CEA5] rounded-xl p-6 border border-slate-200 space-y-4">
+        <div class="bg-[#E1EFE3] rounded-xl p-6 border border-slate-200 space-y-4">
             <h3 class="text-lg font-semibold text-slate-900">Informasi Bank Sampah</h3>
 
             <div class="form-control">
                 <label class="label">
                     <span class="label-text font-medium">Nama Bank Sampah *</span>
                 </label>
-                <input type="text" name="nama_bank_sampah" placeholder="Masukkan Nama Bank Sampah" class="input input-bordered rounded-xl bg-[#E4CEA5] text-sm px-4 py-3 pr-12 text-stone-800 placeholder-[#93764A] w-full" required>
+                <input type="text" name="nama_bank_sampah" placeholder="Masukkan Nama Bank Sampah" class="input input-bordered rounded-xl bg-[#E1EFE3] text-sm px-4 py-3 pr-12 text-stone-800 placeholder-[#5B6B63] w-full" required>
                 @error('nama_bank_sampah') <label class="label"><span class="label-text-alt text-red-500">{{ $message }}</span></label> @enderror
             </div>
 
@@ -70,7 +70,7 @@
                 <label class="label">
                     <span class="label-text font-medium">Alamat *</span>
                 </label>
-                <textarea name="alamat" placeholder="Masukkan Alamat" class="textarea textarea-bordered rounded-xl bg-[#E4CEA5] text-sm px-4 py-3 pr-12 text-stone-800 placeholder-[#93764A] w-full" rows="3" required></textarea>
+                <textarea name="alamat" placeholder="Masukkan Alamat" class="textarea textarea-bordered rounded-xl bg-[#E1EFE3] text-sm px-4 py-3 pr-12 text-stone-800 placeholder-[#5B6B63] w-full" rows="3" required></textarea>
                 @error('alamat') <label class="label"><span class="label-text-alt text-red-500">{{ $message }}</span></label> @enderror
             </div>
 
@@ -78,7 +78,7 @@
                 <label class="label">
                     <span class="label-text font-medium">Area / Kecamatan *</span>
                 </label>
-                <input type="text" name="kecamatan" placeholder="Masukkan Area/Kecamatan" class="input input-bordered rounded-xl bg-[#E4CEA5] text-sm px-4 py-3 pr-12 text-stone-800 placeholder-[#93764A] w-full" required>
+                <input type="text" name="kecamatan" placeholder="Masukkan Area/Kecamatan" class="input input-bordered rounded-xl bg-[#E1EFE3] text-sm px-4 py-3 pr-12 text-stone-800 placeholder-[#5B6B63] w-full" required>
                 @error('kecamatan') <label class="label"><span class="label-text-alt text-red-500">{{ $message }}</span></label> @enderror
             </div>
 
@@ -86,7 +86,7 @@
                 <label class="label">
                     <span class="label-text font-medium">Jam Operasional *</span>
                 </label>
-                <input type="text" name="jam_operasional" class="input input-bordered rounded-xl bg-[#E4CEA5] text-sm px-4 py-3 pr-12 text-stone-800 placeholder-[#93764A] w-full" placeholder="Contoh: Senin-Jumat, 08:00-16:00" required>
+                <input type="text" name="jam_operasional" class="input input-bordered rounded-xl bg-[#E1EFE3] text-sm px-4 py-3 pr-12 text-stone-800 placeholder-[#5B6B63] w-full" placeholder="Contoh: Senin-Jumat, 08:00-16:00" required>
                 @error('jam_operasional') <label class="label"><span class="label-text-alt text-red-500">{{ $message }}</span></label> @enderror
             </div>
 
@@ -94,7 +94,7 @@
                 <label class="label">
                     <span class="label-text font-medium">Nomor Telepon *</span>
                 </label>
-                <input type="text" name="nomor_telepon" placeholder="Masukkan Nomor Telepon" class="input input-bordered rounded-xl bg-[#E4CEA5] text-sm px-4 py-3 pr-12 text-stone-800 placeholder-[#93764A] w-full">
+                <input type="text" name="nomor_telepon" placeholder="Masukkan Nomor Telepon" class="input input-bordered rounded-xl bg-[#E1EFE3] text-sm px-4 py-3 pr-12 text-stone-800 placeholder-[#5B6B63] w-full">
                 @error('nomor_telepon') <label class="label"><span class="label-text-alt text-red-500">{{ $message }}</span></label> @enderror
             </div>
 
@@ -102,14 +102,14 @@
                 <label class="label">
                     <span class="label-text font-medium">Deskripsi (Opsional)</span>
                 </label>
-                <textarea name="deskripsi" placeholder="Masukkan Deskripsi (Optional)" class="input input-bordered rounded-xl bg-[#E4CEA5] text-sm px-4 py-3 pr-12 text-stone-800 placeholder-[#93764A] w-full" rows="2"></textarea>
+                <textarea name="deskripsi" placeholder="Masukkan Deskripsi (Optional)" class="input input-bordered rounded-xl bg-[#E1EFE3] text-sm px-4 py-3 pr-12 text-stone-800 placeholder-[#5B6B63] w-full" rows="2"></textarea>
             </div>
         </div>
 
         <!-- Actions -->
         <div class="flex gap-3">
-            <a href="{{ route('sa.bank-sampah.index') }}" class="btn flex-1 rounded-xl bg-[#E4CEA5] hover:bg-red-600">Batal</a>
-            <button type="submit" class="btn flex-1 rounded-xl bg-[#A3A85C] hover:bg-[#A3A85C] text-white">
+            <a href="{{ route('sa.bank-sampah.index') }}" class="btn flex-1 rounded-xl bg-[#E1EFE3] hover:bg-red-600">Batal</a>
+            <button type="submit" class="btn flex-1 rounded-xl bg-[#16A34A] hover:bg-[#16A34A] text-white">
                 <span class="material-symbols-outlined">person_add</span> Buat Akun Admin
             </button>
         </div>
